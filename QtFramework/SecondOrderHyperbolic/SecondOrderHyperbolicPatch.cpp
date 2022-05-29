@@ -77,24 +77,26 @@ GLdouble SecHypPatch3::f1_2(GLdouble alpha, GLdouble t) const
 
 GLdouble SecHypPatch3::f2_2(GLdouble alpha, GLdouble t) const
 {
-    return (8 * cosh(alpha / 2) * sinh((alpha - t) / 2) * pow(sinh(t / 2), 3)
-            + (-12 * cosh(alpha / 2) * cosh ((alpha - t) / 2) * cosh(t / 2 )
-               + (4 * pow(cosh(alpha / 2) , 2) + 2) * pow(sinh((alpha -  t) / 2), 2)
-                + (2 * pow(cosh(alpha / 2), 2) + 1) * pow(cosh((alpha - t) / 2), 2))
-                * pow(sinh(t / 2), 2)
-            + (12 * cosh(alpha / 2) * sinh((alpha - t) / 2) * pow(cosh(t/2), 2)
-                + (- 8 * pow(cosh(alpha / 2), 2) - 4) * cosh((alpha - t) / 2) * sinh((alpha - t) / 2) * cosh(t / 2))
-                * sinh(t / 2)
-            + (2 * pow(cosh(alpha / 2), 2) + 1) * pow(sinh((alpha - t) / 2), 2) * pow(cosh(t / 2), 2)
-            )
-            / 2 * pow(sinh(alpha / 2), 4);
+    return  (8.0 * cosh(alpha / 2.0) * sinh((alpha - t) / 2.0) * pow(sinh(t / 2.0), 3.0)
+
+                       + (-12.0 * cosh(alpha / 2.0) * cosh ((alpha - t) / 2.0) * cosh(t / 2.0 )
+                          + (4.0 * pow(cosh(alpha / 2.0) , 2.0) + 2.0) * pow(sinh((alpha -  t) / 2.0), 2.0)
+                           + (2.0 * pow(cosh(alpha / 2.0), 2.0) + 1.0) * pow(cosh((alpha - t) / 2.0), 2.0))
+                           * pow(sinh(t / 2.0), 2.0)
+
+                       + (12.0 * cosh(alpha / 2.0) * sinh((alpha - t) / 2.0) * pow(cosh(t/2.0), 2.0)
+                           + (- 8.0 * pow(cosh(alpha / 2.0), 2.0) - 4.0) * cosh((alpha - t) / 2.0) * sinh((alpha - t) / 2.0) * cosh(t / 2.0))
+                           * sinh(t / 2.0)
+
+                       + (2.0 * pow(cosh(alpha / 2.0), 2.0) + 1.0) * pow(sinh((alpha - t) / 2.0), 2.0) * pow(cosh(t / 2.0), 2.0)
+                       )
+                       / (2.0 * pow(sinh(alpha / 2.0), 4.0));
 }
 
 GLdouble SecHypPatch3::f3_2(GLdouble alpha, GLdouble t) const
 {
-    return pow(1.0 / sinh(alpha / 2), 4)
-            * (cosh(2 * t) - cosh(t))
-            / 2.0;
+    return (pow(sinh(t / 2.0), 4.0) + 3.0 * pow(cosh(t/2.0), 2.0) * pow(sinh(t/2.0), 2.0))
+              / pow(sinh(alpha / 2.0), 4.0);
 }
 
 SecHypPatch3::SecHypPatch3(GLdouble u, GLdouble v):TensorProductSurface3(0.0, u, 0.0, v){ _alpha[0] = u; _alpha[1] = v; }

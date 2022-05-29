@@ -70,13 +70,59 @@ FORMS += \
     GUI/SideWidget.ui
 
 HEADERS += \
+    Core/Colors4.h \
+    Core/Constants.h \
+    Core/DCoordinates3.h \
+    Core/GenericCurves3.h \
+    Core/HCoordinates3.h \
+    Core/Lights.h \
+    Core/LinearCombination3.h \
+    Core/Materials.h \
+    Core/Matrices.h \
+    Core/ModelProperties.h \
+    Core/RealSquareMatrices.h \
+    Core/ShaderPrograms.h \
+    Core/TCoordinates4.h \
+    Core/TensorProductSurfaces3.h \
+    Core/TriangularFaces.h \
+    Core/TriangulatedMeshes3.h \
+    Cyclic/CyclicCurves3.h \
+    Dependencies/Include/GL/glew.h \
     GUI/GLWidget.h \
     GUI/MainWindow.h \
     GUI/SideWidget.h \
-    Core/Exceptions.h
+    Core/Exceptions.h \
+    Parametric/ParametricCurves3.h \
+    Parametric/ParametricSurfaces3.h \
+    SecondOrderHyperbolic/BasisFunctions.h \
+    SecondOrderHyperbolic/SecondOrderHyperbolicArc.h \
+    SecondOrderHyperbolic/SecondOrderHyperbolicPatch.h \
+    Test/TestFunctions.h
 
 SOURCES += \
+    Core/GenericCurves3.cpp \
+    Core/Lights.cpp \
+    Core/LinearCombination3.cpp \
+    Core/Materials.cpp \
+    Core/RealSquareMatrices.cpp \
+    Core/ShaderPrograms.cpp \
+    Core/TensorProductSurfaces3.cpp \
+    Core/TriangulatedMeshes3.cpp \
+    Cyclic/CyclicCurves3.cpp \
     GUI/GLWidget.cpp \
     GUI/MainWindow.cpp \
     GUI/SideWidget.cpp \
+    Parametric/ParametricCurves3.cpp \
+    Parametric/ParametricSurfaces3.cpp \
+    SecondOrderHyperbolic/SecondOrderHyperbolicArc.cpp \
+    SecondOrderHyperbolic/SecondOrderHyperbolicPatch.cpp \
+    Test/TestFunctions.cpp \
     main.cpp
+
+DISTFILES += \
+    Dependencies/Lib/GL/x64/glew32.dll \
+    Dependencies/Lib/GL/x64/glew32.lib \
+    Dependencies/Lib/GL/x64/readme.txt \
+    Dependencies/Lib/GL/x86/glew32.dll \
+    Dependencies/Lib/GL/x86/glew32.lib \
+    Dependencies/Lib/GL/x86/readme.txt
