@@ -11,11 +11,14 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QSlider>
+#include <QtWidgets/QToolBox>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -40,12 +43,34 @@ public:
     QDoubleSpinBox *trans_y_spin_box;
     QLabel *label_7;
     QDoubleSpinBox *trans_z_spin_box;
+    QToolBox *toolBox;
+    QWidget *page;
+    QWidget *formLayoutWidget;
+    QFormLayout *formLayout_2;
+    QLabel *label_8;
+    QComboBox *comboBoxSelectedArc;
+    QLabel *label_9;
+    QComboBox *comboBoxSelectedArcPoint;
+    QCheckBox *checkBoxShowArcDerivatives1;
+    QCheckBox *checkBoxShowArcDerivatives2;
+    QDoubleSpinBox *doubleSpinBoxScaleArcDerivatives;
+    QLabel *label_11;
+    QDoubleSpinBox *doubleSpinBoxArcX;
+    QLabel *label_12;
+    QDoubleSpinBox *doubleSpinBoxArcY;
+    QLabel *label_13;
+    QDoubleSpinBox *doubleSpinBoxArcZ;
+    QLabel *label_10;
+    QWidget *page_2;
+    QWidget *formLayoutWidget_2;
+    QFormLayout *formLayout_3;
+    QLabel *label_14;
 
     void setupUi(QWidget *SideWidget)
     {
         if (SideWidget->objectName().isEmpty())
             SideWidget->setObjectName(QString::fromUtf8("SideWidget"));
-        SideWidget->resize(289, 289);
+        SideWidget->resize(289, 651);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -154,6 +179,126 @@ public:
 
         formLayout->setWidget(6, QFormLayout::FieldRole, trans_z_spin_box);
 
+        toolBox = new QToolBox(SideWidget);
+        toolBox->setObjectName(QString::fromUtf8("toolBox"));
+        toolBox->setGeometry(QRect(20, 278, 251, 311));
+        page = new QWidget();
+        page->setObjectName(QString::fromUtf8("page"));
+        page->setGeometry(QRect(0, 0, 251, 251));
+        formLayoutWidget = new QWidget(page);
+        formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
+        formLayoutWidget->setGeometry(QRect(10, 10, 231, 221));
+        formLayout_2 = new QFormLayout(formLayoutWidget);
+        formLayout_2->setObjectName(QString::fromUtf8("formLayout_2"));
+        formLayout_2->setContentsMargins(0, 0, 0, 0);
+        label_8 = new QLabel(formLayoutWidget);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+
+        formLayout_2->setWidget(0, QFormLayout::LabelRole, label_8);
+
+        comboBoxSelectedArc = new QComboBox(formLayoutWidget);
+        comboBoxSelectedArc->addItem(QString());
+        comboBoxSelectedArc->addItem(QString());
+        comboBoxSelectedArc->addItem(QString());
+        comboBoxSelectedArc->addItem(QString());
+        comboBoxSelectedArc->addItem(QString());
+        comboBoxSelectedArc->addItem(QString());
+        comboBoxSelectedArc->addItem(QString());
+        comboBoxSelectedArc->addItem(QString());
+        comboBoxSelectedArc->addItem(QString());
+        comboBoxSelectedArc->setObjectName(QString::fromUtf8("comboBoxSelectedArc"));
+
+        formLayout_2->setWidget(0, QFormLayout::FieldRole, comboBoxSelectedArc);
+
+        label_9 = new QLabel(formLayoutWidget);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+
+        formLayout_2->setWidget(1, QFormLayout::LabelRole, label_9);
+
+        comboBoxSelectedArcPoint = new QComboBox(formLayoutWidget);
+        comboBoxSelectedArcPoint->addItem(QString());
+        comboBoxSelectedArcPoint->addItem(QString());
+        comboBoxSelectedArcPoint->addItem(QString());
+        comboBoxSelectedArcPoint->addItem(QString());
+        comboBoxSelectedArcPoint->setObjectName(QString::fromUtf8("comboBoxSelectedArcPoint"));
+
+        formLayout_2->setWidget(1, QFormLayout::FieldRole, comboBoxSelectedArcPoint);
+
+        checkBoxShowArcDerivatives1 = new QCheckBox(formLayoutWidget);
+        checkBoxShowArcDerivatives1->setObjectName(QString::fromUtf8("checkBoxShowArcDerivatives1"));
+
+        formLayout_2->setWidget(5, QFormLayout::LabelRole, checkBoxShowArcDerivatives1);
+
+        checkBoxShowArcDerivatives2 = new QCheckBox(formLayoutWidget);
+        checkBoxShowArcDerivatives2->setObjectName(QString::fromUtf8("checkBoxShowArcDerivatives2"));
+
+        formLayout_2->setWidget(5, QFormLayout::FieldRole, checkBoxShowArcDerivatives2);
+
+        doubleSpinBoxScaleArcDerivatives = new QDoubleSpinBox(formLayoutWidget);
+        doubleSpinBoxScaleArcDerivatives->setObjectName(QString::fromUtf8("doubleSpinBoxScaleArcDerivatives"));
+        doubleSpinBoxScaleArcDerivatives->setMaximum(5.000000000000000);
+        doubleSpinBoxScaleArcDerivatives->setSingleStep(0.050000000000000);
+        doubleSpinBoxScaleArcDerivatives->setValue(1.000000000000000);
+
+        formLayout_2->setWidget(6, QFormLayout::FieldRole, doubleSpinBoxScaleArcDerivatives);
+
+        label_11 = new QLabel(formLayoutWidget);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+
+        formLayout_2->setWidget(2, QFormLayout::LabelRole, label_11);
+
+        doubleSpinBoxArcX = new QDoubleSpinBox(formLayoutWidget);
+        doubleSpinBoxArcX->setObjectName(QString::fromUtf8("doubleSpinBoxArcX"));
+        doubleSpinBoxArcX->setMinimum(-99.000000000000000);
+        doubleSpinBoxArcX->setSingleStep(0.100000000000000);
+
+        formLayout_2->setWidget(2, QFormLayout::FieldRole, doubleSpinBoxArcX);
+
+        label_12 = new QLabel(formLayoutWidget);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+
+        formLayout_2->setWidget(3, QFormLayout::LabelRole, label_12);
+
+        doubleSpinBoxArcY = new QDoubleSpinBox(formLayoutWidget);
+        doubleSpinBoxArcY->setObjectName(QString::fromUtf8("doubleSpinBoxArcY"));
+        doubleSpinBoxArcY->setMinimum(-99.000000000000000);
+        doubleSpinBoxArcY->setSingleStep(0.100000000000000);
+
+        formLayout_2->setWidget(3, QFormLayout::FieldRole, doubleSpinBoxArcY);
+
+        label_13 = new QLabel(formLayoutWidget);
+        label_13->setObjectName(QString::fromUtf8("label_13"));
+
+        formLayout_2->setWidget(4, QFormLayout::LabelRole, label_13);
+
+        doubleSpinBoxArcZ = new QDoubleSpinBox(formLayoutWidget);
+        doubleSpinBoxArcZ->setObjectName(QString::fromUtf8("doubleSpinBoxArcZ"));
+        doubleSpinBoxArcZ->setMinimum(-99.000000000000000);
+        doubleSpinBoxArcZ->setSingleStep(0.100000000000000);
+
+        formLayout_2->setWidget(4, QFormLayout::FieldRole, doubleSpinBoxArcZ);
+
+        label_10 = new QLabel(formLayoutWidget);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+
+        formLayout_2->setWidget(6, QFormLayout::LabelRole, label_10);
+
+        toolBox->addItem(page, QString::fromUtf8("Arcs"));
+        page_2 = new QWidget();
+        page_2->setObjectName(QString::fromUtf8("page_2"));
+        page_2->setGeometry(QRect(0, 0, 251, 251));
+        formLayoutWidget_2 = new QWidget(page_2);
+        formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
+        formLayoutWidget_2->setGeometry(QRect(9, 9, 231, 241));
+        formLayout_3 = new QFormLayout(formLayoutWidget_2);
+        formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
+        formLayout_3->setContentsMargins(0, 0, 0, 0);
+        label_14 = new QLabel(formLayoutWidget_2);
+        label_14->setObjectName(QString::fromUtf8("label_14"));
+
+        formLayout_3->setWidget(0, QFormLayout::LabelRole, label_14);
+
+        toolBox->addItem(page_2, QString::fromUtf8("Patches"));
 #if QT_CONFIG(shortcut)
         label->setBuddy(rotate_x_slider);
         label_2->setBuddy(rotate_y_slider);
@@ -165,6 +310,9 @@ public:
 #endif // QT_CONFIG(shortcut)
 
         retranslateUi(SideWidget);
+
+        toolBox->setCurrentIndex(1);
+
 
         QMetaObject::connectSlotsByName(SideWidget);
     } // setupUi
@@ -183,6 +331,32 @@ public:
         label_5->setText(QCoreApplication::translate("SideWidget", "Translate along x", nullptr));
         label_6->setText(QCoreApplication::translate("SideWidget", "Translate along y", nullptr));
         label_7->setText(QCoreApplication::translate("SideWidget", "Translate along z", nullptr));
+        label_8->setText(QCoreApplication::translate("SideWidget", "selected arc", nullptr));
+        comboBoxSelectedArc->setItemText(0, QCoreApplication::translate("SideWidget", "white", nullptr));
+        comboBoxSelectedArc->setItemText(1, QCoreApplication::translate("SideWidget", "pink", nullptr));
+        comboBoxSelectedArc->setItemText(2, QCoreApplication::translate("SideWidget", "purple", nullptr));
+        comboBoxSelectedArc->setItemText(3, QCoreApplication::translate("SideWidget", "blue", nullptr));
+        comboBoxSelectedArc->setItemText(4, QCoreApplication::translate("SideWidget", "green", nullptr));
+        comboBoxSelectedArc->setItemText(5, QCoreApplication::translate("SideWidget", "gray", nullptr));
+        comboBoxSelectedArc->setItemText(6, QCoreApplication::translate("SideWidget", "lime", nullptr));
+        comboBoxSelectedArc->setItemText(7, QCoreApplication::translate("SideWidget", "yellow", nullptr));
+        comboBoxSelectedArc->setItemText(8, QCoreApplication::translate("SideWidget", "brown", nullptr));
+
+        label_9->setText(QCoreApplication::translate("SideWidget", "selected point", nullptr));
+        comboBoxSelectedArcPoint->setItemText(0, QCoreApplication::translate("SideWidget", "0", nullptr));
+        comboBoxSelectedArcPoint->setItemText(1, QCoreApplication::translate("SideWidget", "1", nullptr));
+        comboBoxSelectedArcPoint->setItemText(2, QCoreApplication::translate("SideWidget", "2", nullptr));
+        comboBoxSelectedArcPoint->setItemText(3, QCoreApplication::translate("SideWidget", "3", nullptr));
+
+        checkBoxShowArcDerivatives1->setText(QCoreApplication::translate("SideWidget", "show derivative1", nullptr));
+        checkBoxShowArcDerivatives2->setText(QCoreApplication::translate("SideWidget", "show derivative2", nullptr));
+        label_11->setText(QCoreApplication::translate("SideWidget", "x", nullptr));
+        label_12->setText(QCoreApplication::translate("SideWidget", "y", nullptr));
+        label_13->setText(QCoreApplication::translate("SideWidget", "z", nullptr));
+        label_10->setText(QCoreApplication::translate("SideWidget", "derivative scale", nullptr));
+        toolBox->setItemText(toolBox->indexOf(page), QCoreApplication::translate("SideWidget", "Arcs", nullptr));
+        label_14->setText(QCoreApplication::translate("SideWidget", "selected patch", nullptr));
+        toolBox->setItemText(toolBox->indexOf(page_2), QCoreApplication::translate("SideWidget", "Patches", nullptr));
     } // retranslateUi
 
 };

@@ -23,8 +23,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_cagd__MainWindow_t {
-    const uint offsetsAndSize[6];
-    char stringdata0[43];
+    const uint offsetsAndSize[12];
+    char stringdata0[82];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_cagd__MainWindow_t, stringdata0) + ofs), len 
@@ -32,11 +32,14 @@ static const qt_meta_stringdata_cagd__MainWindow_t qt_meta_stringdata_cagd__Main
     {
 QT_MOC_LITERAL(0, 16), // "cagd::MainWindow"
 QT_MOC_LITERAL(17, 24), // "on_action_Quit_triggered"
-QT_MOC_LITERAL(42, 0) // ""
+QT_MOC_LITERAL(42, 0), // ""
+QT_MOC_LITERAL(43, 12), // "setArcPointX"
+QT_MOC_LITERAL(56, 12), // "setArcPointY"
+QT_MOC_LITERAL(69, 12) // "setArcPointZ"
 
     },
     "cagd::MainWindow\0on_action_Quit_triggered\0"
-    ""
+    "\0setArcPointX\0setArcPointY\0setArcPointZ"
 };
 #undef QT_MOC_LITERAL
 
@@ -46,7 +49,7 @@ static const uint qt_meta_data_cagd__MainWindow[] = {
       10,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -54,10 +57,16 @@ static const uint qt_meta_data_cagd__MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   20,    2, 0x08,    1 /* Private */,
+       1,    0,   38,    2, 0x08,    1 /* Private */,
+       3,    1,   39,    2, 0x08,    2 /* Private */,
+       4,    1,   42,    2, 0x08,    4 /* Private */,
+       5,    1,   45,    2, 0x08,    6 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
+    QMetaType::Void, QMetaType::Double,    2,
+    QMetaType::Void, QMetaType::Double,    2,
+    QMetaType::Void, QMetaType::Double,    2,
 
        0        // eod
 };
@@ -69,10 +78,12 @@ void cagd::MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         (void)_t;
         switch (_id) {
         case 0: _t->on_action_Quit_triggered(); break;
+        case 1: _t->setArcPointX((*reinterpret_cast< std::add_pointer_t<double>>(_a[1]))); break;
+        case 2: _t->setArcPointY((*reinterpret_cast< std::add_pointer_t<double>>(_a[1]))); break;
+        case 3: _t->setArcPointZ((*reinterpret_cast< std::add_pointer_t<double>>(_a[1]))); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject cagd::MainWindow::staticMetaObject = { {
@@ -83,7 +94,7 @@ const QMetaObject cagd::MainWindow::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_cagd__MainWindow_t
 , QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>
-, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<double, std::false_type>
 
 
 >,
@@ -112,13 +123,13 @@ int cagd::MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 4)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 1;
+        _id -= 4;
     }
     return _id;
 }

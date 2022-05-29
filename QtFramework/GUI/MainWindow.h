@@ -25,5 +25,10 @@ namespace cagd
     private slots:
         // private event handling methods/slots
         void on_action_Quit_triggered();
+
+        //arc
+        void setArcPointX(double);
+        void setArcPointY(double);
+        void setArcPointZ(double);
     };
 }
