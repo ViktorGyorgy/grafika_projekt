@@ -50,10 +50,11 @@ namespace cagd
         void _destroySl();
 
         //materials
-        RowMatrix<Material> _materials;
-        void _create_materials();
-        int selectedMaterial = 0;
-        void applyMaterial();
+
+        RowMatrix<Material> materials;
+        RowMatrix<int> selectedMaterial;
+        void initSelectedMaterial();
+        void createMaterials();
 
         // your other declarations
         int arcOrPatch = 0;
@@ -64,26 +65,44 @@ namespace cagd
         float scaleArcDerivatives = 1;
         RowMatrix<SecondOrderHyperbolicArc> arcs;
         RowMatrix<GenericCurve3*> arcImages;
-        int showArcDerivative1 = 0, showArcDerivative2 = 0;
+        int showArcDerivative1 = 0;
+        int showArcDerivative2 = 0;
+        int showArcControlPolygon = 0;
+        int showArcDataPoints = 0;
         int selectedArc = 0;
         int selectedArcPoint = 0;
+        int selectedArcJoinType = 0;
+        int selectedJoiningArc = 0;
 
         //patches
         int numberOfPatches = 9;
-        int showPatchDerivatives1 = 0, showPatchDerivatives2 = 0;
+
+        int showPatchControlPolygon = 0;
+        int showPatchDataPoints = 0;
+        int showInterpolatingSurface = 0;
+        int showNormalVectors = 0;
+        int showUIsometricCurves = 0;
+        int showVIsometricCurves = 0;
+        int showIsometricDerivatives = 0;
+        int showPatchDerivatives = 0;
+        int showPatchPartialDerivatives = 0;
+        int turnOnLight = 0;
+
         float scalePatchDerivatives = 1;
         RowMatrix<SecHypPatch3*> patches;
         RowMatrix<TriangulatedMesh3*> beforeInterpolation, afterInterpolation;
         RowMatrix<RowMatrix<GLdouble>>	uKnotVectors;
         RowMatrix<ColumnMatrix<GLdouble>> vKnotVectors;
         RowMatrix<RowMatrix<GenericCurve3*> *> uCurves, vCurves;
+        RowMatrix<Matrix<DCoordinate3>> _data_points_to_interpolate;
 
         int selectedPatch = 0;
+        int selectedPatchPoint = 0;
         int selectedPatchPointI = 0;
         int selectedPatchPointJ = 0;
-
-
-
+        int selectedLight = 0;
+        int selectedPatchJoinType = 0;
+        int selectedJoiningPatch = 0;
 
     public:
         // special and default constructor
@@ -105,6 +124,7 @@ namespace cagd
         //patches
         void createPatches();
         void renderPatches();
+        void sendPatchPointCoordinates();
 
     public slots:
         // public event handling methods/slots
@@ -119,23 +139,52 @@ namespace cagd
         void set_trans_z(double value);
 
         //from here our code
+        //arcs
         void setArcOrPatch(int value);
         void setSelectedArc(int value);
         void setSelectedArcPoint(int value);
         void setShowArcDerivatives1(int value);
         void setShowArcDerivatives2(int value);
+        void setShowArcControlPolygon(int value);
+        void setShowArcDataPoints(int value);
         void setScaleArcDerivatives(double value);
-        void setArcPointX(double);
-        void setArcPointY(double);
-        void setArcPointZ(double);
+        void setArcPointX(double value);
+        void setArcPointY(double value);
+        void setArcPointZ(double value);
         bool updateCurrentArcImage();
+        void setSelectedArcJoinType(int value);
+        void setSelectedJoiningArc(int value);
 
 
         //patches
+        void setSelectedPatch(int value);
+        void setSelectedPatchPoint(int value);
+        void setPatchPointX(double value);
+        void setPatchPointY(double value);
+        void setPatchPointZ(double value);
+        void setShowPatchControlPolygon(int value);
+        void setShowPatchDataPoints(int value);
+        void setShowInterpolatingSurface(int value);
+        void setShowNormalVectors(int value);
+        void setSelectedMaterialOfSelectedPatch(int value);
+        void setSelectedLight(int value);
+        void setTurnOnSelectedLight(int value);
+        void setshowUIsometricCurves(int value);
+        void setshowVIsometricCurves(int value);
+        void setshowIsometricCurvesDerivatives(int value);
+        void setshowPatchDerivatives(int value);
+        void setshowPatchPartialDerivatives(int value);
+        void updateCurrentPatchImage();
+        void setSelectedPatchJoinType(int value);
+        void setSelectedJoiningPatch(int value);
 
    signals:
         void sendArcPointX(double);
         void sendArcPointY(double);
         void sendArcPointZ(double);
+
+        void sendPatchPointX(double);
+        void sendPatchPointY(double);
+        void sendPatchPointZ(double);
     };
 }

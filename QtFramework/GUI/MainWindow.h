@@ -30,5 +30,10 @@ namespace cagd
         void setArcPointX(double);
         void setArcPointY(double);
         void setArcPointZ(double);
+
+        //patch
+        void setPatchPointX(double);
+        void setPatchPointY(double);
+        void setPatchPointZ(double);
     };
 }

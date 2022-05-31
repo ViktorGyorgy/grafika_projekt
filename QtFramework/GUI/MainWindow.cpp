@@ -56,13 +56,15 @@ namespace cagd
         //sidewidget to GLwidget
         connect(_side_widget->checkBoxShowArcDerivatives1, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setShowArcDerivatives1(int)));
         connect(_side_widget->checkBoxShowArcDerivatives2, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setShowArcDerivatives2(int)));
+        connect(_side_widget->checkBoxShowArcControlPolygon, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setShowArcControlPolygon(int)));
+        connect(_side_widget->checkBoxShowArcDataPoints, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setShowArcDataPoints(int)));
         connect(_side_widget->comboBoxSelectedArc, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedArc(int)));
         connect(_side_widget->comboBoxSelectedArcPoint, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedArcPoint(int)));
         connect(_side_widget->doubleSpinBoxScaleArcDerivatives, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setScaleArcDerivatives(double)));
 
         connect(_side_widget->doubleSpinBoxArcX, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointX(double)));
         connect(_side_widget->doubleSpinBoxArcY, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointY(double)));
-        connect(_side_widget->doubleSpinBoxArcZ, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointZ(double)));
+        connect(_side_widget->doubleSpinBoxArcZ, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointZ(double)));        
 
         //GLwidget to mainWindow
         connect(_gl_widget, SIGNAL(sendArcPointX(double)), this, SLOT(setArcPointX(double)));
@@ -72,6 +74,34 @@ namespace cagd
 
 
         //patches stuff
+        connect(_side_widget->checkBoxShowPatchControlPolygon, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setShowPatchControlPolygon(int)));
+        connect(_side_widget->checkBoxShowPatchDataPoints, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setShowPatchDataPoints(int)));
+        connect(_side_widget->checkBoxShowInterpolatingSurface, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setShowInterpolatingSurface(int)));
+        connect(_side_widget->checkBoxShowNormalVectors, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setShowNormalVectors(int)));
+        connect(_side_widget->checkBoxShowIsoparametricCurvesU, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setshowUIsometricCurves(int)));
+        connect(_side_widget->checkBoxShowIsoparametricCurvesV, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setshowVIsometricCurves(int)));
+        connect(_side_widget->checkBoxShowIsometricDerivatives, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setshowIsometricCurvesDerivatives(int)));
+        connect(_side_widget->checkBoxShowPatchDerivatives, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setshowPatchDerivatives(int)));
+        connect(_side_widget->checkBoxShowPatchPartialDerivatives, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setshowPatchPartialDerivatives(int)));
+        connect(_side_widget->checkBoxApplyLight, SIGNAL(stateChanged(int)), _gl_widget, SLOT(setTurnOnSelectedLight(int)));
+        connect(_side_widget->comboBoxSelectedArcJoinType, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedArcJoinType(int)));
+        connect(_side_widget->comboBoxSelectedJoiningArc, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedJoiningArc(int)));
+
+        connect(_side_widget->comboBoxSelectedPatch, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedPatch(int)));
+        connect(_side_widget->comboBoxSelectedPatchPoint, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedPatchPoint(int)));
+        connect(_side_widget->comboBoxMaterial, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedMaterialOfSelectedPatch(int)));
+        connect(_side_widget->comboBoxLight, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedLight(int)));
+        connect(_side_widget->comboBoxSelectedPatchJoinType, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedPatchJoinType(int)));
+        connect(_side_widget->comboBoxSelectedJoiningPatch, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedJoiningPatch(int)));
+
+        connect(_side_widget->doubleSpinBoxPatchX, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setPatchPointX(double)));
+        connect(_side_widget->doubleSpinBoxPatchY, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setPatchPointY(double)));
+        connect(_side_widget->doubleSpinBoxPatchZ, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setPatchPointZ(double)));
+
+        //GLwidget to mainWindow
+        connect(_gl_widget, SIGNAL(sendPatchPointX(double)), this, SLOT(setPatchPointX(double)));
+        connect(_gl_widget, SIGNAL(sendPatchPointY(double)), this, SLOT(setPatchPointY(double)));
+        connect(_gl_widget, SIGNAL(sendPatchPointZ(double)), this, SLOT(setPatchPointZ(double)));
 
     }
 
@@ -93,5 +123,17 @@ namespace cagd
 
     void MainWindow::setArcPointZ(double value){
         _side_widget->doubleSpinBoxArcZ->setValue(value);
+    }
+
+    void MainWindow::setPatchPointX(double value){
+        _side_widget->doubleSpinBoxPatchX->setValue(value);
+    }
+
+    void MainWindow::setPatchPointY(double value){
+        _side_widget->doubleSpinBoxPatchY->setValue(value);
+    }
+
+    void MainWindow::setPatchPointZ(double value){
+        _side_widget->doubleSpinBoxPatchZ->setValue(value);
     }
 }

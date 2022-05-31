@@ -86,9 +86,12 @@ namespace cagd
             createArcs();
             sendArcPointCoordinates();
 
-            //patches
 
+            //patches
+            initSelectedMaterial();
+            createMaterials();
             createPatches();
+            sendPatchPointCoordinates();
         }
         catch (Exception &e)
         {
@@ -315,17 +318,26 @@ namespace cagd
     }
 
     //materials
-    void GLWidget::_create_materials(){
-            _materials.ResizeColumns(7);
-            _materials[0] = MatFBBrass;
-            _materials[1] = MatFBGold;
-            _materials[2] = MatFBSilver;
-            _materials[3] = MatFBEmerald;
-            _materials[4] = MatFBPearl;
-            _materials[5] = MatFBTurquoise;
-            _materials[6] = MatFBRuby;
-        }
+    void GLWidget::createMaterials()
+    {
+        materials.ResizeColumns(7);
+        materials[0] = MatFBBrass;
+        materials[1] = MatFBGold;
+        materials[2] = MatFBSilver;
+        materials[3] = MatFBEmerald;
+        materials[4] = MatFBPearl;
+        materials[5] = MatFBTurquoise;
+        materials[6] = MatFBRuby;
+    }
 
+    void GLWidget::initSelectedMaterial()
+    {
+        selectedMaterial.ResizeColumns(numberOfPatches);
+
+        for (int i = 0;  i < numberOfPatches; i++) {
+            selectedMaterial[i] = 0;
+        }
+    }
 
     //project part
     void GLWidget::setArcOrPatch(int value)
@@ -392,6 +404,7 @@ namespace cagd
     {
         selectedArc = value;
         sendArcPointCoordinates();
+        updateArcs();
         update();
     }
 
@@ -399,6 +412,7 @@ namespace cagd
     {
         selectedArcPoint = value;
         sendArcPointCoordinates();
+        updateArcs();
         update();
     }
 
@@ -411,6 +425,18 @@ namespace cagd
     void GLWidget::setShowArcDerivatives2(int value)
     {
         showArcDerivative2 = value;
+        update();
+    }
+
+    void GLWidget::setShowArcControlPolygon(int value)
+    {
+        showArcControlPolygon = value;
+        update();
+    }
+
+    void GLWidget::setShowArcDataPoints(int value)
+    {
+        showArcDataPoints = value;
         update();
     }
 
@@ -439,6 +465,17 @@ namespace cagd
     {
         arcs[selectedArc][selectedArcPoint][2] = value;
         updateCurrentArcImage();
+        update();
+    }
+
+    void GLWidget::setSelectedArcJoinType(int value)
+    {
+        selectedArcJoinType = value;
+        update();
+    }
+    void GLWidget::setSelectedJoiningArc(int value)
+    {
+        selectedJoiningArc = value;
         update();
     }
 
@@ -527,11 +564,17 @@ namespace cagd
 
             glDisable(GL_LIGHTING);
 
-            glColor3f(1.0f, 0.0f, 0.0f);
-            arcs[i].RenderData(GL_LINE_STRIP);
-            glPointSize(10.0);
-            arcs[i].RenderData(GL_POINTS);
+            if (showArcControlPolygon)
+            {
+                glColor3f(1.0f, 0.0f, 0.0f);
+                arcs[i].RenderData(GL_LINE_STRIP);
+            }
 
+            if (showArcDataPoints)
+            {
+                glPointSize(10.0);
+                arcs[i].RenderData(GL_POINTS);
+            }
 
             glColor3f(colors[i][0], colors[i][1], colors[i][2]);
             arcImages[i]->RenderDerivatives(0, GL_LINE_STRIP);
@@ -564,12 +607,136 @@ namespace cagd
 
     //patches stuff
     //setters
+    void GLWidget::setSelectedPatch(int value)
+    {
+        selectedPatch = value;
+        sendPatchPointCoordinates();
+        update();
+    }
 
+    void GLWidget::setSelectedPatchPoint(int value)
+    {
+        selectedPatchPoint = value;
+        sendPatchPointCoordinates();
+        update();
+    }
 
+    void GLWidget::setShowPatchControlPolygon(int value)
+    {
+        showPatchControlPolygon = value;
+        update();
+    }
+
+    void GLWidget::setShowPatchDataPoints(int value)
+    {
+        showPatchDataPoints = value;
+        update();
+    }
+
+    void GLWidget::setShowInterpolatingSurface(int value)
+    {
+        showInterpolatingSurface = value;
+        update();
+    }
+
+    void GLWidget::setShowNormalVectors(int value)
+    {
+        // TODO: find out what are normal vectors
+        update();
+    }
+
+    void GLWidget::setSelectedMaterialOfSelectedPatch(int value)
+    {
+        selectedMaterial[selectedPatch] = value;
+        update();
+    }
+
+    void GLWidget::setSelectedLight(int value)
+    {
+        selectedLight = value;
+        //TO DO: somehow handle all 3 lights
+        update();
+    }
+
+    void GLWidget::setTurnOnSelectedLight(int value)
+    {
+        turnOnLight = value;
+        update();
+    }
+
+    void GLWidget::setshowUIsometricCurves(int value)
+    {
+        showUIsometricCurves = value;
+        update();
+    }
+
+    void GLWidget::setshowVIsometricCurves(int value)
+    {
+        showVIsometricCurves = value;
+        update();
+    }
+
+    void GLWidget::setshowIsometricCurvesDerivatives(int value)
+    {
+        showIsometricDerivatives = value;
+        update();
+    }
+
+    void GLWidget::setshowPatchDerivatives(int value)
+    {
+        showPatchDerivatives = value;
+        //TODO: find out what are patch derivatives
+        update();
+    }
+
+    void GLWidget::setshowPatchPartialDerivatives(int value)
+    {
+        showPatchPartialDerivatives = value;
+        //TO DO find out what are patch partial derivatives
+        update();
+    }
+
+    void GLWidget::setPatchPointX(double value)
+    {
+        _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4)[0] = value;
+        updateCurrentPatchImage();
+        update();
+    }
+
+    void GLWidget::setPatchPointY(double value)
+    {
+        _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4)[1] = value;
+        updateCurrentPatchImage();
+        update();
+    }
+
+    void GLWidget::setPatchPointZ(double value)
+    {
+        _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4)[2] = value;
+        updateCurrentPatchImage();
+        update();
+    }
+
+    void GLWidget::setSelectedPatchJoinType(int value)
+    {
+        selectedPatchJoinType = value;
+        update();
+    }
+    void GLWidget::setSelectedJoiningPatch(int value)
+    {
+        selectedJoiningPatch = value;
+        update();
+    }
 
     //other
     void GLWidget::createPatches()
     {
+        _data_points_to_interpolate.ResizeColumns(numberOfPatches);
+        for(int i = 0; i < numberOfPatches; i++)
+        {
+            _data_points_to_interpolate[i].ResizeColumns(4);
+            _data_points_to_interpolate[i].ResizeRows(4);
+        }
 
         patches.ResizeColumns(numberOfPatches);
         beforeInterpolation.ResizeColumns(numberOfPatches);
@@ -629,17 +796,11 @@ namespace cagd
             vKnotVectors[i](2) = 2.0 / 3.0;
             vKnotVectors[i](3) = 1.0;
 
-             Matrix<DCoordinate3> _data_points_to_interpolate(4, 4);
-            _data_points_to_interpolate.ResizeColumns(4);
-            _data_points_to_interpolate.ResizeRows(4);
             for (GLuint row = 0; row < 4; ++row)
                 for (GLuint column = 0; column < 4; ++column)
-                    patches[i]->GetData(row, column, _data_points_to_interpolate(row, column));
-            if(i == 0)
-                cout << _data_points_to_interpolate << endl;
+                    patches[i]->GetData(row, column, _data_points_to_interpolate[i](row, column));
 
-
-            if (patches[i]->UpdateDataForInterpolation(uKnotVectors[i], vKnotVectors[i], _data_points_to_interpolate))
+            if (patches[i]->UpdateDataForInterpolation(uKnotVectors[i], vKnotVectors[i], _data_points_to_interpolate[i]))
             {
                 afterInterpolation[i] = patches[i]->GenerateImage(30, 30, GL_STATIC_DRAW);
 
@@ -659,75 +820,116 @@ namespace cagd
         }
     }
 
+    void GLWidget::updateCurrentPatchImage()
+    {
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                patches[selectedPatch]->SetData(i,j,_data_points_to_interpolate[selectedPatch](i,j));
+            }
+        }
+
+        patches[selectedPatch]->UpdateVertexBufferObjectsOfData();
+
+        beforeInterpolation[selectedPatch] = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
+        if(beforeInterpolation[selectedPatch])
+        {
+            beforeInterpolation[selectedPatch]->UpdateVertexBufferObjects();
+        }
+
+        if (patches[selectedPatch]->UpdateDataForInterpolation(uKnotVectors[selectedPatch], vKnotVectors[selectedPatch], _data_points_to_interpolate[selectedPatch]))
+        {
+            afterInterpolation[selectedPatch] = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
+
+            if(afterInterpolation[selectedPatch])
+                afterInterpolation[selectedPatch]->UpdateVertexBufferObjects();
+        }
+
+        uCurves[selectedPatch] = patches[selectedPatch]->GenerateUIsoparametricLines(4, 1, 200, GL_STATIC_DRAW);
+        vCurves[selectedPatch] = patches[selectedPatch]->GenerateVIsoparametricLines(4, 1, 200, GL_STATIC_DRAW);
+
+
+        for(GLuint  j = 0; j < uCurves[selectedPatch]->GetColumnCount(); ++j)
+            (*uCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+
+        for(GLuint  j = 0; j < vCurves[selectedPatch]->GetColumnCount(); ++j)
+            (*vCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+    }
+
     void GLWidget::renderPatches()
     {
-        for(int i = 0; i < numberOfPatches; i++)
-        {
-            glPushMatrix();
+        glPushMatrix();
+            DCoordinate3 sp = _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4);
+            glPointSize(10.0f);
+            glColor3f(0.0f, 0.5f, 0.0f);
+            glBegin (GL_POINTS);
+            glVertex3f(sp[0], sp[1], sp[2]);
+            glEnd ();
+            glFlush();
+
+            for(int i = 0; i < numberOfPatches; i++)
+            {
                 glDisable(GL_LIGHTING);
 
-                glColor3f(1.0f, 0.0f, 0.0f);
-                patches[i]->RenderData();
+                if (showPatchControlPolygon)
+                {
+                    glColor3f(1.0f, 0.0f, 0.0f);
+                    patches[i]->RenderData();
+                }
 
-                glColor4f(0.5f, 1.0f, 0.5f, 0.4f);
-                glPointSize(10.0);
-                patches[i]->RenderData(GL_POINTS);
+                if (showPatchDataPoints)
+                {
+                    glColor4f(0.5f, 1.0f, 0.5f, 0.4f);
+                    glPointSize(10.0);
+                    patches[i]->RenderData(GL_POINTS);
+                }
 
                 glPointSize(5.0f);
                 for(GLuint j = 0; j < 4; ++j){
-                    glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
-                    (*uCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                    if(showUIsometricCurves)
+                    {
+                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
+                        (*uCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                    }
 
-                    if(showPatchDerivatives1)
+                    if(showIsometricDerivatives)
                     {
                         glColor3f(0.0f, 0.5f, 0.0f);
                         (*uCurves[i])[j]->RenderDerivatives(1, GL_LINES);
-                        (*uCurves[i])[j]->RenderDerivatives(1, GL_POINTS);
-                    }
-
-                    if(showPatchDerivatives2)
-                    {
-                        glColor3f(0.0f, 0.5f, 0.0f);
-                        (*uCurves[i])[j]->RenderDerivatives(2, GL_LINES);
-                        (*uCurves[i])[j]->RenderDerivatives(2, GL_POINTS);
                     }
                 }
 
 
                 for(GLuint j = 0; j < 4; ++j){
-                    glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
-                    (*vCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                    if(showVIsometricCurves)
+                    {
+                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
+                        (*vCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                    }
 
-                    if(showPatchDerivatives1)
+                    if(showIsometricDerivatives)
                     {
                         glColor3f(0.0f, 0.5f, 0.0f);
                         (*vCurves[i])[j]->RenderDerivatives(1, GL_LINES);
-                        (*vCurves[i])[j]->RenderDerivatives(1, GL_POINTS);
                     }
-
-                    if(showPatchDerivatives2)
-                    {
-                        glColor3f(0.0f, 0.5f, 0.0f);
-                        (*vCurves[i])[j]->RenderDerivatives(2, GL_LINES);
-                        (*vCurves[i])[j]->RenderDerivatives(2, GL_POINTS);
-                    }
-
                 }
 
+                if(turnOnLight)
+                {
 
-                glEnable(GL_LIGHTING);
-                _dl->Enable();
-
+                    glEnable(GL_LIGHTING);
+                    _dl->Enable();
+                }
 
                 glPointSize(1.0);
-                glColor3f(1.0f, 1.0f, 1.0f);
+                glColor3f(colors[i][0], colors[i][1], colors[i][2]);
                 if(beforeInterpolation[i])
                 {
-                    MatFBRuby.Apply();
+                    materials[selectedMaterial[i]].Apply();
                     beforeInterpolation[i]->Render();
                 }
 
-                if(afterInterpolation[i])
+                glColor3f(0.0f, 1.0f, 0.0f);
+                if(afterInterpolation[i] && showInterpolatingSurface)
                 {
                     glEnable(GL_BLEND);
                     glDepthMask(GL_FALSE);
@@ -738,10 +940,20 @@ namespace cagd
                     glDisable(GL_BLEND);
                 }
 
-                _dl->Disable();
-                glDisable(GL_LIGHTING);
-
-                glPopMatrix();
+                if (turnOnLight)
+                {
+                    _dl->Disable();
+                    glDisable(GL_LIGHTING);
+                }
             }
-      }
+        glPopMatrix();
+    }
+
+    void GLWidget::sendPatchPointCoordinates()
+    {
+        DCoordinate3 sp = _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4);
+        emit sendPatchPointX(sp[0]);
+        emit sendPatchPointY(sp[1]);
+        emit sendPatchPointZ(sp[2]);
+    }
 }
