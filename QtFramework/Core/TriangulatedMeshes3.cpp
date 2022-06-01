@@ -509,3 +509,17 @@ TriangulatedMesh3::~TriangulatedMesh3()
 {
     DeleteVertexBufferObjects();
 }
+
+void TriangulatedMesh3::RenderNormals()
+{
+    glBegin(GL_LINES);
+    glColor3f(0.2f,0.2f,1.0f);
+        for(size_t i = 0; i < _vertex.size(); ++i)
+        {
+            glVertex3dv(&_vertex[i][0]);
+            DCoordinate3 sum = _vertex[i];
+            sum += 0.3*_normal[i];
+            glVertex3dv(&sum[0]);
+        }
+    glEnd();
+}

@@ -24,7 +24,7 @@ namespace cagd
         SecHypPatch3*      _neighbours[8];
         int                _connected_side[8];
 
-        TriangulatedMesh3*  _image;
+
 
         RowMatrix<GenericCurve3*>* _uip;
         RowMatrix<GenericCurve3*>* _vip;
@@ -47,6 +47,7 @@ namespace cagd
 
 
     public:
+        TriangulatedMesh3*  _image;
         SecHypPatch3(GLdouble u_alpha = PI / 2.0, GLdouble v_alpha = 1.0);
 
         // inherited pure virtual methods have to be redeclared and defined

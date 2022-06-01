@@ -511,6 +511,13 @@ namespace cagd
         update();
     }
 
+    void GLWidget::setArcAlpha(double value)
+    {
+        arcs[selectedArc].SetAlpha(value);
+        updateCurrentArcImage();
+        update();
+    }
+
     //the real arc part
     void GLWidget::createArcs()
     {
@@ -800,7 +807,7 @@ namespace cagd
 
     void GLWidget::setShowNormalVectors(int value)
     {
-        // TODO: find out what are normal vectors
+        showNormalVectors = value;
         update();
     }
 
@@ -875,6 +882,20 @@ namespace cagd
         update();
     }
 
+    void GLWidget::setPatchUalpha(double value)
+    {
+        patches[selectedPatch]->SetUAlpha(value);
+        updateCurrentPatchImage();
+        update();
+    }
+
+    void GLWidget::setPatchValpha(double value)
+    {
+        patches[selectedPatch]->SetVAlpha(value);
+        updateCurrentPatchImage();
+        update();
+    }
+
     void GLWidget::setSelectedPatchJoinType(int value)
     {
         selectedPatchJoinType = value;
@@ -883,6 +904,20 @@ namespace cagd
     void GLWidget::setSelectedJoiningPatch(int value)
     {
         selectedJoiningPatch = value;
+        update();
+    }
+
+    void GLWidget::setScalePatchDerivatives(double value)
+    {
+        scalePatchDerivatives = value;
+        for(int i = 0; i < numberOfPatches; i++)
+        {
+            for(GLuint  j = 0; j < uCurves[i]->GetColumnCount(); ++j)
+                (*uCurves[i])[j]->UpdateVertexBufferObjects(scalePatchDerivatives);
+
+            for(GLuint  j = 0; j < vCurves[i]->GetColumnCount(); ++j)
+                (*vCurves[i])[j]->UpdateVertexBufferObjects(scalePatchDerivatives);
+        }
         update();
     }
 
@@ -1107,10 +1142,16 @@ namespace cagd
                     glDisable(GL_LIGHTING);
                 }
 
+
                 if (turnOnLight)
                 {
                     disableSelectedLight();
                     glDisable(GL_LIGHTING);
+                }
+
+                if (showNormalVectors)
+                {
+                    beforeInterpolation[i]->RenderNormals();
                 }
             }
         glPopMatrix();

@@ -66,6 +66,7 @@ namespace cagd
         connect(_side_widget->doubleSpinBoxArcX, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointX(double)));
         connect(_side_widget->doubleSpinBoxArcY, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointY(double)));
         connect(_side_widget->doubleSpinBoxArcZ, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointZ(double)));
+        connect(_side_widget->doubleSpinBoxArcAlpha, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcAlpha(double)));
 
         //arc extend, merge, join
         connect(_side_widget->pushButtonExtendLeftArc, SIGNAL(clicked()), _gl_widget, SLOT(extendArcLeft()));
@@ -104,6 +105,10 @@ namespace cagd
         connect(_side_widget->doubleSpinBoxPatchX, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setPatchPointX(double)));
         connect(_side_widget->doubleSpinBoxPatchY, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setPatchPointY(double)));
         connect(_side_widget->doubleSpinBoxPatchZ, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setPatchPointZ(double)));
+        connect(_side_widget->doubleSpinBoxPatchUalpha, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setPatchUalpha(double)));
+        connect(_side_widget->doubleSpinBoxPatchValpha, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setPatchValpha(double)));
+        connect(_side_widget->doubleSpinBoxScalePatchDerivatives, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setScalePatchDerivatives(double)));
+
 
         //GLwidget to mainWindow
         connect(_gl_widget, SIGNAL(sendPatchPointX(double)), this, SLOT(setPatchPointX(double)));

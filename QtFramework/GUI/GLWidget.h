@@ -62,7 +62,7 @@ namespace cagd
         void createMaterials();
 
         // your other declarations
-        int arcOrPatch = 1;
+        int arcOrPatch = 0;
         RowMatrix<Color4> colors;
 
         //everything with arcs
@@ -169,6 +169,7 @@ namespace cagd
         bool updateSelectedJoiningArcImage();
         void setSelectedArcJoinType(int value);
         void setSelectedJoiningArc(int value);
+        void setArcAlpha(double value);
 
         //arc join merge extend
         void extendArcLeft();
@@ -198,6 +199,9 @@ namespace cagd
         void updateCurrentPatchImage();
         void setSelectedPatchJoinType(int value);
         void setSelectedJoiningPatch(int value);
+        void setPatchUalpha(double);
+        void setPatchValpha(double);
+        void setScalePatchDerivatives(double);
 
         //extend patches
         void extendPatchWest();

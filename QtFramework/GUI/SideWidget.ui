@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>373</width>
-    <height>1143</height>
+    <height>1329</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -221,16 +221,22 @@
    </widget>
   </widget>
   <widget class="QToolBox" name="toolBox">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>290</y>
+     <y>280</y>
      <width>331</width>
-     <height>721</height>
+     <height>701</height>
     </rect>
    </property>
+   <property name="inputMethodHints">
+    <set>Qt::ImhNone</set>
+   </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <property name="geometry">
@@ -238,7 +244,7 @@
       <x>0</x>
       <y>0</y>
       <width>331</width>
-      <height>661</height>
+      <height>631</height>
      </rect>
     </property>
     <attribute name="label">
@@ -564,6 +570,29 @@
         </property>
        </widget>
       </item>
+      <item row="12" column="0">
+       <widget class="QLabel" name="label_26">
+        <property name="text">
+         <string>alpha</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxArcAlpha">
+        <property name="minimum">
+         <double>0.050000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>7.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.050000000000000</double>
+        </property>
+        <property name="value">
+         <double>1.570000000000000</double>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </widget>
@@ -573,7 +602,7 @@
       <x>0</x>
       <y>0</y>
       <width>331</width>
-      <height>661</height>
+      <height>631</height>
      </rect>
     </property>
     <attribute name="label">
@@ -585,7 +614,7 @@
        <x>10</x>
        <y>10</y>
        <width>317</width>
-       <height>481</height>
+       <height>501</height>
       </rect>
      </property>
      <layout class="QFormLayout" name="formLayout_3">
@@ -1061,15 +1090,61 @@
         </property>
        </widget>
       </item>
+      <item row="17" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchUalpha">
+        <property name="minimum">
+         <double>0.050000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>7.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.050000000000000</double>
+        </property>
+        <property name="value">
+         <double>1.570000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="18" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchValpha">
+        <property name="minimum">
+         <double>0.050000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>7.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.050000000000000</double>
+        </property>
+        <property name="value">
+         <double>1.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="17" column="0">
+       <widget class="QLabel" name="label_27">
+        <property name="text">
+         <string>Ualpha</string>
+        </property>
+       </widget>
+      </item>
+      <item row="18" column="0">
+       <widget class="QLabel" name="label_28">
+        <property name="text">
+         <string>Valpha</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>500</y>
+       <y>520</y>
        <width>311</width>
-       <height>121</height>
+       <height>91</height>
       </rect>
      </property>
      <property name="title">
@@ -1081,7 +1156,7 @@
         <x>10</x>
         <y>30</y>
         <width>291</width>
-        <height>81</height>
+        <height>51</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout_4">

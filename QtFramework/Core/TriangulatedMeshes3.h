@@ -39,12 +39,12 @@ namespace cagd
         DCoordinate3                 _rightmost_vertex;
 
         // geometry
-        std::vector<DCoordinate3>    _vertex;
-        std::vector<DCoordinate3>    _normal;
         std::vector<TCoordinate4>    _tex;
         std::vector<TriangularFace>  _face;
 
     public:
+        std::vector<DCoordinate3>    _vertex;
+        std::vector<DCoordinate3>    _normal;
         // special and default constructor
         TriangulatedMesh3(GLuint vertex_count = 0, GLuint face_count = 0, GLenum usage_flag = GL_STATIC_DRAW);
 
@@ -86,5 +86,6 @@ namespace cagd
 
         // destructor
         virtual ~TriangulatedMesh3();
+        void RenderNormals();
     };
 }
