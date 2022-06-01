@@ -230,7 +230,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <property name="geometry">
@@ -238,7 +238,7 @@
       <x>0</x>
       <y>0</y>
       <width>331</width>
-      <height>651</height>
+      <height>661</height>
      </rect>
     </property>
     <attribute name="label">
@@ -249,8 +249,8 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>291</width>
-       <height>345</height>
+       <width>311</width>
+       <height>461</height>
       </rect>
      </property>
      <layout class="QFormLayout" name="formLayout_2">
@@ -536,6 +536,34 @@
         </property>
        </widget>
       </item>
+      <item row="11" column="0">
+       <widget class="QPushButton" name="pushButtonExtendLeftArc">
+        <property name="text">
+         <string>extend left</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="1">
+       <widget class="QPushButton" name="pushButtonExtendRightArc">
+        <property name="text">
+         <string>extend right</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QPushButton" name="pushButtonMergeArcs">
+        <property name="text">
+         <string>merge</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QPushButton" name="pushButtonJoinArcs">
+        <property name="text">
+         <string>join</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </widget>
@@ -545,7 +573,7 @@
       <x>0</x>
       <y>0</y>
       <width>331</width>
-      <height>651</height>
+      <height>661</height>
      </rect>
     </property>
     <attribute name="label">
@@ -962,17 +990,17 @@
        <widget class="QComboBox" name="comboBoxSelectedPatchJoinType">
         <item>
          <property name="text">
-          <string>north</string>
+          <string>south-north</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>west</string>
+          <string>west-west</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>east</string>
+          <string>west-east</string>
          </property>
         </item>
        </widget>
@@ -988,6 +1016,48 @@
        <widget class="QLabel" name="label_25">
         <property name="text">
          <string>join type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="14" column="0">
+       <widget class="QPushButton" name="pushButtonMergePatches">
+        <property name="text">
+         <string>merge</string>
+        </property>
+       </widget>
+      </item>
+      <item row="14" column="1">
+       <widget class="QPushButton" name="pushButtonJoinPatches">
+        <property name="text">
+         <string>join</string>
+        </property>
+       </widget>
+      </item>
+      <item row="15" column="0">
+       <widget class="QPushButton" name="pushButtonExtendWest">
+        <property name="text">
+         <string>extend west</string>
+        </property>
+       </widget>
+      </item>
+      <item row="15" column="1">
+       <widget class="QPushButton" name="pushButtonExtendEast">
+        <property name="text">
+         <string>extend east</string>
+        </property>
+       </widget>
+      </item>
+      <item row="16" column="0">
+       <widget class="QPushButton" name="pushButtonExtendNorth">
+        <property name="text">
+         <string>extend north</string>
+        </property>
+       </widget>
+      </item>
+      <item row="16" column="1">
+       <widget class="QPushButton" name="pushButtonExtendSouth">
+        <property name="text">
+         <string>extend south</string>
         </property>
        </widget>
       </item>

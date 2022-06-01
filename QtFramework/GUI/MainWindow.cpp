@@ -61,10 +61,17 @@ namespace cagd
         connect(_side_widget->comboBoxSelectedArc, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedArc(int)));
         connect(_side_widget->comboBoxSelectedArcPoint, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedArcPoint(int)));
         connect(_side_widget->doubleSpinBoxScaleArcDerivatives, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setScaleArcDerivatives(double)));
+        connect(_side_widget->comboBoxSelectedArcJoinType, SIGNAL(currentIndexChanged(int)), _gl_widget, SLOT(setSelectedArcJoinType(int)));
 
         connect(_side_widget->doubleSpinBoxArcX, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointX(double)));
         connect(_side_widget->doubleSpinBoxArcY, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointY(double)));
-        connect(_side_widget->doubleSpinBoxArcZ, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointZ(double)));        
+        connect(_side_widget->doubleSpinBoxArcZ, SIGNAL(valueChanged(double)), _gl_widget, SLOT(setArcPointZ(double)));
+
+        //arc extend, merge, join
+        connect(_side_widget->pushButtonExtendLeftArc, SIGNAL(clicked()), _gl_widget, SLOT(extendArcLeft()));
+        connect(_side_widget->pushButtonExtendRightArc, SIGNAL(clicked()), _gl_widget, SLOT(extendArcRight()));
+        connect(_side_widget->pushButtonMergeArcs, SIGNAL(clicked()), _gl_widget, SLOT(mergeArcs()));
+        connect(_side_widget->pushButtonJoinArcs, SIGNAL(clicked()), _gl_widget, SLOT(joinArcs()));
 
         //GLwidget to mainWindow
         connect(_gl_widget, SIGNAL(sendArcPointX(double)), this, SLOT(setArcPointX(double)));
@@ -103,6 +110,15 @@ namespace cagd
         connect(_gl_widget, SIGNAL(sendPatchPointY(double)), this, SLOT(setPatchPointY(double)));
         connect(_gl_widget, SIGNAL(sendPatchPointZ(double)), this, SLOT(setPatchPointZ(double)));
 
+        //extend
+        connect(_side_widget->pushButtonExtendWest, SIGNAL(clicked()), _gl_widget, SLOT(extendPatchWest()));
+        connect(_side_widget->pushButtonExtendEast, SIGNAL(clicked()), _gl_widget, SLOT(extendPatchEast()));
+        connect(_side_widget->pushButtonExtendNorth, SIGNAL(clicked()), _gl_widget, SLOT(extendPatchNorth()));
+        connect(_side_widget->pushButtonExtendSouth, SIGNAL(clicked()), _gl_widget, SLOT(extendPatchSouth()));
+
+        //join
+        connect(_side_widget->pushButtonJoinPatches, SIGNAL(clicked()), _gl_widget, SLOT(joinPatches()));
+        connect(_side_widget->pushButtonMergePatches, SIGNAL(clicked()), _gl_widget, SLOT(mergePatches()));
     }
 
     //--------------------------------

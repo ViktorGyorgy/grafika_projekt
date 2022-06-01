@@ -26,9 +26,11 @@ namespace cagd
         GLdouble f2_2(GLdouble t) const;
         GLdouble f3_2(GLdouble t) const;
 
+        GenericCurve3* _image;
+
     public:
         // Variables for the interaction with curves
-        SecondOrderHyperbolicArc *left, *rigth;
+        SecondOrderHyperbolicArc *left, *right;
         GLuint image_index;
 
         // special/default constructor
@@ -39,14 +41,39 @@ namespace cagd
         GLboolean CalculateDerivatives(GLuint max_order_of_derivatives, GLdouble u, Derivatives& d) const;
 
         // project-dependent setters/getters, e.g.,
-
+        void setImage(GenericCurve3* _image);
+        GenericCurve3* getImage();
 
         // if exists, you will need to set/get the shape/tension parameter of the basis/blending functions
         GLboolean SetAlpha(GLdouble alpha);
         GLdouble GetAlpha() const;
 
-        GLboolean SetPoint(GLuint row, GLuint col, GLdouble x, GLdouble y, GLdouble z);
-        GLboolean SetPoint(GLuint row, GLuint col, const DCoordinate3 &position);
+        DCoordinate3& getPoint(GLuint index);
+        void setPoint(GLuint index, GLdouble x, GLdouble y, GLdouble z);
+        void setPoint(GLuint index, const DCoordinate3 &position);
+
+
+        //Functions for manipulating arcs
+        void translateX(GLdouble value);
+        void translateY(GLdouble value);
+        void translateZ(GLdouble value);
+
+        SecondOrderHyperbolicArc* extendLeft(); //Continue
+        SecondOrderHyperbolicArc* extendRight(); //Continue
+
+        SecondOrderHyperbolicArc* joinLeftLeft(SecondOrderHyperbolicArc *arc);
+        SecondOrderHyperbolicArc* joinLeftRight(SecondOrderHyperbolicArc *arc);
+        SecondOrderHyperbolicArc* joinRightLeft(SecondOrderHyperbolicArc *arc);
+        SecondOrderHyperbolicArc* joinRightRight(SecondOrderHyperbolicArc *arc);
+
+        void mergeLeftLeft(SecondOrderHyperbolicArc *arc);
+        void mergeLeftRight(SecondOrderHyperbolicArc *arc);
+        void mergeRightLeft(SecondOrderHyperbolicArc *arc);
+        void mergeRightRight(SecondOrderHyperbolicArc *arc);
+
+        SecondOrderHyperbolicArc* preserveContinuity(GLuint index,int axis,GLdouble value);
+
+        void PreserveAlpha(double alpha);
     };
 }
 

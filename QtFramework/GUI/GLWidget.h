@@ -14,6 +14,7 @@
 #include "../Core/ShaderPrograms.h"
 #include "SecondOrderHyperbolic/SecondOrderHyperbolicArc.h"
 #include "SecondOrderHyperbolic/SecondOrderHyperbolicPatch.h"
+#include <vector>
 
 namespace cagd
 {
@@ -40,7 +41,8 @@ namespace cagd
         DirectionalLight * _dl;
         PointLight * _pl;
         Spotlight * _sl;
-        int lightIndex = -1;
+        int turnOnLight = 0;
+        int selectedLight = 0;
 
         bool _createDl();
         bool _createPl();
@@ -48,6 +50,9 @@ namespace cagd
         void _destroyDl();
         void _destroyPl();
         void _destroySl();
+
+        void enableSelectedLight();
+        void disableSelectedLight();
 
         //materials
 
@@ -57,7 +62,7 @@ namespace cagd
         void createMaterials();
 
         // your other declarations
-        int arcOrPatch = 0;
+        int arcOrPatch = 1;
         RowMatrix<Color4> colors;
 
         //everything with arcs
@@ -74,6 +79,9 @@ namespace cagd
         int selectedArcJoinType = 0;
         int selectedJoiningArc = 0;
 
+        vector<SecondOrderHyperbolicArc> otherArcs;
+        vector<GenericCurve3*> otherArcImages;
+
         //patches
         int numberOfPatches = 9;
 
@@ -86,7 +94,7 @@ namespace cagd
         int showIsometricDerivatives = 0;
         int showPatchDerivatives = 0;
         int showPatchPartialDerivatives = 0;
-        int turnOnLight = 0;
+
 
         float scalePatchDerivatives = 1;
         RowMatrix<SecHypPatch3*> patches;
@@ -96,11 +104,13 @@ namespace cagd
         RowMatrix<RowMatrix<GenericCurve3*> *> uCurves, vCurves;
         RowMatrix<Matrix<DCoordinate3>> _data_points_to_interpolate;
 
+        vector<SecHypPatch3> otherPatches;
+
         int selectedPatch = 0;
         int selectedPatchPoint = 0;
         int selectedPatchPointI = 0;
         int selectedPatchPointJ = 0;
-        int selectedLight = 0;
+
         int selectedPatchJoinType = 0;
         int selectedJoiningPatch = 0;
 
@@ -119,11 +129,15 @@ namespace cagd
         void createArcs();
         void updateArcs();
         void renderArcs();
+        void renderOtherArcs();
         void sendArcPointCoordinates();
+
+
 
         //patches
         void createPatches();
         void renderPatches();
+        void renderOtherPatches();
         void sendPatchPointCoordinates();
 
     public slots:
@@ -152,8 +166,15 @@ namespace cagd
         void setArcPointY(double value);
         void setArcPointZ(double value);
         bool updateCurrentArcImage();
+        bool updateSelectedJoiningArcImage();
         void setSelectedArcJoinType(int value);
         void setSelectedJoiningArc(int value);
+
+        //arc join merge extend
+        void extendArcLeft();
+        void extendArcRight();
+        void mergeArcs();
+        void joinArcs();
 
 
         //patches
@@ -177,6 +198,15 @@ namespace cagd
         void updateCurrentPatchImage();
         void setSelectedPatchJoinType(int value);
         void setSelectedJoiningPatch(int value);
+
+        //extend patches
+        void extendPatchWest();
+        void extendPatchEast();
+        void extendPatchNorth();
+        void extendPatchSouth();
+
+        void joinPatches();
+        void mergePatches();
 
    signals:
         void sendArcPointX(double);
