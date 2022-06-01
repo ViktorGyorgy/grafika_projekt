@@ -992,10 +992,10 @@ namespace cagd
             for (GLuint row = 0; row < 4; ++row)
                 for (GLuint column = 0; column < 4; ++column)
                     patches[i]->GetData(row, column, _data_points_to_interpolate[i](row, column));
-
-            if (patches[i]->UpdateDataForInterpolation(uKnotVectors[i], vKnotVectors[i], _data_points_to_interpolate[i]))
+            SecHypPatch3 p(*patches[i]);
+            if (p.UpdateDataForInterpolation(uKnotVectors[i], vKnotVectors[i], _data_points_to_interpolate[i]))
             {
-                afterInterpolation[i] = patches[i]->GenerateImage(30, 30, GL_STATIC_DRAW);
+                afterInterpolation[i] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
 
                 if(afterInterpolation[i])
                     afterInterpolation[i]->UpdateVertexBufferObjects();
@@ -1029,9 +1029,10 @@ namespace cagd
             beforeInterpolation[selectedPatch]->UpdateVertexBufferObjects();
         }
 
-        if (patches[selectedPatch]->UpdateDataForInterpolation(uKnotVectors[selectedPatch], vKnotVectors[selectedPatch], _data_points_to_interpolate[selectedPatch]))
+        SecHypPatch3 p(*patches[selectedPatch]);
+        if (p.UpdateDataForInterpolation(uKnotVectors[selectedPatch], vKnotVectors[selectedPatch], _data_points_to_interpolate[selectedPatch]))
         {
-            afterInterpolation[selectedPatch] = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
+            afterInterpolation[selectedPatch] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
 
             if(afterInterpolation[selectedPatch])
                 afterInterpolation[selectedPatch]->UpdateVertexBufferObjects();
@@ -1062,6 +1063,40 @@ namespace cagd
             for(int i = 0; i < numberOfPatches; i++)
             {
                 glDisable(GL_LIGHTING);
+
+                DCoordinate3 sp = _data_points_to_interpolate[i](0, 1);
+                glPointSize(10.0f);
+                glColor3f(0.0f, 1.0f, 0.0f);
+                glBegin (GL_POINTS);
+                glVertex3f(sp[0], sp[1], sp[2]);
+                glEnd ();
+                glFlush();
+
+                sp = _data_points_to_interpolate[i](3, 1);
+                glPointSize(10.0f);
+                glColor3f(1.0f, 0.0f, 0.0f);
+                glBegin (GL_POINTS);
+                glVertex3f(sp[0], sp[1], sp[2]);
+                glEnd ();
+                glFlush();
+
+                sp = _data_points_to_interpolate[i](1, 0);
+                glPointSize(10.0f);
+                glColor3f(1.0f, 1.0f, 0.0f);
+                glBegin (GL_POINTS);
+                glVertex3f(sp[0], sp[1], sp[2]);
+                glEnd ();
+                glFlush();
+
+                sp = _data_points_to_interpolate[i](1, 3);
+                glPointSize(10.0f);
+                glColor3f(1.0f, 1.0f, 1.0f);
+                glBegin (GL_POINTS);
+                glVertex3f(sp[0], sp[1], sp[2]);
+                glEnd ();
+                glFlush();
+
+
 
                 if (showPatchControlPolygon)
                 {
@@ -1258,7 +1293,8 @@ namespace cagd
     //extends
     void GLWidget::extendPatchWest(){
         SecHypPatch3 p;
-        patches[selectedPatch]->ExtendWest(p);
+        patches[selectedPatch]->ExtendPatch(6, p);
+        p.UpdateVertexBufferObjectsOfData();
         p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));
         otherPatches.push_back(p);
         update();
@@ -1266,7 +1302,7 @@ namespace cagd
 
     void GLWidget::extendPatchEast(){
         SecHypPatch3 p;
-        patches[selectedPatch]->ExtendEast(p);
+        patches[selectedPatch]->ExtendPatch(2, p);
         p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));
         otherPatches.push_back(p);
         update();
@@ -1274,7 +1310,7 @@ namespace cagd
 
     void GLWidget::extendPatchNorth(){
         SecHypPatch3 p;
-        patches[selectedPatch]->ExtendNorth(p);
+        patches[selectedPatch]->ExtendPatch(0, p);
         p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));
         otherPatches.push_back(p);
         update();
@@ -1282,7 +1318,7 @@ namespace cagd
 
     void GLWidget::extendPatchSouth(){
         SecHypPatch3 p;
-        patches[selectedPatch]->ExtendSouth(p);
+        patches[selectedPatch]->ExtendPatch(4, p);
         p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));
         otherPatches.push_back(p);
         update();
@@ -1292,13 +1328,13 @@ namespace cagd
         if(selectedPatch == selectedJoiningPatch) return;
         switch(selectedPatchJoinType){
             case 0:
-                patches[selectedPatch]->MergeNorthEast(*patches[selectedJoiningPatch]);
+                patches[selectedPatch]->MergePatch(*patches[selectedJoiningPatch], 0, 4);
                 break;
             case 1:
-                patches[selectedPatch]->MergeWestWest(*patches[selectedJoiningPatch]);
+                patches[selectedPatch]->MergePatch(*patches[selectedJoiningPatch], 2, 6);
                 break;
             case 2:
-                patches[selectedPatch]->MergeSouthSouth(*patches[selectedJoiningPatch]);
+                patches[selectedPatch]->MergePatch(*patches[selectedJoiningPatch], 2, 2);
                 break;
         }
 
@@ -1315,13 +1351,13 @@ namespace cagd
         SecHypPatch3 p;
         switch(selectedPatchJoinType){
             case 0:
-                patches[selectedPatch]->JoinNorthEast(*patches[selectedJoiningPatch], p);
+                patches[selectedPatch]->JoinPatch(*patches[selectedJoiningPatch], 0, 4, p);
                 break;
             case 1:
-                patches[selectedPatch]->JoinWestWest(*patches[selectedJoiningPatch], p);
+                patches[selectedPatch]->JoinPatch(*patches[selectedJoiningPatch], 2, 6, p);
                 break;
             case 2:
-                patches[selectedPatch]->JoinSouthSouth(*patches[selectedJoiningPatch], p);
+                patches[selectedPatch]->JoinPatch(*patches[selectedJoiningPatch], 2, 2, p);
                 break;
         }
         p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));

@@ -227,7 +227,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>280</y>
+     <y>290</y>
      <width>331</width>
      <height>701</height>
     </rect>
@@ -236,7 +236,7 @@
     <set>Qt::ImhNone</set>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <property name="geometry">
@@ -244,7 +244,7 @@
       <x>0</x>
       <y>0</y>
       <width>331</width>
-      <height>631</height>
+      <height>641</height>
      </rect>
     </property>
     <attribute name="label">
@@ -602,7 +602,7 @@
       <x>0</x>
       <y>0</y>
       <width>331</width>
-      <height>631</height>
+      <height>641</height>
      </rect>
     </property>
     <attribute name="label">
@@ -614,7 +614,7 @@
        <x>10</x>
        <y>10</y>
        <width>317</width>
-       <height>501</height>
+       <height>526</height>
       </rect>
      </property>
      <layout class="QFormLayout" name="formLayout_3">
@@ -1019,17 +1019,17 @@
        <widget class="QComboBox" name="comboBoxSelectedPatchJoinType">
         <item>
          <property name="text">
-          <string>south-north</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>west-west</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
           <string>west-east</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>north-south</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>north-north</string>
          </property>
         </item>
        </widget>
@@ -1065,28 +1065,28 @@
       <item row="15" column="0">
        <widget class="QPushButton" name="pushButtonExtendWest">
         <property name="text">
-         <string>extend west</string>
+         <string>extend south</string>
         </property>
        </widget>
       </item>
       <item row="15" column="1">
        <widget class="QPushButton" name="pushButtonExtendEast">
         <property name="text">
-         <string>extend east</string>
+         <string>extend north</string>
         </property>
        </widget>
       </item>
       <item row="16" column="0">
        <widget class="QPushButton" name="pushButtonExtendNorth">
         <property name="text">
-         <string>extend north</string>
+         <string>extend west</string>
         </property>
        </widget>
       </item>
       <item row="16" column="1">
        <widget class="QPushButton" name="pushButtonExtendSouth">
         <property name="text">
-         <string>extend south</string>
+         <string>extend east</string>
         </property>
        </widget>
       </item>
@@ -1142,7 +1142,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>520</y>
+       <y>540</y>
        <width>311</width>
        <height>91</height>
       </rect>

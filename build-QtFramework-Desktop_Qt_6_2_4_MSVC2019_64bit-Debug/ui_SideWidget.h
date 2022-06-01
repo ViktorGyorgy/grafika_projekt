@@ -72,6 +72,8 @@ public:
     QPushButton *pushButtonExtendRightArc;
     QPushButton *pushButtonMergeArcs;
     QPushButton *pushButtonJoinArcs;
+    QLabel *label_26;
+    QDoubleSpinBox *doubleSpinBoxArcAlpha;
     QWidget *page_2;
     QWidget *formLayoutWidget_2;
     QFormLayout *formLayout_3;
@@ -108,6 +110,10 @@ public:
     QPushButton *pushButtonExtendEast;
     QPushButton *pushButtonExtendNorth;
     QPushButton *pushButtonExtendSouth;
+    QDoubleSpinBox *doubleSpinBoxPatchUalpha;
+    QDoubleSpinBox *doubleSpinBoxPatchValpha;
+    QLabel *label_27;
+    QLabel *label_28;
     QGroupBox *groupBox_2;
     QWidget *formLayoutWidget_3;
     QFormLayout *formLayout_4;
@@ -119,7 +125,7 @@ public:
     {
         if (SideWidget->objectName().isEmpty())
             SideWidget->setObjectName(QString::fromUtf8("SideWidget"));
-        SideWidget->resize(373, 1143);
+        SideWidget->resize(373, 1329);
         QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -230,10 +236,12 @@ public:
 
         toolBox = new QToolBox(SideWidget);
         toolBox->setObjectName(QString::fromUtf8("toolBox"));
-        toolBox->setGeometry(QRect(10, 290, 331, 721));
+        toolBox->setEnabled(true);
+        toolBox->setGeometry(QRect(10, 290, 331, 701));
+        toolBox->setInputMethodHints(Qt::ImhNone);
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
-        page->setGeometry(QRect(0, 0, 331, 661));
+        page->setGeometry(QRect(0, 0, 331, 641));
         formLayoutWidget = new QWidget(page);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
         formLayoutWidget->setGeometry(QRect(10, 10, 311, 461));
@@ -398,13 +406,27 @@ public:
 
         formLayout_2->setWidget(10, QFormLayout::FieldRole, pushButtonJoinArcs);
 
+        label_26 = new QLabel(formLayoutWidget);
+        label_26->setObjectName(QString::fromUtf8("label_26"));
+
+        formLayout_2->setWidget(12, QFormLayout::LabelRole, label_26);
+
+        doubleSpinBoxArcAlpha = new QDoubleSpinBox(formLayoutWidget);
+        doubleSpinBoxArcAlpha->setObjectName(QString::fromUtf8("doubleSpinBoxArcAlpha"));
+        doubleSpinBoxArcAlpha->setMinimum(0.050000000000000);
+        doubleSpinBoxArcAlpha->setMaximum(7.000000000000000);
+        doubleSpinBoxArcAlpha->setSingleStep(0.050000000000000);
+        doubleSpinBoxArcAlpha->setValue(1.570000000000000);
+
+        formLayout_2->setWidget(12, QFormLayout::FieldRole, doubleSpinBoxArcAlpha);
+
         toolBox->addItem(page, QString::fromUtf8("Arcs"));
         page_2 = new QWidget();
         page_2->setObjectName(QString::fromUtf8("page_2"));
-        page_2->setGeometry(QRect(0, 0, 331, 661));
+        page_2->setGeometry(QRect(0, 0, 331, 641));
         formLayoutWidget_2 = new QWidget(page_2);
         formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
-        formLayoutWidget_2->setGeometry(QRect(10, 10, 317, 481));
+        formLayoutWidget_2->setGeometry(QRect(10, 10, 317, 526));
         formLayout_3 = new QFormLayout(formLayoutWidget_2);
         formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
         formLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -632,12 +654,40 @@ public:
 
         formLayout_3->setWidget(16, QFormLayout::FieldRole, pushButtonExtendSouth);
 
+        doubleSpinBoxPatchUalpha = new QDoubleSpinBox(formLayoutWidget_2);
+        doubleSpinBoxPatchUalpha->setObjectName(QString::fromUtf8("doubleSpinBoxPatchUalpha"));
+        doubleSpinBoxPatchUalpha->setMinimum(0.050000000000000);
+        doubleSpinBoxPatchUalpha->setMaximum(7.000000000000000);
+        doubleSpinBoxPatchUalpha->setSingleStep(0.050000000000000);
+        doubleSpinBoxPatchUalpha->setValue(1.570000000000000);
+
+        formLayout_3->setWidget(17, QFormLayout::FieldRole, doubleSpinBoxPatchUalpha);
+
+        doubleSpinBoxPatchValpha = new QDoubleSpinBox(formLayoutWidget_2);
+        doubleSpinBoxPatchValpha->setObjectName(QString::fromUtf8("doubleSpinBoxPatchValpha"));
+        doubleSpinBoxPatchValpha->setMinimum(0.050000000000000);
+        doubleSpinBoxPatchValpha->setMaximum(7.000000000000000);
+        doubleSpinBoxPatchValpha->setSingleStep(0.050000000000000);
+        doubleSpinBoxPatchValpha->setValue(1.000000000000000);
+
+        formLayout_3->setWidget(18, QFormLayout::FieldRole, doubleSpinBoxPatchValpha);
+
+        label_27 = new QLabel(formLayoutWidget_2);
+        label_27->setObjectName(QString::fromUtf8("label_27"));
+
+        formLayout_3->setWidget(17, QFormLayout::LabelRole, label_27);
+
+        label_28 = new QLabel(formLayoutWidget_2);
+        label_28->setObjectName(QString::fromUtf8("label_28"));
+
+        formLayout_3->setWidget(18, QFormLayout::LabelRole, label_28);
+
         groupBox_2 = new QGroupBox(page_2);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(10, 500, 311, 121));
+        groupBox_2->setGeometry(QRect(10, 540, 311, 91));
         formLayoutWidget_3 = new QWidget(groupBox_2);
         formLayoutWidget_3->setObjectName(QString::fromUtf8("formLayoutWidget_3"));
-        formLayoutWidget_3->setGeometry(QRect(10, 30, 291, 81));
+        formLayoutWidget_3->setGeometry(QRect(10, 30, 291, 51));
         formLayout_4 = new QFormLayout(formLayoutWidget_3);
         formLayout_4->setObjectName(QString::fromUtf8("formLayout_4"));
         formLayout_4->setContentsMargins(0, 0, 0, 0);
@@ -735,6 +785,7 @@ public:
         pushButtonExtendRightArc->setText(QCoreApplication::translate("SideWidget", "extend right", nullptr));
         pushButtonMergeArcs->setText(QCoreApplication::translate("SideWidget", "merge", nullptr));
         pushButtonJoinArcs->setText(QCoreApplication::translate("SideWidget", "join", nullptr));
+        label_26->setText(QCoreApplication::translate("SideWidget", "alpha", nullptr));
         toolBox->setItemText(toolBox->indexOf(page), QCoreApplication::translate("SideWidget", "Arcs", nullptr));
         label_14->setText(QCoreApplication::translate("SideWidget", "selected patch", nullptr));
         comboBoxSelectedPatch->setItemText(0, QCoreApplication::translate("SideWidget", "white", nullptr));
@@ -800,18 +851,20 @@ public:
         comboBoxSelectedJoiningPatch->setItemText(7, QCoreApplication::translate("SideWidget", "yellow", nullptr));
         comboBoxSelectedJoiningPatch->setItemText(8, QCoreApplication::translate("SideWidget", "brown", nullptr));
 
-        comboBoxSelectedPatchJoinType->setItemText(0, QCoreApplication::translate("SideWidget", "south-north", nullptr));
-        comboBoxSelectedPatchJoinType->setItemText(1, QCoreApplication::translate("SideWidget", "west-west", nullptr));
-        comboBoxSelectedPatchJoinType->setItemText(2, QCoreApplication::translate("SideWidget", "west-east", nullptr));
+        comboBoxSelectedPatchJoinType->setItemText(0, QCoreApplication::translate("SideWidget", "west-east", nullptr));
+        comboBoxSelectedPatchJoinType->setItemText(1, QCoreApplication::translate("SideWidget", "north-south", nullptr));
+        comboBoxSelectedPatchJoinType->setItemText(2, QCoreApplication::translate("SideWidget", "north-north", nullptr));
 
         label_24->setText(QCoreApplication::translate("SideWidget", "join with", nullptr));
         label_25->setText(QCoreApplication::translate("SideWidget", "join type", nullptr));
         pushButtonMergePatches->setText(QCoreApplication::translate("SideWidget", "merge", nullptr));
         pushButtonJoinPatches->setText(QCoreApplication::translate("SideWidget", "join", nullptr));
-        pushButtonExtendWest->setText(QCoreApplication::translate("SideWidget", "extend west", nullptr));
-        pushButtonExtendEast->setText(QCoreApplication::translate("SideWidget", "extend east", nullptr));
-        pushButtonExtendNorth->setText(QCoreApplication::translate("SideWidget", "extend north", nullptr));
-        pushButtonExtendSouth->setText(QCoreApplication::translate("SideWidget", "extend south", nullptr));
+        pushButtonExtendWest->setText(QCoreApplication::translate("SideWidget", "extend south", nullptr));
+        pushButtonExtendEast->setText(QCoreApplication::translate("SideWidget", "extend north", nullptr));
+        pushButtonExtendNorth->setText(QCoreApplication::translate("SideWidget", "extend west", nullptr));
+        pushButtonExtendSouth->setText(QCoreApplication::translate("SideWidget", "extend east", nullptr));
+        label_27->setText(QCoreApplication::translate("SideWidget", "Ualpha", nullptr));
+        label_28->setText(QCoreApplication::translate("SideWidget", "Valpha", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("SideWidget", "Isoparametric cuves", nullptr));
         checkBoxShowIsoparametricCurvesU->setText(QCoreApplication::translate("SideWidget", "show U", nullptr));
         checkBoxShowIsoparametricCurvesV->setText(QCoreApplication::translate("SideWidget", "show V", nullptr));
