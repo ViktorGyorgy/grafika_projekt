@@ -513,8 +513,11 @@ namespace cagd
 
     void GLWidget::setArcAlpha(double value)
     {
-        arcs[selectedArc].SetAlpha(value);
-        updateCurrentArcImage();
+        for(int i = 0; i < numberOfArcs; i++)
+        {
+            arcs[i].SetAlpha(value);
+            updateArcs();
+        }
         update();
     }
 
@@ -616,7 +619,7 @@ namespace cagd
 
         DCoordinate3 sp = arcs[selectedArc][selectedArcPoint];
         glPointSize(10.0f);
-        glColor3f(1.0f, 0.0f, 0.0f);
+        glColor3f(0.0f, 1.0f, 0.0f);
         glBegin (GL_POINTS);
         glVertex3f(sp[0], sp[1], sp[2]);
         glEnd ();
@@ -884,17 +887,14 @@ namespace cagd
 
     void GLWidget::setPatchUalpha(double value)
     {
-        patches[selectedPatch]->SetUAlpha(value);
-        updateCurrentPatchImage();
+        for(int i = 0; i < numberOfPatches; i++){
+            patches[i]->SetUAlpha(value);
+            patches[i]->SetVAlpha(value);
+        }
+        updatePatches();
         update();
     }
 
-    void GLWidget::setPatchValpha(double value)
-    {
-        patches[selectedPatch]->SetVAlpha(value);
-        updateCurrentPatchImage();
-        update();
-    }
 
     void GLWidget::setSelectedPatchJoinType(int value)
     {
@@ -1011,6 +1011,46 @@ namespace cagd
             for(GLuint  j = 0; j < vCurves[i]->GetColumnCount(); ++j)
                 (*vCurves[i])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
         }
+    }
+
+    void GLWidget::updatePatches()
+    {
+        for(int k = 0; k < patches.GetColumnCount(); k++)
+        {
+            for (int i = 0; i < 4; i++){
+                for (int j = 0; j < 4; j++){
+                    patches[k]->SetData(i,j,_data_points_to_interpolate[k](i,j));
+                }
+            }
+
+            patches[k]->UpdateVertexBufferObjectsOfData();
+
+            beforeInterpolation[k] = patches[k]->GenerateImage(30, 30, GL_STATIC_DRAW);
+            if(beforeInterpolation[k])
+            {
+                beforeInterpolation[k]->UpdateVertexBufferObjects();
+            }
+
+            SecHypPatch3 p(*patches[k]);
+            if (p.UpdateDataForInterpolation(uKnotVectors[k], vKnotVectors[k], _data_points_to_interpolate[k]))
+            {
+                afterInterpolation[k] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
+
+                if(afterInterpolation[k])
+                    afterInterpolation[k]->UpdateVertexBufferObjects();
+            }
+
+            uCurves[k] = patches[k]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+            vCurves[k] = patches[k]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+
+
+            for(GLuint  j = 0; j < uCurves[k]->GetColumnCount(); ++j)
+                (*uCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+
+            for(GLuint  j = 0; j < vCurves[k]->GetColumnCount(); ++j)
+                (*vCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+        }
+
     }
 
     void GLWidget::updateCurrentPatchImage()

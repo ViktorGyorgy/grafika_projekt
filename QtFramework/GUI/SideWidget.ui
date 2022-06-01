@@ -229,7 +229,7 @@
      <x>10</x>
      <y>290</y>
      <width>331</width>
-     <height>701</height>
+     <height>761</height>
     </rect>
    </property>
    <property name="inputMethodHints">
@@ -244,7 +244,7 @@
       <x>0</x>
       <y>0</y>
       <width>331</width>
-      <height>641</height>
+      <height>691</height>
      </rect>
     </property>
     <attribute name="label">
@@ -392,55 +392,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="comboBoxSelectedArc">
-        <item>
-         <property name="text">
-          <string>white</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>pink</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>purple</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>blue</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>green</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>gray</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>lime</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>yellow</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>brown</string>
-         </property>
-        </item>
-       </widget>
-      </item>
       <item row="6" column="0">
        <widget class="QCheckBox" name="checkBoxShowArcControlPolygon">
         <property name="text">
@@ -460,55 +411,6 @@
         <property name="text">
          <string>join with</string>
         </property>
-       </widget>
-      </item>
-      <item row="8" column="1">
-       <widget class="QComboBox" name="comboBoxSelectedJoiningArc">
-        <item>
-         <property name="text">
-          <string>white</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>pink</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>purple</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>blue</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>green</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>gray</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>lime</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>yellow</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>brown</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item row="9" column="1">
@@ -593,6 +495,20 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="spinBoxSelectedArc">
+        <property name="maximum">
+         <number>8</number>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QSpinBox" name="spinBoxJoiningArc">
+        <property name="maximum">
+         <number>8</number>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </widget>
@@ -602,7 +518,7 @@
       <x>0</x>
       <y>0</y>
       <width>331</width>
-      <height>641</height>
+      <height>691</height>
      </rect>
     </property>
     <attribute name="label">
@@ -613,8 +529,8 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>317</width>
-       <height>526</height>
+       <width>331</width>
+       <height>675</height>
       </rect>
      </property>
      <layout class="QFormLayout" name="formLayout_3">
@@ -623,55 +539,6 @@
         <property name="text">
          <string>selected patch</string>
         </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="comboBoxSelectedPatch">
-        <item>
-         <property name="text">
-          <string>white</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>pink</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>purple</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>blue</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>green</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>gray</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>lime</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>yellow</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>brown</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item row="1" column="0">
@@ -765,6 +632,66 @@
         </item>
        </widget>
       </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_19">
+        <property name="text">
+         <string>x</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchX">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-99.989999999999995</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_20">
+        <property name="text">
+         <string>y</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchY">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-99.989999999999995</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_21">
+        <property name="text">
+         <string>z</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchZ">
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="minimum">
+         <double>-99.989999999999995</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
       <item row="5" column="0">
        <widget class="QCheckBox" name="checkBoxShowPatchControlPolygon">
         <property name="text">
@@ -800,45 +727,6 @@
         </property>
        </widget>
       </item>
-      <item row="7" column="1">
-       <widget class="QComboBox" name="comboBoxMaterial">
-        <item>
-         <property name="text">
-          <string>Brass</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Gold</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Silver</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Emerald</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Pearl</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Turquoise</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Ruby</string>
-         </property>
-        </item>
-       </widget>
-      </item>
       <item row="8" column="0">
        <widget class="QLabel" name="label_17">
         <property name="text">
@@ -863,6 +751,13 @@
           <string>Point light</string>
          </property>
         </item>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QCheckBox" name="checkBoxApplyLight">
+        <property name="text">
+         <string>light</string>
+        </property>
        </widget>
       </item>
       <item row="10" column="0">
@@ -899,120 +794,18 @@
         </property>
        </widget>
       </item>
-      <item row="9" column="0">
-       <widget class="QCheckBox" name="checkBoxApplyLight">
+      <item row="12" column="0">
+       <widget class="QLabel" name="label_24">
         <property name="text">
-         <string>light</string>
+         <string>join with</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_19">
+      <item row="13" column="0">
+       <widget class="QLabel" name="label_25">
         <property name="text">
-         <string>x</string>
+         <string>join type</string>
         </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_20">
-        <property name="text">
-         <string>y</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_21">
-        <property name="text">
-         <string>z</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchX">
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-99.989999999999995</double>
-        </property>
-        <property name="singleStep">
-         <double>0.100000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchY">
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-99.989999999999995</double>
-        </property>
-        <property name="singleStep">
-         <double>0.100000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchZ">
-        <property name="decimals">
-         <number>3</number>
-        </property>
-        <property name="minimum">
-         <double>-99.989999999999995</double>
-        </property>
-        <property name="singleStep">
-         <double>0.100000000000000</double>
-        </property>
-       </widget>
-      </item>
-      <item row="12" column="1">
-       <widget class="QComboBox" name="comboBoxSelectedJoiningPatch">
-        <item>
-         <property name="text">
-          <string>white</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>pink</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>purple</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>blue</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>green</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>gray</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>lime</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>yellow</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>brown</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item row="13" column="1">
@@ -1032,20 +825,6 @@
           <string>north-north</string>
          </property>
         </item>
-       </widget>
-      </item>
-      <item row="12" column="0">
-       <widget class="QLabel" name="label_24">
-        <property name="text">
-         <string>join with</string>
-        </property>
-       </widget>
-      </item>
-      <item row="13" column="0">
-       <widget class="QLabel" name="label_25">
-        <property name="text">
-         <string>join type</string>
-        </property>
        </widget>
       </item>
       <item row="14" column="0">
@@ -1090,6 +869,13 @@
         </property>
        </widget>
       </item>
+      <item row="17" column="0">
+       <widget class="QLabel" name="label_27">
+        <property name="text">
+         <string>alpha</string>
+        </property>
+       </widget>
+      </item>
       <item row="17" column="1">
        <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchUalpha">
         <property name="minimum">
@@ -1106,84 +892,107 @@
         </property>
        </widget>
       </item>
-      <item row="18" column="1">
-       <widget class="QDoubleSpinBox" name="doubleSpinBoxPatchValpha">
-        <property name="minimum">
-         <double>0.050000000000000</double>
-        </property>
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="spinBoxSelectedPatch">
         <property name="maximum">
-         <double>7.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.050000000000000</double>
-        </property>
-        <property name="value">
-         <double>1.000000000000000</double>
+         <number>8</number>
         </property>
        </widget>
       </item>
-      <item row="17" column="0">
-       <widget class="QLabel" name="label_27">
-        <property name="text">
-         <string>Ualpha</string>
-        </property>
+      <item row="7" column="1">
+       <widget class="QComboBox" name="comboBoxMaterial">
+        <item>
+         <property name="text">
+          <string>Brass</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Gold</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Silver</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Emerald</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Pearl</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Turquoise</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Ruby</string>
+         </property>
+        </item>
        </widget>
       </item>
-      <item row="18" column="0">
-       <widget class="QLabel" name="label_28">
-        <property name="text">
-         <string>Valpha</string>
+      <item row="12" column="1">
+       <widget class="QSpinBox" name="spinBoxJoiningPatch">
+        <property name="maximum">
+         <number>8</number>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>540</y>
-       <width>311</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Isoparametric cuves</string>
-     </property>
-     <widget class="QWidget" name="formLayoutWidget_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>30</y>
-        <width>291</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <layout class="QFormLayout" name="formLayout_4">
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="checkBoxShowIsoparametricCurvesU">
-         <property name="text">
-          <string>show U</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QCheckBox" name="checkBoxShowIsoparametricCurvesV">
-         <property name="text">
-          <string>show V</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="checkBoxShowIsometricDerivatives">
-         <property name="text">
-          <string>derivatives</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>1060</y>
+     <width>311</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Isoparametric cuves</string>
+   </property>
+   <widget class="QWidget" name="formLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>291</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout_4">
+     <item row="0" column="0">
+      <widget class="QCheckBox" name="checkBoxShowIsoparametricCurvesU">
+       <property name="text">
+        <string>show V</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QCheckBox" name="checkBoxShowIsometricDerivatives">
+       <property name="text">
+        <string>derivatives</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QCheckBox" name="checkBoxShowIsoparametricCurvesV">
+       <property name="text">
+        <string>show U</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>

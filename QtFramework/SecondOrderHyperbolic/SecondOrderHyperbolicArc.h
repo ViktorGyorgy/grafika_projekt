@@ -30,7 +30,9 @@ namespace cagd
 
     public:
         // Variables for the interaction with curves
-        SecondOrderHyperbolicArc *left, *right;
+        SecondOrderHyperbolicArc *left = nullptr, *right = nullptr;
+        int joinTypeLeft, joinTypeRight;
+
         GLuint image_index;
 
         // special/default constructor

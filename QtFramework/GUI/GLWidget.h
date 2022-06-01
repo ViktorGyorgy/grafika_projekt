@@ -200,8 +200,8 @@ namespace cagd
         void setSelectedPatchJoinType(int value);
         void setSelectedJoiningPatch(int value);
         void setPatchUalpha(double);
-        void setPatchValpha(double);
         void setScalePatchDerivatives(double);
+        void updatePatches();
 
         //extend patches
         void extendPatchWest();
