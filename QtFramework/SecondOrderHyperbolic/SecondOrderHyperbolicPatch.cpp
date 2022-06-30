@@ -1,4 +1,4 @@
-#include "SecondOrderHyperbolicPatch.h".h"
+#include "SecondOrderHyperbolicPatch.h"
 
 using namespace cagd;
 

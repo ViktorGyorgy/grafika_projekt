@@ -117,6 +117,7 @@ namespace cagd
         connect(_gl_widget, SIGNAL(sendPatchPointY(double)), this, SLOT(setPatchPointY(double)));
         connect(_gl_widget, SIGNAL(sendPatchPointZ(double)), this, SLOT(setPatchPointZ(double)));
         connect(_gl_widget, SIGNAL(setN(int)), this, SLOT(setNumberOfArcs(int)));
+        connect(_gl_widget, SIGNAL(setPatchN(int)), this, SLOT(setNumberOfPatches(int)));
 
         //extend
         connect(_side_widget->pushButtonExtendWest, SIGNAL(clicked()), _gl_widget, SLOT(extendPatchWest()));

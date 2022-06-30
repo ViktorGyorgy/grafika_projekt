@@ -924,22 +924,34 @@ namespace cagd
 
     void GLWidget::setPatchPointX(double value)
     {
-        _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4)[0] = value;
+        (*patches[selectedPatch])(selectedPatchPoint / 4, selectedPatchPoint % 4)[0] = value;
+        DCoordinate3 p;
+        patches[selectedPatch]->GetData(selectedPatchPoint / 4, selectedPatchPoint % 4, p);
+        patches[selectedPatch]->PreserveContinuity(selectedPatchPoint / 4, selectedPatchPoint % 4, p);
         updateCurrentPatchImage();
+        //updatePatches();
         update();
     }
 
     void GLWidget::setPatchPointY(double value)
     {
-        _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4)[1] = value;
+        (*patches[selectedPatch])(selectedPatchPoint / 4, selectedPatchPoint % 4)[1] = value;
+        DCoordinate3 p;
+        patches[selectedPatch]->GetData(selectedPatchPoint / 4, selectedPatchPoint % 4, p);
+        patches[selectedPatch]->PreserveContinuity(selectedPatchPoint / 4, selectedPatchPoint % 4, p);
         updateCurrentPatchImage();
+        //updatePatches();
         update();
     }
 
     void GLWidget::setPatchPointZ(double value)
     {
-        _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4)[2] = value;
+        (*patches[selectedPatch])(selectedPatchPoint / 4, selectedPatchPoint % 4)[2] = value;
+        DCoordinate3 p;
+        patches[selectedPatch]->GetData(selectedPatchPoint / 4, selectedPatchPoint % 4, p);
+        patches[selectedPatch]->PreserveContinuity(selectedPatchPoint / 4, selectedPatchPoint % 4, p);
         updateCurrentPatchImage();
+        //updatePatches();
         update();
     }
 
@@ -1006,34 +1018,35 @@ namespace cagd
             GLdouble offsetYNow = offsetY * (i / 3) + 2;
 
             patches[i] = new SecHypPatch3();
-            patches[i]->SetData(0, 0, -0.33 + offsetXNow, -0.33 + offsetYNow, 0.0);
-            patches[i]->SetData(0, 1, -0.33 + offsetXNow, -0.166 + offsetYNow, 0.0);
-            patches[i]->SetData(0, 2, -0.33 + offsetXNow, 0.166 + offsetYNow, 0.0);
-            patches[i]->SetData(0, 3, -0.33 + offsetXNow, 0.33 + offsetYNow, 0.0);
+            patches[i]->SetData(3, 0, -0.33 + offsetXNow, -0.33 + offsetYNow, 0.0);
+            patches[i]->SetData(2, 0, -0.33 + offsetXNow, -0.166 + offsetYNow, 0.0);
+            patches[i]->SetData(1, 0, -0.33 + offsetXNow, 0.166 + offsetYNow, 0.0);
+            patches[i]->SetData(0, 0, -0.33 + offsetXNow, 0.33 + offsetYNow, 0.0);
 
-            patches[i]->SetData(1, 0, -0.166 + offsetXNow, -0.33 + offsetYNow, 0.0);
-            patches[i]->SetData(1, 1, -0.166 + offsetXNow, -0.166 + offsetYNow, 0.33);
-            patches[i]->SetData(1, 2, -0.166 + offsetXNow, 0.166 + offsetYNow, 0.33);
-            patches[i]->SetData(1, 3, -0.166 + offsetXNow, 0.33 + offsetYNow, 0.0);
+            patches[i]->SetData(3, 1, -0.166 + offsetXNow, -0.33 + offsetYNow, 0.0);
+            patches[i]->SetData(2, 1, -0.166 + offsetXNow, -0.166 + offsetYNow, 0.33);
+            patches[i]->SetData(1, 1, -0.166 + offsetXNow, 0.166 + offsetYNow, 0.33);
+            patches[i]->SetData(0, 1, -0.166 + offsetXNow, 0.33 + offsetYNow, 0.0);
 
-            patches[i]->SetData(2, 0, 0.166 + offsetXNow, -0.33 + offsetYNow, 0.0);
-            patches[i]->SetData(2, 1, 0.166 + offsetXNow, -0.166 + offsetYNow, 0.33);
-            patches[i]->SetData(2, 2, 0.166 + offsetXNow, 0.166 + offsetYNow, 0.33);
-            patches[i]->SetData(2, 3, 0.166 + offsetXNow, 0.33 + offsetYNow, 0.0);
+            patches[i]->SetData(3, 2, 0.166 + offsetXNow, -0.33 + offsetYNow, 0.0);
+            patches[i]->SetData(2, 2, 0.166 + offsetXNow, -0.166 + offsetYNow, 0.33);
+            patches[i]->SetData(1, 2, 0.166 + offsetXNow, 0.166 + offsetYNow, 0.33);
+            patches[i]->SetData(0, 2, 0.166 + offsetXNow, 0.33 + offsetYNow, 0.0);
 
-            patches[i]->SetData(3, 0, 0.33 + offsetXNow, -0.33 + offsetYNow, 0.0);
-            patches[i]->SetData(3, 1, 0.33 + offsetXNow, -0.166 + offsetYNow, 0.0);
-            patches[i]->SetData(3, 2, 0.33 + offsetXNow, 0.166 + offsetYNow, 0.0);
-            patches[i]->SetData(3, 3, 0.33 + offsetXNow, 0.33 + offsetYNow, 0.0);
+            patches[i]->SetData(3, 3, 0.33 + offsetXNow, -0.33 + offsetYNow, 0.0);
+            patches[i]->SetData(2, 3, 0.33 + offsetXNow, -0.166 + offsetYNow, 0.0);
+            patches[i]->SetData(1, 3, 0.33 + offsetXNow, 0.166 + offsetYNow, 0.0);
+            patches[i]->SetData(0, 3, 0.33 + offsetXNow, 0.33 + offsetYNow, 0.0);
 
             patches[i]->UpdateVertexBufferObjectsOfData();
 
 
-//            beforeInterpolation[i] = patches[i]->GenerateImage(30, 30, GL_STATIC_DRAW);
-//            if(beforeInterpolation[i])
-//            {
-//                beforeInterpolation[i]->UpdateVertexBufferObjects();
-//            }
+            TriangulatedMesh3 *img = patches[i]->GenerateImage(30, 30, GL_STATIC_DRAW);
+            if(img)
+            {
+                img->UpdateVertexBufferObjects();
+            }
+            patches[i]->SetImage(img);
 
             uKnotVectors[i].ResizeColumns(4);
             uKnotVectors[i](0) = 0.0;
@@ -1051,13 +1064,6 @@ namespace cagd
                 for (GLuint column = 0; column < 4; ++column)
                     patches[i]->GetData(row, column, _data_points_to_interpolate[i](row, column));
             SecHypPatch3 p(*patches[i]);
-//            if (p.UpdateDataForInterpolation(uKnotVectors[i], vKnotVectors[i], _data_points_to_interpolate[i]))
-//            {
-//                afterInterpolation[i] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
-
-//                if(afterInterpolation[i])
-//                    afterInterpolation[i]->UpdateVertexBufferObjects();
-//            }
 
             uCurves[i] = patches[i]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
             vCurves[i] = patches[i]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
@@ -1081,22 +1087,20 @@ namespace cagd
                 }
             }
 
+            if(patches[k]->GetImage()){
+                delete patches[k]->GetImage();
+            }
+
             patches[k]->UpdateVertexBufferObjectsOfData();
 
-//            beforeInterpolation[k] = patches[k]->GenerateImage(30, 30, GL_STATIC_DRAW);
-//            if(beforeInterpolation[k])
-//            {
-//                beforeInterpolation[k]->UpdateVertexBufferObjects();
-//            }
+            TriangulatedMesh3* img = patches[k]->GenerateImage(30, 30, GL_STATIC_DRAW);
+            if(img)
+            {
+                img->UpdateVertexBufferObjects();
+            }
+            patches[k]->SetImage(img);
 
-//            SecHypPatch3 p(*patches[k]);
-//            if (p.UpdateDataForInterpolation(uKnotVectors[k], vKnotVectors[k], _data_points_to_interpolate[k]))
-//            {
-//                afterInterpolation[k] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
 
-//                if(afterInterpolation[k])
-//                    afterInterpolation[k]->UpdateVertexBufferObjects();
-//            }
 
             uCurves[k] = patches[k]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
             vCurves[k] = patches[k]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
@@ -1113,44 +1117,33 @@ namespace cagd
 
     void GLWidget::updateCurrentPatchImage()
     {
-        for (int i = 0; i < 4; i++){
-            for (int j = 0; j < 4; j++){
-                patches[selectedPatch]->SetData(i,j,_data_points_to_interpolate[selectedPatch](i,j));
-            }
-        }
 
         patches[selectedPatch]->UpdateVertexBufferObjectsOfData();
 
-//        beforeInterpolation[selectedPatch] = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
-//        if(beforeInterpolation[selectedPatch])
-//        {
-//            beforeInterpolation[selectedPatch]->UpdateVertexBufferObjects();
-//        }
+        TriangulatedMesh3* img = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
+        if(img)
+        {
+            img->UpdateVertexBufferObjects();
+        }
 
-//        SecHypPatch3 p(*patches[selectedPatch]);
-//        if (p.UpdateDataForInterpolation(uKnotVectors[selectedPatch], vKnotVectors[selectedPatch], _data_points_to_interpolate[selectedPatch]))
-//        {
-//            afterInterpolation[selectedPatch] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
+        patches[selectedPatch]->SetImage(img);
 
-//            if(afterInterpolation[selectedPatch])
-//                afterInterpolation[selectedPatch]->UpdateVertexBufferObjects();
-//        }
-
-        uCurves[selectedPatch] = patches[selectedPatch]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
-        vCurves[selectedPatch] = patches[selectedPatch]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+//        uCurves[selectedPatch] = patches[selectedPatch]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+//        vCurves[selectedPatch] = patches[selectedPatch]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
 
 
-        for(GLuint  j = 0; j < uCurves[selectedPatch]->GetColumnCount(); ++j)
-            (*uCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+//        for(GLuint  j = 0; j < uCurves[selectedPatch]->GetColumnCount(); ++j)
+//            (*uCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
 
-        for(GLuint  j = 0; j < vCurves[selectedPatch]->GetColumnCount(); ++j)
-            (*vCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+//        for(GLuint  j = 0; j < vCurves[selectedPatch]->GetColumnCount(); ++j)
+//            (*vCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
     }
 
     void GLWidget::renderPatches()
     {
         glPushMatrix();
-            DCoordinate3 sp = _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4);
+            DCoordinate3 sp;
+            patches[selectedPatch]->GetData(selectedPatchPoint / 4, selectedPatchPoint % 4, sp);
             glPointSize(10.0f);
             glColor3f(0.0f, 0.5f, 0.0f);
             glBegin (GL_POINTS);
@@ -1158,41 +1151,43 @@ namespace cagd
             glEnd ();
             glFlush();
 
-            for(int i = 0; i < numberOfPatches; i++)
+            for(int i = 0; i < patches.GetColumnCount(); i++)
             {
                 glDisable(GL_LIGHTING);
 
-                DCoordinate3 sp = _data_points_to_interpolate[i](0, 1);
-                glPointSize(10.0f);
-                glColor3f(0.0f, 1.0f, 0.0f);
-                glBegin (GL_POINTS);
-                glVertex3f(sp[0], sp[1], sp[2]);
-                glEnd ();
-                glFlush();
 
-                sp = _data_points_to_interpolate[i](3, 1);
-                glPointSize(10.0f);
-                glColor3f(1.0f, 0.0f, 0.0f);
-                glBegin (GL_POINTS);
-                glVertex3f(sp[0], sp[1], sp[2]);
-                glEnd ();
-                glFlush();
 
-                sp = _data_points_to_interpolate[i](1, 0);
-                glPointSize(10.0f);
-                glColor3f(1.0f, 1.0f, 0.0f);
-                glBegin (GL_POINTS);
-                glVertex3f(sp[0], sp[1], sp[2]);
-                glEnd ();
-                glFlush();
+//                DCoordinate3 sp = _data_points_to_interpolate[i](0, 1);
+//                glPointSize(10.0f);
+//                glColor3f(0.0f, 1.0f, 0.0f);
+//                glBegin (GL_POINTS);
+//                glVertex3f(sp[0], sp[1], sp[2]);
+//                glEnd ();
+//                glFlush();
 
-                sp = _data_points_to_interpolate[i](1, 3);
-                glPointSize(10.0f);
-                glColor3f(1.0f, 1.0f, 1.0f);
-                glBegin (GL_POINTS);
-                glVertex3f(sp[0], sp[1], sp[2]);
-                glEnd ();
-                glFlush();
+//                sp = _data_points_to_interpolate[i](3, 1);
+//                glPointSize(10.0f);
+//                glColor3f(1.0f, 0.0f, 0.0f);
+//                glBegin (GL_POINTS);
+//                glVertex3f(sp[0], sp[1], sp[2]);
+//                glEnd ();
+//                glFlush();
+
+//                sp = _data_points_to_interpolate[i](1, 0);
+//                glPointSize(10.0f);
+//                glColor3f(1.0f, 1.0f, 0.0f);
+//                glBegin (GL_POINTS);
+//                glVertex3f(sp[0], sp[1], sp[2]);
+//                glEnd ();
+//                glFlush();
+
+//                sp = _data_points_to_interpolate[i](1, 3);
+//                glPointSize(10.0f);
+//                glColor3f(1.0f, 1.0f, 1.0f);
+//                glBegin (GL_POINTS);
+//                glVertex3f(sp[0], sp[1], sp[2]);
+//                glEnd ();
+//                glFlush();
 
 
 
@@ -1209,39 +1204,39 @@ namespace cagd
                     patches[i]->RenderData(GL_POINTS);
                 }
 
-                glPointSize(5.0f);
-                for(GLuint j = 0; j < 4; ++j){
-                    if(showUIsometricCurves)
-                    {
-                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
-                        (*uCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
-                    }
+//                glPointSize(5.0f);
+//                for(GLuint j = 0; j < 4; ++j){
+//                    if(showUIsometricCurves)
+//                    {
+//                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
+//                        (*uCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+//                    }
 
-                    if(showIsometricDerivatives)
-                    {
-                        glColor3f(0.0f, 0.5f, 0.0f);
-                        (*uCurves[i])[j]->RenderDerivatives(1, GL_LINES);
-                        glColor3f(0.0f, 0.0f, 0.5f);
-                        (*uCurves[i])[j]->RenderDerivatives(2, GL_LINES);
-                    }
-                }
+//                    if(showIsometricDerivatives)
+//                    {
+//                        glColor3f(0.0f, 0.5f, 0.0f);
+//                        (*uCurves[i])[j]->RenderDerivatives(1, GL_LINES);
+//                        glColor3f(0.0f, 0.0f, 0.5f);
+//                        (*uCurves[i])[j]->RenderDerivatives(2, GL_LINES);
+//                    }
+//                }
 
 
-                for(GLuint j = 0; j < 4; ++j){
-                    if(showVIsometricCurves)
-                    {
-                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
-                        (*vCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
-                    }
+//                for(GLuint j = 0; j < 4; ++j){
+//                    if(showVIsometricCurves)
+//                    {
+//                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
+//                        (*vCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+//                    }
 
-                    if(showIsometricDerivatives)
-                    {
-                        glColor3f(0.0f, 0.5f, 0.0f);
-                        (*vCurves[i])[j]->RenderDerivatives(1, GL_LINES);
-                        glColor3f(0.0f, 0.0f, 0.5f);
-                        (*vCurves[i])[j]->RenderDerivatives(2, GL_LINES);
-                    }
-                }
+//                    if(showIsometricDerivatives)
+//                    {
+//                        glColor3f(0.0f, 0.5f, 0.0f);
+//                        (*vCurves[i])[j]->RenderDerivatives(1, GL_LINES);
+//                        glColor3f(0.0f, 0.0f, 0.5f);
+//                        (*vCurves[i])[j]->RenderDerivatives(2, GL_LINES);
+//                    }
+//                }
 
                 if(turnOnLight)
                 {
@@ -1251,29 +1246,22 @@ namespace cagd
                 }
 
                 glPointSize(1.0);
-                glColor3f(colors[i][0], colors[i][1], colors[i][2]);
-//                if(beforeInterpolation[i])
-//                {
+                if(i == selectedPatch){
+                    glColor3f(0.0f, 0.0f, 1.0f);
+                }
+                else if(i == selectedJoiningPatch){
+                    glColor3f(0.5f, 0.5f, 0.0f);
+                }
+                else{
+                     glColor3f(1.0f, 1.0f, 1.0f);
+                }
+//
+                if(patches[i]->GetImage())
+                {
 //                    materials[selectedMaterial[i]].Apply();
-//                    beforeInterpolation[i]->Render();
-//                }
+                    patches[i]->GetImage()->Render();
+                }
 
-//                glColor3f(0.0f, 1.0f, 0.0f);
-//                if(afterInterpolation[i] && showInterpolatingSurface)
-//                {
-
-//                    glEnable(GL_LIGHTING);
-//                    enableSelectedLight();
-//                    glEnable(GL_BLEND);
-//                    glDepthMask(GL_FALSE);
-//                    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-//                        MatFBEmerald.Apply();
-//                        afterInterpolation[i]->Render();
-//                    glDepthMask(GL_TRUE);
-//                    glDisable(GL_BLEND);
-//                    disableSelectedLight();
-//                    glDisable(GL_LIGHTING);
-//                }
 
 
                 if (turnOnLight)
@@ -1284,7 +1272,7 @@ namespace cagd
 
 //                if (showNormalVectors)
 //                {
-//                    beforeInterpolation[i]->RenderNormals();
+//                    patches[i]->GetImage()->RenderNormals();
 //                }
             }
         glPopMatrix();
@@ -1293,7 +1281,8 @@ namespace cagd
 
     void GLWidget::sendPatchPointCoordinates()
     {
-        DCoordinate3 sp = _data_points_to_interpolate[selectedPatch](selectedPatchPoint / 4, selectedPatchPoint % 4);
+        DCoordinate3 sp;
+        patches[selectedPatch]->GetData(selectedPatchPoint / 4, selectedPatchPoint % 4, sp);
         emit sendPatchPointX(sp[0]);
         emit sendPatchPointY(sp[1]);
         emit sendPatchPointZ(sp[2]);
@@ -1302,35 +1291,60 @@ namespace cagd
 
     //extends
     void GLWidget::extendPatchWest(){
-        SecHypPatch3 p;
-        patches[selectedPatch]->ExtendPatch(6, p);
-        p.UpdateVertexBufferObjectsOfData();
-        p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));
-        otherPatches.push_back(p);
+        if(patches[selectedPatch]->_neighbours[6]){
+            return;
+        }
+        SecHypPatch3 *p = new SecHypPatch3;
+        patches[selectedPatch]->ExtendPatch(6, *p);
+        p->UpdateVertexBufferObjectsOfData();
+        p->SetImage(p->GenerateImage(30, 30, GL_STATIC_DRAW));
+        int n = patches.GetColumnCount();
+        patches.ResizeColumns(n+1);
+        patches[n] = p;
+        emit setPatchN(n);
         update();
     };
 
     void GLWidget::extendPatchEast(){
-        SecHypPatch3 p;
-        patches[selectedPatch]->ExtendPatch(2, p);
-        p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));
-        otherPatches.push_back(p);
+        if(patches[selectedPatch]->_neighbours[2]){
+            return;
+        }
+        SecHypPatch3 *p = new SecHypPatch3;
+        patches[selectedPatch]->ExtendPatch(2, *p);
+        p->SetImage(p->GenerateImage(30, 30, GL_STATIC_DRAW));
+        p->GetImage()->UpdateVertexBufferObjects();
+        int n = patches.GetColumnCount();
+        patches.ResizeColumns(n+1);
+        patches[n] = p;
+        emit setPatchN(n);
         update();
     };
 
     void GLWidget::extendPatchNorth(){
-        SecHypPatch3 p;
-        patches[selectedPatch]->ExtendPatch(0, p);
-        p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));
-        otherPatches.push_back(p);
+        if(patches[selectedPatch]->_neighbours[0]){
+            return;
+        }
+        SecHypPatch3 *p = new SecHypPatch3;
+        patches[selectedPatch]->ExtendPatch(0, *p);
+        p->SetImage(p->GenerateImage(30, 30, GL_STATIC_DRAW));
+        int n = patches.GetColumnCount();
+        patches.ResizeColumns(n+1);
+        patches[n] = p;
+        emit setPatchN(n);
         update();
     };
 
     void GLWidget::extendPatchSouth(){
-        SecHypPatch3 p;
-        patches[selectedPatch]->ExtendPatch(4, p);
-        p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));
-        otherPatches.push_back(p);
+        if(patches[selectedPatch]->_neighbours[4]){
+            return;
+        }
+        SecHypPatch3 *p = new SecHypPatch3;
+        patches[selectedPatch]->ExtendPatch(4, *p);
+        p->SetImage(p->GenerateImage(30, 30, GL_STATIC_DRAW));
+        int n = patches.GetColumnCount();
+        patches.ResizeColumns(n+1);
+        patches[n] = p;
+        emit setPatchN(n);
         update();
     };
 
@@ -1338,39 +1352,62 @@ namespace cagd
         if(selectedPatch == selectedJoiningPatch) return;
         switch(selectedPatchJoinType){
             case 0:
+                if(patches[selectedPatch]->_neighbours[0] || patches[selectedJoiningPatch]->_neighbours[4]){
+                    return;
+                }
                 patches[selectedPatch]->MergePatch(*patches[selectedJoiningPatch], 0, 4);
                 break;
             case 1:
+                if(patches[selectedPatch]->_neighbours[2] || patches[selectedJoiningPatch]->_neighbours[6]){
+                    return;
+                }
                 patches[selectedPatch]->MergePatch(*patches[selectedJoiningPatch], 2, 6);
                 break;
             case 2:
-                patches[selectedPatch]->MergePatch(*patches[selectedJoiningPatch], 2, 2);
+                if(patches[selectedPatch]->_neighbours[0] || patches[selectedJoiningPatch]->_neighbours[0]){
+                    return;
+                }
+                patches[selectedPatch]->MergePatch(*patches[selectedJoiningPatch], 0, 0);
                 break;
         }
-
-//        beforeInterpolation[selectedPatch] = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
-//        beforeInterpolation[selectedPatch]->UpdateVertexBufferObjects();
-//        beforeInterpolation[selectedJoiningPatch] = patches[selectedJoiningPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
-//        beforeInterpolation[selectedJoiningPatch]->UpdateVertexBufferObjects();
-
+        patches[selectedPatch]->UpdateVertexBufferObjectsOfData();
+        patches[selectedPatch]->SetImage(patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW));
+        patches[selectedPatch]->GetImage()->UpdateVertexBufferObjects();
+        patches[selectedJoiningPatch]->UpdateVertexBufferObjectsOfData();
+        patches[selectedJoiningPatch]->SetImage(patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW));
+        patches[selectedJoiningPatch]->GetImage()->UpdateVertexBufferObjects();
+        sendPatchPointCoordinates();
         update();
     };
 
     void GLWidget::joinPatches(){
-        SecHypPatch3 p;
+        if(selectedPatch == selectedJoiningPatch) return;
+        SecHypPatch3 *p = new SecHypPatch3;
         switch(selectedPatchJoinType){
             case 0:
-                patches[selectedPatch]->JoinPatch(*patches[selectedJoiningPatch], 0, 4, p);
+                if(patches[selectedPatch]->_neighbours[0] || patches[selectedJoiningPatch]->_neighbours[4]){
+                    return;
+                }
+                patches[selectedPatch]->JoinPatch(*patches[selectedJoiningPatch], 0, 4, *p);
                 break;
             case 1:
-                patches[selectedPatch]->JoinPatch(*patches[selectedJoiningPatch], 2, 6, p);
+                if(patches[selectedPatch]->_neighbours[2] || patches[selectedJoiningPatch]->_neighbours[6]){
+                    return;
+                }
+                patches[selectedPatch]->JoinPatch(*patches[selectedJoiningPatch], 2, 6, *p);
                 break;
             case 2:
-                patches[selectedPatch]->JoinPatch(*patches[selectedJoiningPatch], 2, 2, p);
+                if(patches[selectedPatch]->_neighbours[0] || patches[selectedJoiningPatch]->_neighbours[0]){
+                    return;
+                }
+                patches[selectedPatch]->JoinPatch(*patches[selectedJoiningPatch], 0, 0, *p);
                 break;
         }
-        p.SetImage(p.GenerateImage(30, 30, GL_STATIC_DRAW));
-        otherPatches.push_back(p);
+        p->SetImage(p->GenerateImage(30, 30, GL_STATIC_DRAW));
+        int n = patches.GetColumnCount();
+        patches.ResizeColumns(n+1);
+        patches[n] = p;
+        emit setPatchN(n);
         update();
     };
 

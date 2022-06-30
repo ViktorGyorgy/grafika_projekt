@@ -99,8 +99,6 @@ namespace cagd
         RowMatrix<RowMatrix<GenericCurve3*> *> uCurves, vCurves;
         RowMatrix<Matrix<DCoordinate3>> _data_points_to_interpolate;
 
-        vector<SecHypPatch3> otherPatches;
-
         int selectedPatch = 0;
         int selectedPatchPoint = 0;
         int selectedPatchPointI = 0;
@@ -217,5 +215,6 @@ namespace cagd
         void sendPatchPointZ(double);
 
         void setN(int);
+        void setPatchN(int);
     };
 }

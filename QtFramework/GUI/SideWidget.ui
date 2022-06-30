@@ -812,12 +812,12 @@
        <widget class="QComboBox" name="comboBoxSelectedPatchJoinType">
         <item>
          <property name="text">
-          <string>west-east</string>
+          <string>north-south</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>north-south</string>
+          <string>east-west</string>
          </property>
         </item>
         <item>
@@ -844,28 +844,28 @@
       <item row="15" column="0">
        <widget class="QPushButton" name="pushButtonExtendWest">
         <property name="text">
-         <string>extend south</string>
+         <string>extend west</string>
         </property>
        </widget>
       </item>
       <item row="15" column="1">
        <widget class="QPushButton" name="pushButtonExtendEast">
         <property name="text">
-         <string>extend north</string>
+         <string>extend east</string>
         </property>
        </widget>
       </item>
       <item row="16" column="0">
        <widget class="QPushButton" name="pushButtonExtendNorth">
         <property name="text">
-         <string>extend west</string>
+         <string>extend north</string>
         </property>
        </widget>
       </item>
       <item row="16" column="1">
        <widget class="QPushButton" name="pushButtonExtendSouth">
         <property name="text">
-         <string>extend east</string>
+         <string>extend south</string>
         </property>
        </widget>
       </item>

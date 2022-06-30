@@ -758,16 +758,16 @@ public:
         label_18->setText(QCoreApplication::translate("SideWidget", "derivatives scale", nullptr));
         label_24->setText(QCoreApplication::translate("SideWidget", "join with", nullptr));
         label_25->setText(QCoreApplication::translate("SideWidget", "join type", nullptr));
-        comboBoxSelectedPatchJoinType->setItemText(0, QCoreApplication::translate("SideWidget", "west-east", nullptr));
-        comboBoxSelectedPatchJoinType->setItemText(1, QCoreApplication::translate("SideWidget", "north-south", nullptr));
+        comboBoxSelectedPatchJoinType->setItemText(0, QCoreApplication::translate("SideWidget", "north-south", nullptr));
+        comboBoxSelectedPatchJoinType->setItemText(1, QCoreApplication::translate("SideWidget", "east-west", nullptr));
         comboBoxSelectedPatchJoinType->setItemText(2, QCoreApplication::translate("SideWidget", "north-north", nullptr));
 
         pushButtonMergePatches->setText(QCoreApplication::translate("SideWidget", "merge", nullptr));
         pushButtonJoinPatches->setText(QCoreApplication::translate("SideWidget", "join", nullptr));
-        pushButtonExtendWest->setText(QCoreApplication::translate("SideWidget", "extend south", nullptr));
-        pushButtonExtendEast->setText(QCoreApplication::translate("SideWidget", "extend north", nullptr));
-        pushButtonExtendNorth->setText(QCoreApplication::translate("SideWidget", "extend west", nullptr));
-        pushButtonExtendSouth->setText(QCoreApplication::translate("SideWidget", "extend east", nullptr));
+        pushButtonExtendWest->setText(QCoreApplication::translate("SideWidget", "extend west", nullptr));
+        pushButtonExtendEast->setText(QCoreApplication::translate("SideWidget", "extend east", nullptr));
+        pushButtonExtendNorth->setText(QCoreApplication::translate("SideWidget", "extend north", nullptr));
+        pushButtonExtendSouth->setText(QCoreApplication::translate("SideWidget", "extend south", nullptr));
         label_27->setText(QCoreApplication::translate("SideWidget", "alpha", nullptr));
         comboBoxMaterial->setItemText(0, QCoreApplication::translate("SideWidget", "Brass", nullptr));
         comboBoxMaterial->setItemText(1, QCoreApplication::translate("SideWidget", "Gold", nullptr));
