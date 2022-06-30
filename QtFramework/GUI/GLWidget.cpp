@@ -434,7 +434,6 @@ namespace cagd
     {
         selectedArc = value;
         sendArcPointCoordinates();
-        updateArcs();
         update();
     }
 
@@ -442,7 +441,6 @@ namespace cagd
     {
         selectedArcPoint = value;
         sendArcPointCoordinates();
-        updateArcs();
         update();
     }
 
@@ -479,25 +477,28 @@ namespace cagd
 
     void GLWidget::setArcPointX(double value)
     {
+        double difference = (*arcs[selectedArc])[selectedArcPoint][0] - value;
         (*arcs[selectedArc])[selectedArcPoint][0] = value;
-        updateNthArcImage(selectedArc);
-        updateArcNeighbors(selectedArc);
+        arcs[selectedArc]->preserveContinuity(selectedArcPoint, 0, difference);
+        updateArcs();
         update();
     }
 
     void GLWidget::setArcPointY(double value)
     {
+        double difference = (*arcs[selectedArc])[selectedArcPoint][1] - value;
         (*arcs[selectedArc])[selectedArcPoint][1] = value;
-        updateNthArcImage(selectedArc);
-        updateArcNeighbors(selectedArc);
+        arcs[selectedArc]->preserveContinuity(selectedArcPoint, 1, difference);
+        updateArcs();
         update();
     }
 
     void GLWidget::setArcPointZ(double value)
     {
+        double difference = (*arcs[selectedArc])[selectedArcPoint][2] - value;
         (*arcs[selectedArc])[selectedArcPoint][2] = value;
-        updateNthArcImage(selectedArc);
-        updateArcNeighbors(selectedArc);
+        arcs[selectedArc]->preserveContinuity(selectedArcPoint, 2, difference);
+        updateArcs();
         update();
     }
 
@@ -517,8 +518,8 @@ namespace cagd
         for(int i = 0; i < arcs.GetColumnCount(); i++)
         {
             arcs[i]->SetAlpha(value);
-            updateArcs();
         }
+        updateArcs();
         update();
     }
 
@@ -562,8 +563,12 @@ namespace cagd
     }
 
     void GLWidget::updateArcs(){
-        for(int i = 0; i < numberOfArcs; i++)
+
+        for(int i = 0; i < arcs.GetColumnCount(); i++)
         {
+
+            arcs[i]->setImage(arcs[i]->GenerateImage(2, 100, GL_STATIC_DRAW));
+            arcs[i]->UpdateVertexBufferObjectsOfData();
             arcs[i]->getImage()->UpdateVertexBufferObjects(scaleArcDerivatives);
         }
     }
@@ -1263,17 +1268,16 @@ namespace cagd
                 }
 
 
-
                 if (turnOnLight)
                 {
                     disableSelectedLight();
                     glDisable(GL_LIGHTING);
                 }
 
-//                if (showNormalVectors)
-//                {
-//                    patches[i]->GetImage()->RenderNormals();
-//                }
+                if (showNormalVectors)
+                {
+                    patches[i]->GetImage()->RenderNormals();
+                }
             }
         glPopMatrix();
     }
@@ -1373,8 +1377,8 @@ namespace cagd
         patches[selectedPatch]->UpdateVertexBufferObjectsOfData();
         patches[selectedPatch]->SetImage(patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW));
         patches[selectedPatch]->GetImage()->UpdateVertexBufferObjects();
+        patches[selectedJoiningPatch]->SetImage(patches[selectedJoiningPatch]->GenerateImage(30, 30, GL_STATIC_DRAW));
         patches[selectedJoiningPatch]->UpdateVertexBufferObjectsOfData();
-        patches[selectedJoiningPatch]->SetImage(patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW));
         patches[selectedJoiningPatch]->GetImage()->UpdateVertexBufferObjects();
         sendPatchPointCoordinates();
         update();
