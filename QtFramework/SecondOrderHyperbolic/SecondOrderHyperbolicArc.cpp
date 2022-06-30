@@ -177,6 +177,10 @@ void SecondOrderHyperbolicArc::translateZ(GLdouble value){
 }
 
 SecondOrderHyperbolicArc* SecondOrderHyperbolicArc::extendLeft(){  //Continue
+    if(this->left){
+        return nullptr;
+    }
+
     SecondOrderHyperbolicArc *extension = new SecondOrderHyperbolicArc();
     extension->setPoint(3,getPoint(0));
     extension->setPoint(2,2*getPoint(0)-getPoint(1));
@@ -188,6 +192,10 @@ SecondOrderHyperbolicArc* SecondOrderHyperbolicArc::extendLeft(){  //Continue
     return extension;
 }
 SecondOrderHyperbolicArc* SecondOrderHyperbolicArc::extendRight(){ //Continue
+    if(this->right){
+        return nullptr;
+    }
+
     SecondOrderHyperbolicArc *extension = new SecondOrderHyperbolicArc();
     extension->setPoint(0,getPoint(3));
     extension->setPoint(1,2*getPoint(3)-getPoint(2));
@@ -276,6 +284,14 @@ void SecondOrderHyperbolicArc::mergeRightRight(SecondOrderHyperbolicArc *arc){
     arc->setPoint(3,(getPoint(2)+arc->getPoint(2))/2);
     this->right=arc;
     arc->right=this;
+}
+
+void SecondOrderHyperbolicArc::setImage(GenericCurve3* _image){
+    this->_image = _image;
+}
+
+GenericCurve3* SecondOrderHyperbolicArc::getImage(){
+    return _image;
 }
 
 SecondOrderHyperbolicArc* SecondOrderHyperbolicArc::preserveContinuity(GLuint index,int axis,GLdouble value){

@@ -123,12 +123,10 @@ namespace cagd
             if(arcOrPatch == 0)
             {
                 renderArcs();
-                renderOtherArcs();
             }
             else
             {
                 renderPatches();
-                renderOtherPatches();
             }
 
 
@@ -481,22 +479,25 @@ namespace cagd
 
     void GLWidget::setArcPointX(double value)
     {
-        arcs[selectedArc][selectedArcPoint][0] = value;
-        updateCurrentArcImage();
+        (*arcs[selectedArc])[selectedArcPoint][0] = value;
+        updateNthArcImage(selectedArc);
+        updateArcNeighbors(selectedArc);
         update();
     }
 
     void GLWidget::setArcPointY(double value)
     {
-        arcs[selectedArc][selectedArcPoint][1] = value;
-        updateCurrentArcImage();
+        (*arcs[selectedArc])[selectedArcPoint][1] = value;
+        updateNthArcImage(selectedArc);
+        updateArcNeighbors(selectedArc);
         update();
     }
 
     void GLWidget::setArcPointZ(double value)
     {
-        arcs[selectedArc][selectedArcPoint][2] = value;
-        updateCurrentArcImage();
+        (*arcs[selectedArc])[selectedArcPoint][2] = value;
+        updateNthArcImage(selectedArc);
+        updateArcNeighbors(selectedArc);
         update();
     }
 
@@ -513,9 +514,9 @@ namespace cagd
 
     void GLWidget::setArcAlpha(double value)
     {
-        for(int i = 0; i < numberOfArcs; i++)
+        for(int i = 0; i < arcs.GetColumnCount(); i++)
         {
-            arcs[i].SetAlpha(value);
+            arcs[i]->SetAlpha(value);
             updateArcs();
         }
         update();
@@ -534,11 +535,11 @@ namespace cagd
 
 
         arcs.ResizeColumns(numberOfArcs);
-        arcImages.ResizeColumns(numberOfArcs);
         GLdouble offsetX = 3;
         GLdouble offsetY = -2;
         for(int i = 0; i < numberOfArcs; i++)
         {
+            arcs[i] = new SecondOrderHyperbolicArc();
             GLdouble offsetXNow = offsetX * (i % 3);
             GLdouble offsetYNow = offsetY * (i / 3);
             ColumnMatrix<DCoordinate3> points_to_interpolate(4);
@@ -547,13 +548,15 @@ namespace cagd
             points_to_interpolate[2] = DCoordinate3(-2.66 + offsetXNow, 1.33 + offsetYNow, 0);
             points_to_interpolate[3] = DCoordinate3(-2.5 + offsetXNow, 1.33 + offsetYNow, 0);
 
-            if (arcs[i].UpdateDataForInterpolation(arcVKnotVector, points_to_interpolate))
+            if (arcs[i]->UpdateDataForInterpolation(arcVKnotVector, points_to_interpolate))
             {
-                arcImages[i] = arcs[i].GenerateImage(2, 100, GL_STATIC_DRAW);
-                arcs[i].UpdateVertexBufferObjectsOfData();
+                GenericCurve3 *img = arcs[i]->GenerateImage(2, 100, GL_STATIC_DRAW);
+                arcs[i]->UpdateVertexBufferObjectsOfData();
 
-                if (arcImages[i])
-                    arcImages[i]->UpdateVertexBufferObjects(scaleArcDerivatives);
+
+                if (img)
+                    img->UpdateVertexBufferObjects(scaleArcDerivatives);
+                arcs[i]->setImage(img);
             }
         }
     }
@@ -561,63 +564,41 @@ namespace cagd
     void GLWidget::updateArcs(){
         for(int i = 0; i < numberOfArcs; i++)
         {
-            arcImages[i]->UpdateVertexBufferObjects(scaleArcDerivatives);
+            arcs[i]->getImage()->UpdateVertexBufferObjects(scaleArcDerivatives);
         }
     }
 
-    bool GLWidget::updateCurrentArcImage()
-    {
 
-        if (!arcs[selectedArc].UpdateVertexBufferObjectsOfData())
+    bool GLWidget::updateNthArcImage(int n){
+        if (!arcs[n]->UpdateVertexBufferObjectsOfData())
         {
             return false;
         }
 
-        // generating image
-        if (arcImages[selectedArc])
+        if (arcs[n]->getImage())
         {
-            delete arcImages[selectedArc];
+            delete arcs[n]->getImage();
         }
 
 
-        arcImages[selectedArc] = arcs[selectedArc].GenerateImage(2, 100, GL_STATIC_DRAW);
+        GenericCurve3 *img = arcs[n]->GenerateImage(2, 100, GL_STATIC_DRAW);
 
-        if (!arcImages[selectedArc] || !arcImages[selectedArc]->UpdateVertexBufferObjects())
+        arcs[n]->setImage(img);
+
+        if (!img || !img->UpdateVertexBufferObjects())
         {
             return false;
         }
+
+
         return true;
-    }
-
-    bool GLWidget::updateSelectedJoiningArcImage()
-    {
-
-        if (!arcs[selectedJoiningArc].UpdateVertexBufferObjectsOfData())
-        {
-            return false;
-        }
-
-        // generating image
-        if (arcImages[selectedJoiningArc])
-        {
-            delete arcImages[selectedJoiningArc];
-        }
-
-
-        arcImages[selectedJoiningArc] = arcs[selectedJoiningArc].GenerateImage(2, 100, GL_STATIC_DRAW);
-
-        if (!arcImages[selectedJoiningArc] || !arcImages[selectedJoiningArc]->UpdateVertexBufferObjects())
-        {
-            return false;
-        }
-        return true;
-    }
+     }
 
     void GLWidget::renderArcs()
     {
         glPushMatrix();
 
-        DCoordinate3 sp = arcs[selectedArc][selectedArcPoint];
+        DCoordinate3 sp = (*arcs[selectedArc])[selectedArcPoint];
         glPointSize(10.0f);
         glColor3f(0.0f, 1.0f, 0.0f);
         glBegin (GL_POINTS);
@@ -625,7 +606,7 @@ namespace cagd
         glEnd ();
         glFlush();
 
-        for(int i = 0; i < numberOfArcs; i++)
+        for(int i = 0; i < arcs.GetColumnCount(); i++)
         {
 
             glDisable(GL_LIGHTING);
@@ -633,67 +614,39 @@ namespace cagd
             if (showArcControlPolygon)
             {
                 glColor3f(1.0f, 0.0f, 0.0f);
-                arcs[i].RenderData(GL_LINE_STRIP);
+                arcs[i]->RenderData(GL_LINE_STRIP);
             }
 
             if (showArcDataPoints)
-            {
-                glPointSize(10.0);
-                arcs[i].RenderData(GL_POINTS);
-            }
-
-            glColor3f(colors[i][0], colors[i][1], colors[i][2]);
-            arcImages[i]->RenderDerivatives(0, GL_LINE_STRIP);
-
-            if (showArcDerivative1)
-            {
-                glColor3f(0.0f, 0.5f, 0.0f);
-                arcImages[i]->RenderDerivatives(1, GL_LINES);
-            }
-
-            if (showArcDerivative2)
-            {
-                glColor3f(0.0f, 0.0f, 0.5f);
-                arcImages[i]->RenderDerivatives(2, GL_LINES);
-            }
-        }
-
-
-        glPopMatrix();
-    }
-
-    void GLWidget::renderOtherArcs(){
-        glPushMatrix();
-        for(int i = 0; i < otherArcs.size(); i++)
-        {
-
-            glDisable(GL_LIGHTING);
-
-            if (showArcControlPolygon)
             {
                 glColor3f(1.0f, 0.0f, 0.0f);
-                otherArcs[i].RenderData(GL_LINE_STRIP);
-            }
-
-            if (showArcDataPoints)
-            {
                 glPointSize(10.0);
-                otherArcs[i].RenderData(GL_POINTS);
+                arcs[i]->RenderData(GL_POINTS);
             }
 
-            glColor3f(1.0f, 0.0f, 0.0f);
-            otherArcImages[i]->RenderDerivatives(0, GL_LINE_STRIP);
+            if(i == selectedArc){
+                glColor3f(0.0f, 0.0f, 1.0f);
+            }
+            else if(i == selectedJoiningArc){
+                glColor3f(0.5f, 0.5f, 0.0f);
+            }
+            else {
+                glColor3f(1.0f, 1.0f, 1.0f);
+            }
+
+            arcs[i]->getImage()->RenderDerivatives(0, GL_LINE_STRIP);
+
 
             if (showArcDerivative1)
             {
                 glColor3f(0.0f, 0.5f, 0.0f);
-                otherArcImages[i]->RenderDerivatives(1, GL_LINES);
+                arcs[i]->getImage()->RenderDerivatives(1, GL_LINES);
             }
 
             if (showArcDerivative2)
             {
                 glColor3f(0.0f, 0.0f, 0.5f);
-                otherArcImages[i]->RenderDerivatives(2, GL_LINES);
+                arcs[i]->getImage()->RenderDerivatives(2, GL_LINES);
             }
         }
 
@@ -701,72 +654,177 @@ namespace cagd
         glPopMatrix();
     }
 
+
+    //TODO
     void GLWidget::extendArcLeft(){
-        SecondOrderHyperbolicArc* a = arcs[selectedArc].extendLeft();
-        otherArcs.push_back(*a);
-        GenericCurve3* i = a->GenerateImage(2, 100, GL_STATIC_DRAW);
-        i->UpdateVertexBufferObjects();
-        otherArcImages.push_back(i);
+        if(arcs[selectedArc]->left){
+            return;
+        }
+        int n = arcs.GetColumnCount();
+        arcs.ResizeColumns(n+1);
+        SecondOrderHyperbolicArc* a = arcs[selectedArc]->extendLeft();
+        arcs[n] = a;
+        updateNthArcImage(n);
+        emit setN(n);
         update();
     }
 
+    //TODO: eredeti ARCokhoz legyen hozzaadva
     void GLWidget::extendArcRight(){
-        SecondOrderHyperbolicArc* a = arcs[selectedArc].extendRight();
-        otherArcs.push_back(*a);
-        GenericCurve3* i = a->GenerateImage(2, 100, GL_STATIC_DRAW);
-        i->UpdateVertexBufferObjects();
-        otherArcImages.push_back(i);
+        if(arcs[selectedArc]->right){
+            return;
+        }
+        int n = arcs.GetColumnCount();
+        arcs.ResizeColumns(n+1);
+
+        SecondOrderHyperbolicArc* a = arcs[selectedArc]->extendRight();
+        arcs[n] = a;
+
+        updateNthArcImage(n);
+        emit setN(n);
         update();
     }
 
     void GLWidget::mergeArcs(){
+        if(selectedArc == selectedJoiningArc){
+            return;
+        }
         switch(selectedArcJoinType){
             case 0:
-                arcs[selectedArc].mergeRightRight(&arcs[selectedJoiningArc]);
+                if(arcs[selectedArc]->right || arcs[selectedJoiningArc]->right){
+                    return;
+                }
+                arcs[selectedArc]->mergeRightRight(arcs[selectedJoiningArc]);
                 break;
             case 1:
-                arcs[selectedArc].mergeLeftLeft(&arcs[selectedJoiningArc]);
+                if(arcs[selectedArc]->left || arcs[selectedJoiningArc]->left){
+                    return;
+                }
+                arcs[selectedArc]->mergeLeftLeft(arcs[selectedJoiningArc]);
                 break;
             case 2:
-                arcs[selectedArc].mergeRightLeft(&arcs[selectedJoiningArc]);
+                if(arcs[selectedArc]->right || arcs[selectedJoiningArc]->left){
+                    return;
+                }
+                arcs[selectedArc]->mergeRightLeft(arcs[selectedJoiningArc]);
                 break;
             case 3:
-                arcs[selectedArc].mergeLeftRight(&arcs[selectedJoiningArc]);
+                if(arcs[selectedArc]->left || arcs[selectedJoiningArc]->right){
+                    return;
+                }
+                arcs[selectedArc]->mergeLeftRight(arcs[selectedJoiningArc]);
                 break;
         }
 
-        updateCurrentArcImage();
-        updateSelectedJoiningArcImage();
+        updateNthArcImage(selectedArc);
+        updateNthArcImage(selectedJoiningArc);
+        sendArcPointCoordinates();
         update();
     }
 
+    void GLWidget::updateArcNeighbors(int n){
+        if(arcs[n]->left){
+            if(arcs[n] == arcs[n]->left->left){
+                arcs[n]->left->setPoint(0, arcs[n]->getPoint(0));
+                arcs[n]->left->setPoint(1, 2 * arcs[n]->getPoint(0) - arcs[n]->getPoint(1));
+            }
+            else{
+                arcs[n]->left->setPoint(3, arcs[n]->getPoint(0));
+                arcs[n]->left->setPoint(2, 2 * arcs[n]->getPoint(0) - arcs[n]->getPoint(1));
+            }
+            //update left arc image
+            arcs[n]->left->UpdateVertexBufferObjectsOfData();
+
+            if (arcs[n]->left->getImage())
+            {
+                delete arcs[n]->left->getImage();
+            }
+
+
+            GenericCurve3 *img = arcs[n]->left->GenerateImage(2, 100, GL_STATIC_DRAW);
+
+            arcs[n]->left->setImage(img);
+
+            if (!img || !img->UpdateVertexBufferObjects())
+            {
+                   cout << "HIBA A UPDATEARCNEIGHBORS1" << endl;
+            }
+
+
+        }
+        if(arcs[n]->right){
+            if(arcs[n] == arcs[n]->right->left){
+                arcs[n]->right->setPoint(0, arcs[n]->getPoint(3));
+                arcs[n]->right->setPoint(1, 2 * arcs[n]->getPoint(3) - arcs[n]->getPoint(2));
+            }
+            else{
+                arcs[n]->right->setPoint(3, arcs[n]->getPoint(3));
+                arcs[n]->right->setPoint(2, 2 * arcs[n]->getPoint(3) - arcs[n]->getPoint(2));
+            }
+
+            //update left arc image
+            arcs[n]->right->UpdateVertexBufferObjectsOfData();
+
+            if (arcs[n]->right->getImage())
+            {
+                delete arcs[n]->right->getImage();
+            }
+
+
+            GenericCurve3 *img = arcs[n]->right->GenerateImage(2, 100, GL_STATIC_DRAW);
+
+            arcs[n]->right->setImage(img);
+
+            if (!img || !img->UpdateVertexBufferObjects())
+            {
+                   cout << "HIBA A UPDATEARCNEIGHBORS1" << endl;
+            }
+        }
+    }
+
     void GLWidget::joinArcs(){
+        if(selectedArc == selectedJoiningArc){
+            return;
+        }
         SecondOrderHyperbolicArc* a = nullptr;
         switch(selectedArcJoinType){
             case 0:
-                a = arcs[selectedArc].joinRightRight(&arcs[selectedJoiningArc]);
+                if(arcs[selectedArc]->right || arcs[selectedJoiningArc]->right){
+                    return;
+                }
+                a = arcs[selectedArc]->joinRightRight(arcs[selectedJoiningArc]);
                 break;
             case 1:
-                a = arcs[selectedArc].joinLeftLeft(&arcs[selectedJoiningArc]);
+                if(arcs[selectedArc]->left || arcs[selectedJoiningArc]->left){
+                    return;
+                }
+                a = arcs[selectedArc]->joinLeftLeft(arcs[selectedJoiningArc]);
                 break;
             case 2:
-                a = arcs[selectedArc].joinRightLeft(&arcs[selectedJoiningArc]);
+                if(arcs[selectedArc]->right || arcs[selectedJoiningArc]->left){
+                    return;
+                }
+                a = arcs[selectedArc]->joinRightLeft(arcs[selectedJoiningArc]);
                 break;
             case 3:
-                a = arcs[selectedArc].joinLeftRight(&arcs[selectedJoiningArc]);
+                if(arcs[selectedArc]->left || arcs[selectedJoiningArc]->right){
+                    return;
+                }
+                a = arcs[selectedArc]->joinLeftRight(arcs[selectedJoiningArc]);
                 break;
         }
-        otherArcs.push_back(*a);
-        GenericCurve3* i = a->GenerateImage(2, 100, GL_STATIC_DRAW);
-        i->UpdateVertexBufferObjects();
-        otherArcImages.push_back(i);
+        int n = arcs.GetColumnCount();
+        arcs.ResizeColumns(n+1);
+        arcs[n] = a;
+        updateNthArcImage(n);
+        emit setN(n);
         update();
 
     }
 
     void GLWidget::sendArcPointCoordinates()
     {
-        DCoordinate3 sp = arcs[selectedArc][selectedArcPoint];
+        DCoordinate3 sp = (*arcs[selectedArc])[selectedArcPoint];
         emit sendArcPointX(sp[0]);
         emit sendArcPointY(sp[1]);
         emit sendArcPointZ(sp[2]);
@@ -932,9 +990,9 @@ namespace cagd
         }
 
         patches.ResizeColumns(numberOfPatches);
-        beforeInterpolation.ResizeColumns(numberOfPatches);
+//        beforeInterpolation.ResizeColumns(numberOfPatches);
 
-        afterInterpolation.ResizeColumns(numberOfPatches);
+//        afterInterpolation.ResizeColumns(numberOfPatches);
         uKnotVectors.ResizeColumns(numberOfPatches);
         vKnotVectors.ResizeColumns(numberOfPatches);
         uCurves.ResizeColumns(numberOfPatches);
@@ -971,11 +1029,11 @@ namespace cagd
             patches[i]->UpdateVertexBufferObjectsOfData();
 
 
-            beforeInterpolation[i] = patches[i]->GenerateImage(30, 30, GL_STATIC_DRAW);
-            if(beforeInterpolation[i])
-            {
-                beforeInterpolation[i]->UpdateVertexBufferObjects();
-            }
+//            beforeInterpolation[i] = patches[i]->GenerateImage(30, 30, GL_STATIC_DRAW);
+//            if(beforeInterpolation[i])
+//            {
+//                beforeInterpolation[i]->UpdateVertexBufferObjects();
+//            }
 
             uKnotVectors[i].ResizeColumns(4);
             uKnotVectors[i](0) = 0.0;
@@ -993,13 +1051,13 @@ namespace cagd
                 for (GLuint column = 0; column < 4; ++column)
                     patches[i]->GetData(row, column, _data_points_to_interpolate[i](row, column));
             SecHypPatch3 p(*patches[i]);
-            if (p.UpdateDataForInterpolation(uKnotVectors[i], vKnotVectors[i], _data_points_to_interpolate[i]))
-            {
-                afterInterpolation[i] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
+//            if (p.UpdateDataForInterpolation(uKnotVectors[i], vKnotVectors[i], _data_points_to_interpolate[i]))
+//            {
+//                afterInterpolation[i] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
 
-                if(afterInterpolation[i])
-                    afterInterpolation[i]->UpdateVertexBufferObjects();
-            }
+//                if(afterInterpolation[i])
+//                    afterInterpolation[i]->UpdateVertexBufferObjects();
+//            }
 
             uCurves[i] = patches[i]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
             vCurves[i] = patches[i]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
@@ -1025,20 +1083,20 @@ namespace cagd
 
             patches[k]->UpdateVertexBufferObjectsOfData();
 
-            beforeInterpolation[k] = patches[k]->GenerateImage(30, 30, GL_STATIC_DRAW);
-            if(beforeInterpolation[k])
-            {
-                beforeInterpolation[k]->UpdateVertexBufferObjects();
-            }
+//            beforeInterpolation[k] = patches[k]->GenerateImage(30, 30, GL_STATIC_DRAW);
+//            if(beforeInterpolation[k])
+//            {
+//                beforeInterpolation[k]->UpdateVertexBufferObjects();
+//            }
 
-            SecHypPatch3 p(*patches[k]);
-            if (p.UpdateDataForInterpolation(uKnotVectors[k], vKnotVectors[k], _data_points_to_interpolate[k]))
-            {
-                afterInterpolation[k] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
+//            SecHypPatch3 p(*patches[k]);
+//            if (p.UpdateDataForInterpolation(uKnotVectors[k], vKnotVectors[k], _data_points_to_interpolate[k]))
+//            {
+//                afterInterpolation[k] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
 
-                if(afterInterpolation[k])
-                    afterInterpolation[k]->UpdateVertexBufferObjects();
-            }
+//                if(afterInterpolation[k])
+//                    afterInterpolation[k]->UpdateVertexBufferObjects();
+//            }
 
             uCurves[k] = patches[k]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
             vCurves[k] = patches[k]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
@@ -1063,20 +1121,20 @@ namespace cagd
 
         patches[selectedPatch]->UpdateVertexBufferObjectsOfData();
 
-        beforeInterpolation[selectedPatch] = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
-        if(beforeInterpolation[selectedPatch])
-        {
-            beforeInterpolation[selectedPatch]->UpdateVertexBufferObjects();
-        }
+//        beforeInterpolation[selectedPatch] = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
+//        if(beforeInterpolation[selectedPatch])
+//        {
+//            beforeInterpolation[selectedPatch]->UpdateVertexBufferObjects();
+//        }
 
-        SecHypPatch3 p(*patches[selectedPatch]);
-        if (p.UpdateDataForInterpolation(uKnotVectors[selectedPatch], vKnotVectors[selectedPatch], _data_points_to_interpolate[selectedPatch]))
-        {
-            afterInterpolation[selectedPatch] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
+//        SecHypPatch3 p(*patches[selectedPatch]);
+//        if (p.UpdateDataForInterpolation(uKnotVectors[selectedPatch], vKnotVectors[selectedPatch], _data_points_to_interpolate[selectedPatch]))
+//        {
+//            afterInterpolation[selectedPatch] = p.GenerateImage(30, 30, GL_STATIC_DRAW);
 
-            if(afterInterpolation[selectedPatch])
-                afterInterpolation[selectedPatch]->UpdateVertexBufferObjects();
-        }
+//            if(afterInterpolation[selectedPatch])
+//                afterInterpolation[selectedPatch]->UpdateVertexBufferObjects();
+//        }
 
         uCurves[selectedPatch] = patches[selectedPatch]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
         vCurves[selectedPatch] = patches[selectedPatch]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
@@ -1194,115 +1252,18 @@ namespace cagd
 
                 glPointSize(1.0);
                 glColor3f(colors[i][0], colors[i][1], colors[i][2]);
-                if(beforeInterpolation[i])
-                {
-                    materials[selectedMaterial[i]].Apply();
-                    beforeInterpolation[i]->Render();
-                }
-
-                glColor3f(0.0f, 1.0f, 0.0f);
-                if(afterInterpolation[i] && showInterpolatingSurface)
-                {
-
-                    glEnable(GL_LIGHTING);
-                    enableSelectedLight();
-                    glEnable(GL_BLEND);
-                    glDepthMask(GL_FALSE);
-                    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-                        MatFBEmerald.Apply();
-                        afterInterpolation[i]->Render();
-                    glDepthMask(GL_TRUE);
-                    glDisable(GL_BLEND);
-                    disableSelectedLight();
-                    glDisable(GL_LIGHTING);
-                }
-
-
-                if (turnOnLight)
-                {
-                    disableSelectedLight();
-                    glDisable(GL_LIGHTING);
-                }
-
-                if (showNormalVectors)
-                {
-                    beforeInterpolation[i]->RenderNormals();
-                }
-            }
-        glPopMatrix();
-    }
-
-    void GLWidget::renderOtherPatches()
-    {
-        glPushMatrix();
-
-            for(int i = 0; i < otherPatches.size(); i++)
-            {
-                glDisable(GL_LIGHTING);
-
-                if (showPatchControlPolygon)
-                {
-                    glColor3f(1.0f, 0.0f, 0.0f);
-                    patches[i]->RenderData();
-                }
-
-                if (showPatchDataPoints)
-                {
-                    glColor4f(0.5f, 1.0f, 0.5f, 0.4f);
-                    glPointSize(10.0);
-                    patches[i]->RenderData(GL_POINTS);
-                }
-
-                glPointSize(5.0f);
-                for(GLuint j = 0; j < 4; ++j){
-                    if(showUIsometricCurves)
-                    {
-                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
-                        (*uCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
-                    }
-
-                    if(showIsometricDerivatives)
-                    {
-                        glColor3f(0.0f, 0.5f, 0.0f);
-                        (*uCurves[i])[j]->RenderDerivatives(1, GL_LINES);
-                    }
-                }
-
-
-                for(GLuint j = 0; j < 4; ++j){
-                    if(showVIsometricCurves)
-                    {
-                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
-                        (*vCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
-                    }
-
-                    if(showIsometricDerivatives)
-                    {
-                        glColor3f(0.0f, 0.5f, 0.0f);
-                        (*vCurves[i])[j]->RenderDerivatives(1, GL_LINES);
-                    }
-                }
-
-                if(turnOnLight)
-                {
-
-                    glEnable(GL_LIGHTING);
-                    enableSelectedLight();
-                }
-
-                glPointSize(1.0);
-                glColor3f(1.0f, 0.0f, 0.0f);
 //                if(beforeInterpolation[i])
 //                {
-//
+//                    materials[selectedMaterial[i]].Apply();
 //                    beforeInterpolation[i]->Render();
 //                }
-                MatFBBrass.Apply();
-                otherPatches[i].GetImage()->Render();
 
 //                glColor3f(0.0f, 1.0f, 0.0f);
 //                if(afterInterpolation[i] && showInterpolatingSurface)
 //                {
+
+//                    glEnable(GL_LIGHTING);
+//                    enableSelectedLight();
 //                    glEnable(GL_BLEND);
 //                    glDepthMask(GL_FALSE);
 //                    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
@@ -1310,16 +1271,25 @@ namespace cagd
 //                        afterInterpolation[i]->Render();
 //                    glDepthMask(GL_TRUE);
 //                    glDisable(GL_BLEND);
+//                    disableSelectedLight();
+//                    glDisable(GL_LIGHTING);
 //                }
+
 
                 if (turnOnLight)
                 {
                     disableSelectedLight();
                     glDisable(GL_LIGHTING);
                 }
+
+//                if (showNormalVectors)
+//                {
+//                    beforeInterpolation[i]->RenderNormals();
+//                }
             }
         glPopMatrix();
     }
+
 
     void GLWidget::sendPatchPointCoordinates()
     {
@@ -1378,11 +1348,10 @@ namespace cagd
                 break;
         }
 
-        beforeInterpolation[selectedPatch] = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
-        beforeInterpolation[selectedPatch]->UpdateVertexBufferObjects();
-        beforeInterpolation[selectedJoiningPatch] = patches[selectedJoiningPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
-        beforeInterpolation[selectedJoiningPatch]->UpdateVertexBufferObjects();
-        //TODO: afterInterpolation
+//        beforeInterpolation[selectedPatch] = patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
+//        beforeInterpolation[selectedPatch]->UpdateVertexBufferObjects();
+//        beforeInterpolation[selectedJoiningPatch] = patches[selectedJoiningPatch]->GenerateImage(30, 30, GL_STATIC_DRAW);
+//        beforeInterpolation[selectedJoiningPatch]->UpdateVertexBufferObjects();
 
         update();
     };

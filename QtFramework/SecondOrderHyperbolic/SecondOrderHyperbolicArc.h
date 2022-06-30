@@ -26,7 +26,7 @@ namespace cagd
         GLdouble f2_2(GLdouble t) const;
         GLdouble f3_2(GLdouble t) const;
 
-        GenericCurve3* _image;
+        GenericCurve3* _image = nullptr;
 
     public:
         // Variables for the interaction with curves

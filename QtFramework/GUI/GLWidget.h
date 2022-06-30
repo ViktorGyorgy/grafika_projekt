@@ -68,8 +68,7 @@ namespace cagd
         //everything with arcs
         int numberOfArcs = 9;
         float scaleArcDerivatives = 1;
-        RowMatrix<SecondOrderHyperbolicArc> arcs;
-        RowMatrix<GenericCurve3*> arcImages;
+        RowMatrix<SecondOrderHyperbolicArc*> arcs;
         int showArcDerivative1 = 0;
         int showArcDerivative2 = 0;
         int showArcControlPolygon = 0;
@@ -78,9 +77,6 @@ namespace cagd
         int selectedArcPoint = 0;
         int selectedArcJoinType = 0;
         int selectedJoiningArc = 0;
-
-        vector<SecondOrderHyperbolicArc> otherArcs;
-        vector<GenericCurve3*> otherArcImages;
 
         //patches
         int numberOfPatches = 9;
@@ -98,7 +94,6 @@ namespace cagd
 
         float scalePatchDerivatives = 1;
         RowMatrix<SecHypPatch3*> patches;
-        RowMatrix<TriangulatedMesh3*> beforeInterpolation, afterInterpolation;
         RowMatrix<RowMatrix<GLdouble>>	uKnotVectors;
         RowMatrix<ColumnMatrix<GLdouble>> vKnotVectors;
         RowMatrix<RowMatrix<GenericCurve3*> *> uCurves, vCurves;
@@ -128,8 +123,8 @@ namespace cagd
         //arc stuff
         void createArcs();
         void updateArcs();
+        bool updateNthArcImage(int);
         void renderArcs();
-        void renderOtherArcs();
         void sendArcPointCoordinates();
 
 
@@ -137,7 +132,6 @@ namespace cagd
         //patches
         void createPatches();
         void renderPatches();
-        void renderOtherPatches();
         void sendPatchPointCoordinates();
 
     public slots:
@@ -165,14 +159,15 @@ namespace cagd
         void setArcPointX(double value);
         void setArcPointY(double value);
         void setArcPointZ(double value);
-        bool updateCurrentArcImage();
-        bool updateSelectedJoiningArcImage();
+
+
         void setSelectedArcJoinType(int value);
         void setSelectedJoiningArc(int value);
         void setArcAlpha(double value);
 
         //arc join merge extend
         void extendArcLeft();
+        void updateArcNeighbors(int);
         void extendArcRight();
         void mergeArcs();
         void joinArcs();
@@ -220,5 +215,7 @@ namespace cagd
         void sendPatchPointX(double);
         void sendPatchPointY(double);
         void sendPatchPointZ(double);
+
+        void setN(int);
     };
 }

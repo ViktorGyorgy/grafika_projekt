@@ -19,6 +19,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QToolBox>
 #include <QtWidgets/QWidget>
 
@@ -61,11 +62,9 @@ public:
     QLabel *label_13;
     QDoubleSpinBox *doubleSpinBoxArcZ;
     QLabel *label_10;
-    QComboBox *comboBoxSelectedArc;
     QCheckBox *checkBoxShowArcControlPolygon;
     QCheckBox *checkBoxShowArcDataPoints;
     QLabel *label_22;
-    QComboBox *comboBoxSelectedJoiningArc;
     QComboBox *comboBoxSelectedArcJoinType;
     QLabel *label_23;
     QPushButton *pushButtonExtendLeftArc;
@@ -74,52 +73,52 @@ public:
     QPushButton *pushButtonJoinArcs;
     QLabel *label_26;
     QDoubleSpinBox *doubleSpinBoxArcAlpha;
+    QSpinBox *spinBoxSelectedArc;
+    QSpinBox *spinBoxJoiningArc;
     QWidget *page_2;
     QWidget *formLayoutWidget_2;
     QFormLayout *formLayout_3;
     QLabel *label_14;
-    QComboBox *comboBoxSelectedPatch;
     QLabel *label_15;
     QComboBox *comboBoxSelectedPatchPoint;
+    QLabel *label_19;
+    QDoubleSpinBox *doubleSpinBoxPatchX;
+    QLabel *label_20;
+    QDoubleSpinBox *doubleSpinBoxPatchY;
+    QLabel *label_21;
+    QDoubleSpinBox *doubleSpinBoxPatchZ;
     QCheckBox *checkBoxShowPatchControlPolygon;
     QCheckBox *checkBoxShowPatchDataPoints;
     QCheckBox *checkBoxShowInterpolatingSurface;
     QCheckBox *checkBoxShowNormalVectors;
     QLabel *label_16;
-    QComboBox *comboBoxMaterial;
     QLabel *label_17;
     QComboBox *comboBoxLight;
+    QCheckBox *checkBoxApplyLight;
     QCheckBox *checkBoxShowPatchDerivatives;
     QCheckBox *checkBoxShowPatchPartialDerivatives;
     QLabel *label_18;
     QDoubleSpinBox *doubleSpinBoxScalePatchDerivatives;
-    QCheckBox *checkBoxApplyLight;
-    QLabel *label_19;
-    QLabel *label_20;
-    QLabel *label_21;
-    QDoubleSpinBox *doubleSpinBoxPatchX;
-    QDoubleSpinBox *doubleSpinBoxPatchY;
-    QDoubleSpinBox *doubleSpinBoxPatchZ;
-    QComboBox *comboBoxSelectedJoiningPatch;
-    QComboBox *comboBoxSelectedPatchJoinType;
     QLabel *label_24;
     QLabel *label_25;
+    QComboBox *comboBoxSelectedPatchJoinType;
     QPushButton *pushButtonMergePatches;
     QPushButton *pushButtonJoinPatches;
     QPushButton *pushButtonExtendWest;
     QPushButton *pushButtonExtendEast;
     QPushButton *pushButtonExtendNorth;
     QPushButton *pushButtonExtendSouth;
-    QDoubleSpinBox *doubleSpinBoxPatchUalpha;
-    QDoubleSpinBox *doubleSpinBoxPatchValpha;
     QLabel *label_27;
-    QLabel *label_28;
+    QDoubleSpinBox *doubleSpinBoxPatchUalpha;
+    QSpinBox *spinBoxSelectedPatch;
+    QComboBox *comboBoxMaterial;
+    QSpinBox *spinBoxJoiningPatch;
     QGroupBox *groupBox_2;
     QWidget *formLayoutWidget_3;
     QFormLayout *formLayout_4;
     QCheckBox *checkBoxShowIsoparametricCurvesU;
-    QCheckBox *checkBoxShowIsoparametricCurvesV;
     QCheckBox *checkBoxShowIsometricDerivatives;
+    QCheckBox *checkBoxShowIsoparametricCurvesV;
 
     void setupUi(QWidget *SideWidget)
     {
@@ -237,11 +236,11 @@ public:
         toolBox = new QToolBox(SideWidget);
         toolBox->setObjectName(QString::fromUtf8("toolBox"));
         toolBox->setEnabled(true);
-        toolBox->setGeometry(QRect(10, 290, 331, 701));
+        toolBox->setGeometry(QRect(10, 290, 331, 851));
         toolBox->setInputMethodHints(Qt::ImhNone);
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
-        page->setGeometry(QRect(0, 0, 331, 641));
+        page->setGeometry(QRect(0, 0, 331, 791));
         formLayoutWidget = new QWidget(page);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
         formLayoutWidget->setGeometry(QRect(10, 10, 311, 461));
@@ -329,20 +328,6 @@ public:
 
         formLayout_2->setWidget(7, QFormLayout::LabelRole, label_10);
 
-        comboBoxSelectedArc = new QComboBox(formLayoutWidget);
-        comboBoxSelectedArc->addItem(QString());
-        comboBoxSelectedArc->addItem(QString());
-        comboBoxSelectedArc->addItem(QString());
-        comboBoxSelectedArc->addItem(QString());
-        comboBoxSelectedArc->addItem(QString());
-        comboBoxSelectedArc->addItem(QString());
-        comboBoxSelectedArc->addItem(QString());
-        comboBoxSelectedArc->addItem(QString());
-        comboBoxSelectedArc->addItem(QString());
-        comboBoxSelectedArc->setObjectName(QString::fromUtf8("comboBoxSelectedArc"));
-
-        formLayout_2->setWidget(0, QFormLayout::FieldRole, comboBoxSelectedArc);
-
         checkBoxShowArcControlPolygon = new QCheckBox(formLayoutWidget);
         checkBoxShowArcControlPolygon->setObjectName(QString::fromUtf8("checkBoxShowArcControlPolygon"));
 
@@ -357,20 +342,6 @@ public:
         label_22->setObjectName(QString::fromUtf8("label_22"));
 
         formLayout_2->setWidget(8, QFormLayout::LabelRole, label_22);
-
-        comboBoxSelectedJoiningArc = new QComboBox(formLayoutWidget);
-        comboBoxSelectedJoiningArc->addItem(QString());
-        comboBoxSelectedJoiningArc->addItem(QString());
-        comboBoxSelectedJoiningArc->addItem(QString());
-        comboBoxSelectedJoiningArc->addItem(QString());
-        comboBoxSelectedJoiningArc->addItem(QString());
-        comboBoxSelectedJoiningArc->addItem(QString());
-        comboBoxSelectedJoiningArc->addItem(QString());
-        comboBoxSelectedJoiningArc->addItem(QString());
-        comboBoxSelectedJoiningArc->addItem(QString());
-        comboBoxSelectedJoiningArc->setObjectName(QString::fromUtf8("comboBoxSelectedJoiningArc"));
-
-        formLayout_2->setWidget(8, QFormLayout::FieldRole, comboBoxSelectedJoiningArc);
 
         comboBoxSelectedArcJoinType = new QComboBox(formLayoutWidget);
         comboBoxSelectedArcJoinType->addItem(QString());
@@ -420,13 +391,25 @@ public:
 
         formLayout_2->setWidget(12, QFormLayout::FieldRole, doubleSpinBoxArcAlpha);
 
+        spinBoxSelectedArc = new QSpinBox(formLayoutWidget);
+        spinBoxSelectedArc->setObjectName(QString::fromUtf8("spinBoxSelectedArc"));
+        spinBoxSelectedArc->setMaximum(8);
+
+        formLayout_2->setWidget(0, QFormLayout::FieldRole, spinBoxSelectedArc);
+
+        spinBoxJoiningArc = new QSpinBox(formLayoutWidget);
+        spinBoxJoiningArc->setObjectName(QString::fromUtf8("spinBoxJoiningArc"));
+        spinBoxJoiningArc->setMaximum(8);
+
+        formLayout_2->setWidget(8, QFormLayout::FieldRole, spinBoxJoiningArc);
+
         toolBox->addItem(page, QString::fromUtf8("Arcs"));
         page_2 = new QWidget();
         page_2->setObjectName(QString::fromUtf8("page_2"));
-        page_2->setGeometry(QRect(0, 0, 331, 641));
+        page_2->setGeometry(QRect(0, 0, 331, 791));
         formLayoutWidget_2 = new QWidget(page_2);
         formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
-        formLayoutWidget_2->setGeometry(QRect(10, 10, 317, 526));
+        formLayoutWidget_2->setGeometry(QRect(0, 10, 331, 675));
         formLayout_3 = new QFormLayout(formLayoutWidget_2);
         formLayout_3->setObjectName(QString::fromUtf8("formLayout_3"));
         formLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -434,20 +417,6 @@ public:
         label_14->setObjectName(QString::fromUtf8("label_14"));
 
         formLayout_3->setWidget(0, QFormLayout::LabelRole, label_14);
-
-        comboBoxSelectedPatch = new QComboBox(formLayoutWidget_2);
-        comboBoxSelectedPatch->addItem(QString());
-        comboBoxSelectedPatch->addItem(QString());
-        comboBoxSelectedPatch->addItem(QString());
-        comboBoxSelectedPatch->addItem(QString());
-        comboBoxSelectedPatch->addItem(QString());
-        comboBoxSelectedPatch->addItem(QString());
-        comboBoxSelectedPatch->addItem(QString());
-        comboBoxSelectedPatch->addItem(QString());
-        comboBoxSelectedPatch->addItem(QString());
-        comboBoxSelectedPatch->setObjectName(QString::fromUtf8("comboBoxSelectedPatch"));
-
-        formLayout_3->setWidget(0, QFormLayout::FieldRole, comboBoxSelectedPatch);
 
         label_15 = new QLabel(formLayoutWidget_2);
         label_15->setObjectName(QString::fromUtf8("label_15"));
@@ -475,6 +444,45 @@ public:
 
         formLayout_3->setWidget(1, QFormLayout::FieldRole, comboBoxSelectedPatchPoint);
 
+        label_19 = new QLabel(formLayoutWidget_2);
+        label_19->setObjectName(QString::fromUtf8("label_19"));
+
+        formLayout_3->setWidget(2, QFormLayout::LabelRole, label_19);
+
+        doubleSpinBoxPatchX = new QDoubleSpinBox(formLayoutWidget_2);
+        doubleSpinBoxPatchX->setObjectName(QString::fromUtf8("doubleSpinBoxPatchX"));
+        doubleSpinBoxPatchX->setDecimals(3);
+        doubleSpinBoxPatchX->setMinimum(-99.989999999999995);
+        doubleSpinBoxPatchX->setSingleStep(0.100000000000000);
+
+        formLayout_3->setWidget(2, QFormLayout::FieldRole, doubleSpinBoxPatchX);
+
+        label_20 = new QLabel(formLayoutWidget_2);
+        label_20->setObjectName(QString::fromUtf8("label_20"));
+
+        formLayout_3->setWidget(3, QFormLayout::LabelRole, label_20);
+
+        doubleSpinBoxPatchY = new QDoubleSpinBox(formLayoutWidget_2);
+        doubleSpinBoxPatchY->setObjectName(QString::fromUtf8("doubleSpinBoxPatchY"));
+        doubleSpinBoxPatchY->setDecimals(3);
+        doubleSpinBoxPatchY->setMinimum(-99.989999999999995);
+        doubleSpinBoxPatchY->setSingleStep(0.100000000000000);
+
+        formLayout_3->setWidget(3, QFormLayout::FieldRole, doubleSpinBoxPatchY);
+
+        label_21 = new QLabel(formLayoutWidget_2);
+        label_21->setObjectName(QString::fromUtf8("label_21"));
+
+        formLayout_3->setWidget(4, QFormLayout::LabelRole, label_21);
+
+        doubleSpinBoxPatchZ = new QDoubleSpinBox(formLayoutWidget_2);
+        doubleSpinBoxPatchZ->setObjectName(QString::fromUtf8("doubleSpinBoxPatchZ"));
+        doubleSpinBoxPatchZ->setDecimals(3);
+        doubleSpinBoxPatchZ->setMinimum(-99.989999999999995);
+        doubleSpinBoxPatchZ->setSingleStep(0.100000000000000);
+
+        formLayout_3->setWidget(4, QFormLayout::FieldRole, doubleSpinBoxPatchZ);
+
         checkBoxShowPatchControlPolygon = new QCheckBox(formLayoutWidget_2);
         checkBoxShowPatchControlPolygon->setObjectName(QString::fromUtf8("checkBoxShowPatchControlPolygon"));
 
@@ -500,18 +508,6 @@ public:
 
         formLayout_3->setWidget(7, QFormLayout::LabelRole, label_16);
 
-        comboBoxMaterial = new QComboBox(formLayoutWidget_2);
-        comboBoxMaterial->addItem(QString());
-        comboBoxMaterial->addItem(QString());
-        comboBoxMaterial->addItem(QString());
-        comboBoxMaterial->addItem(QString());
-        comboBoxMaterial->addItem(QString());
-        comboBoxMaterial->addItem(QString());
-        comboBoxMaterial->addItem(QString());
-        comboBoxMaterial->setObjectName(QString::fromUtf8("comboBoxMaterial"));
-
-        formLayout_3->setWidget(7, QFormLayout::FieldRole, comboBoxMaterial);
-
         label_17 = new QLabel(formLayoutWidget_2);
         label_17->setObjectName(QString::fromUtf8("label_17"));
 
@@ -524,6 +520,11 @@ public:
         comboBoxLight->setObjectName(QString::fromUtf8("comboBoxLight"));
 
         formLayout_3->setWidget(8, QFormLayout::FieldRole, comboBoxLight);
+
+        checkBoxApplyLight = new QCheckBox(formLayoutWidget_2);
+        checkBoxApplyLight->setObjectName(QString::fromUtf8("checkBoxApplyLight"));
+
+        formLayout_3->setWidget(9, QFormLayout::LabelRole, checkBoxApplyLight);
 
         checkBoxShowPatchDerivatives = new QCheckBox(formLayoutWidget_2);
         checkBoxShowPatchDerivatives->setObjectName(QString::fromUtf8("checkBoxShowPatchDerivatives"));
@@ -548,72 +549,6 @@ public:
 
         formLayout_3->setWidget(11, QFormLayout::FieldRole, doubleSpinBoxScalePatchDerivatives);
 
-        checkBoxApplyLight = new QCheckBox(formLayoutWidget_2);
-        checkBoxApplyLight->setObjectName(QString::fromUtf8("checkBoxApplyLight"));
-
-        formLayout_3->setWidget(9, QFormLayout::LabelRole, checkBoxApplyLight);
-
-        label_19 = new QLabel(formLayoutWidget_2);
-        label_19->setObjectName(QString::fromUtf8("label_19"));
-
-        formLayout_3->setWidget(2, QFormLayout::LabelRole, label_19);
-
-        label_20 = new QLabel(formLayoutWidget_2);
-        label_20->setObjectName(QString::fromUtf8("label_20"));
-
-        formLayout_3->setWidget(3, QFormLayout::LabelRole, label_20);
-
-        label_21 = new QLabel(formLayoutWidget_2);
-        label_21->setObjectName(QString::fromUtf8("label_21"));
-
-        formLayout_3->setWidget(4, QFormLayout::LabelRole, label_21);
-
-        doubleSpinBoxPatchX = new QDoubleSpinBox(formLayoutWidget_2);
-        doubleSpinBoxPatchX->setObjectName(QString::fromUtf8("doubleSpinBoxPatchX"));
-        doubleSpinBoxPatchX->setDecimals(3);
-        doubleSpinBoxPatchX->setMinimum(-99.989999999999995);
-        doubleSpinBoxPatchX->setSingleStep(0.100000000000000);
-
-        formLayout_3->setWidget(2, QFormLayout::FieldRole, doubleSpinBoxPatchX);
-
-        doubleSpinBoxPatchY = new QDoubleSpinBox(formLayoutWidget_2);
-        doubleSpinBoxPatchY->setObjectName(QString::fromUtf8("doubleSpinBoxPatchY"));
-        doubleSpinBoxPatchY->setDecimals(3);
-        doubleSpinBoxPatchY->setMinimum(-99.989999999999995);
-        doubleSpinBoxPatchY->setSingleStep(0.100000000000000);
-
-        formLayout_3->setWidget(3, QFormLayout::FieldRole, doubleSpinBoxPatchY);
-
-        doubleSpinBoxPatchZ = new QDoubleSpinBox(formLayoutWidget_2);
-        doubleSpinBoxPatchZ->setObjectName(QString::fromUtf8("doubleSpinBoxPatchZ"));
-        doubleSpinBoxPatchZ->setDecimals(3);
-        doubleSpinBoxPatchZ->setMinimum(-99.989999999999995);
-        doubleSpinBoxPatchZ->setSingleStep(0.100000000000000);
-
-        formLayout_3->setWidget(4, QFormLayout::FieldRole, doubleSpinBoxPatchZ);
-
-        comboBoxSelectedJoiningPatch = new QComboBox(formLayoutWidget_2);
-        comboBoxSelectedJoiningPatch->addItem(QString());
-        comboBoxSelectedJoiningPatch->addItem(QString());
-        comboBoxSelectedJoiningPatch->addItem(QString());
-        comboBoxSelectedJoiningPatch->addItem(QString());
-        comboBoxSelectedJoiningPatch->addItem(QString());
-        comboBoxSelectedJoiningPatch->addItem(QString());
-        comboBoxSelectedJoiningPatch->addItem(QString());
-        comboBoxSelectedJoiningPatch->addItem(QString());
-        comboBoxSelectedJoiningPatch->addItem(QString());
-        comboBoxSelectedJoiningPatch->setObjectName(QString::fromUtf8("comboBoxSelectedJoiningPatch"));
-
-        formLayout_3->setWidget(12, QFormLayout::FieldRole, comboBoxSelectedJoiningPatch);
-
-        comboBoxSelectedPatchJoinType = new QComboBox(formLayoutWidget_2);
-        comboBoxSelectedPatchJoinType->addItem(QString());
-        comboBoxSelectedPatchJoinType->addItem(QString());
-        comboBoxSelectedPatchJoinType->addItem(QString());
-        comboBoxSelectedPatchJoinType->setObjectName(QString::fromUtf8("comboBoxSelectedPatchJoinType"));
-
-        formLayout_3->setWidget(13, QFormLayout::FieldRole, comboBoxSelectedPatchJoinType);
-
         label_24 = new QLabel(formLayoutWidget_2);
         label_24->setObjectName(QString::fromUtf8("label_24"));
 
@@ -623,6 +558,14 @@ public:
         label_25->setObjectName(QString::fromUtf8("label_25"));
 
         formLayout_3->setWidget(13, QFormLayout::LabelRole, label_25);
+
+        comboBoxSelectedPatchJoinType = new QComboBox(formLayoutWidget_2);
+        comboBoxSelectedPatchJoinType->addItem(QString());
+        comboBoxSelectedPatchJoinType->addItem(QString());
+        comboBoxSelectedPatchJoinType->addItem(QString());
+        comboBoxSelectedPatchJoinType->setObjectName(QString::fromUtf8("comboBoxSelectedPatchJoinType"));
+
+        formLayout_3->setWidget(13, QFormLayout::FieldRole, comboBoxSelectedPatchJoinType);
 
         pushButtonMergePatches = new QPushButton(formLayoutWidget_2);
         pushButtonMergePatches->setObjectName(QString::fromUtf8("pushButtonMergePatches"));
@@ -654,6 +597,11 @@ public:
 
         formLayout_3->setWidget(16, QFormLayout::FieldRole, pushButtonExtendSouth);
 
+        label_27 = new QLabel(formLayoutWidget_2);
+        label_27->setObjectName(QString::fromUtf8("label_27"));
+
+        formLayout_3->setWidget(17, QFormLayout::LabelRole, label_27);
+
         doubleSpinBoxPatchUalpha = new QDoubleSpinBox(formLayoutWidget_2);
         doubleSpinBoxPatchUalpha->setObjectName(QString::fromUtf8("doubleSpinBoxPatchUalpha"));
         doubleSpinBoxPatchUalpha->setMinimum(0.050000000000000);
@@ -663,31 +611,36 @@ public:
 
         formLayout_3->setWidget(17, QFormLayout::FieldRole, doubleSpinBoxPatchUalpha);
 
-        doubleSpinBoxPatchValpha = new QDoubleSpinBox(formLayoutWidget_2);
-        doubleSpinBoxPatchValpha->setObjectName(QString::fromUtf8("doubleSpinBoxPatchValpha"));
-        doubleSpinBoxPatchValpha->setMinimum(0.050000000000000);
-        doubleSpinBoxPatchValpha->setMaximum(7.000000000000000);
-        doubleSpinBoxPatchValpha->setSingleStep(0.050000000000000);
-        doubleSpinBoxPatchValpha->setValue(1.000000000000000);
+        spinBoxSelectedPatch = new QSpinBox(formLayoutWidget_2);
+        spinBoxSelectedPatch->setObjectName(QString::fromUtf8("spinBoxSelectedPatch"));
+        spinBoxSelectedPatch->setMaximum(8);
 
-        formLayout_3->setWidget(18, QFormLayout::FieldRole, doubleSpinBoxPatchValpha);
+        formLayout_3->setWidget(0, QFormLayout::FieldRole, spinBoxSelectedPatch);
 
-        label_27 = new QLabel(formLayoutWidget_2);
-        label_27->setObjectName(QString::fromUtf8("label_27"));
+        comboBoxMaterial = new QComboBox(formLayoutWidget_2);
+        comboBoxMaterial->addItem(QString());
+        comboBoxMaterial->addItem(QString());
+        comboBoxMaterial->addItem(QString());
+        comboBoxMaterial->addItem(QString());
+        comboBoxMaterial->addItem(QString());
+        comboBoxMaterial->addItem(QString());
+        comboBoxMaterial->addItem(QString());
+        comboBoxMaterial->setObjectName(QString::fromUtf8("comboBoxMaterial"));
 
-        formLayout_3->setWidget(17, QFormLayout::LabelRole, label_27);
+        formLayout_3->setWidget(7, QFormLayout::FieldRole, comboBoxMaterial);
 
-        label_28 = new QLabel(formLayoutWidget_2);
-        label_28->setObjectName(QString::fromUtf8("label_28"));
+        spinBoxJoiningPatch = new QSpinBox(formLayoutWidget_2);
+        spinBoxJoiningPatch->setObjectName(QString::fromUtf8("spinBoxJoiningPatch"));
+        spinBoxJoiningPatch->setMaximum(8);
 
-        formLayout_3->setWidget(18, QFormLayout::LabelRole, label_28);
+        formLayout_3->setWidget(12, QFormLayout::FieldRole, spinBoxJoiningPatch);
 
         groupBox_2 = new QGroupBox(page_2);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(10, 540, 311, 91));
+        groupBox_2->setGeometry(QRect(10, 690, 311, 91));
         formLayoutWidget_3 = new QWidget(groupBox_2);
         formLayoutWidget_3->setObjectName(QString::fromUtf8("formLayoutWidget_3"));
-        formLayoutWidget_3->setGeometry(QRect(10, 30, 291, 51));
+        formLayoutWidget_3->setGeometry(QRect(10, 30, 291, 61));
         formLayout_4 = new QFormLayout(formLayoutWidget_3);
         formLayout_4->setObjectName(QString::fromUtf8("formLayout_4"));
         formLayout_4->setContentsMargins(0, 0, 0, 0);
@@ -696,15 +649,15 @@ public:
 
         formLayout_4->setWidget(0, QFormLayout::LabelRole, checkBoxShowIsoparametricCurvesU);
 
-        checkBoxShowIsoparametricCurvesV = new QCheckBox(formLayoutWidget_3);
-        checkBoxShowIsoparametricCurvesV->setObjectName(QString::fromUtf8("checkBoxShowIsoparametricCurvesV"));
-
-        formLayout_4->setWidget(0, QFormLayout::FieldRole, checkBoxShowIsoparametricCurvesV);
-
         checkBoxShowIsometricDerivatives = new QCheckBox(formLayoutWidget_3);
         checkBoxShowIsometricDerivatives->setObjectName(QString::fromUtf8("checkBoxShowIsometricDerivatives"));
 
         formLayout_4->setWidget(1, QFormLayout::LabelRole, checkBoxShowIsometricDerivatives);
+
+        checkBoxShowIsoparametricCurvesV = new QCheckBox(formLayoutWidget_3);
+        checkBoxShowIsoparametricCurvesV->setObjectName(QString::fromUtf8("checkBoxShowIsoparametricCurvesV"));
+
+        formLayout_4->setWidget(0, QFormLayout::FieldRole, checkBoxShowIsoparametricCurvesV);
 
         toolBox->addItem(page_2, QString::fromUtf8("Patches"));
 #if QT_CONFIG(shortcut)
@@ -719,7 +672,7 @@ public:
 
         retranslateUi(SideWidget);
 
-        toolBox->setCurrentIndex(1);
+        toolBox->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(SideWidget);
@@ -752,29 +705,9 @@ public:
         label_12->setText(QCoreApplication::translate("SideWidget", "y", nullptr));
         label_13->setText(QCoreApplication::translate("SideWidget", "z", nullptr));
         label_10->setText(QCoreApplication::translate("SideWidget", "derivative scale", nullptr));
-        comboBoxSelectedArc->setItemText(0, QCoreApplication::translate("SideWidget", "white", nullptr));
-        comboBoxSelectedArc->setItemText(1, QCoreApplication::translate("SideWidget", "pink", nullptr));
-        comboBoxSelectedArc->setItemText(2, QCoreApplication::translate("SideWidget", "purple", nullptr));
-        comboBoxSelectedArc->setItemText(3, QCoreApplication::translate("SideWidget", "blue", nullptr));
-        comboBoxSelectedArc->setItemText(4, QCoreApplication::translate("SideWidget", "green", nullptr));
-        comboBoxSelectedArc->setItemText(5, QCoreApplication::translate("SideWidget", "gray", nullptr));
-        comboBoxSelectedArc->setItemText(6, QCoreApplication::translate("SideWidget", "lime", nullptr));
-        comboBoxSelectedArc->setItemText(7, QCoreApplication::translate("SideWidget", "yellow", nullptr));
-        comboBoxSelectedArc->setItemText(8, QCoreApplication::translate("SideWidget", "brown", nullptr));
-
         checkBoxShowArcControlPolygon->setText(QCoreApplication::translate("SideWidget", "control polygon", nullptr));
         checkBoxShowArcDataPoints->setText(QCoreApplication::translate("SideWidget", "data points", nullptr));
         label_22->setText(QCoreApplication::translate("SideWidget", "join with", nullptr));
-        comboBoxSelectedJoiningArc->setItemText(0, QCoreApplication::translate("SideWidget", "white", nullptr));
-        comboBoxSelectedJoiningArc->setItemText(1, QCoreApplication::translate("SideWidget", "pink", nullptr));
-        comboBoxSelectedJoiningArc->setItemText(2, QCoreApplication::translate("SideWidget", "purple", nullptr));
-        comboBoxSelectedJoiningArc->setItemText(3, QCoreApplication::translate("SideWidget", "blue", nullptr));
-        comboBoxSelectedJoiningArc->setItemText(4, QCoreApplication::translate("SideWidget", "green", nullptr));
-        comboBoxSelectedJoiningArc->setItemText(5, QCoreApplication::translate("SideWidget", "gray", nullptr));
-        comboBoxSelectedJoiningArc->setItemText(6, QCoreApplication::translate("SideWidget", "lime", nullptr));
-        comboBoxSelectedJoiningArc->setItemText(7, QCoreApplication::translate("SideWidget", "yellow", nullptr));
-        comboBoxSelectedJoiningArc->setItemText(8, QCoreApplication::translate("SideWidget", "brown", nullptr));
-
         comboBoxSelectedArcJoinType->setItemText(0, QCoreApplication::translate("SideWidget", "right-right", nullptr));
         comboBoxSelectedArcJoinType->setItemText(1, QCoreApplication::translate("SideWidget", "left-left", nullptr));
         comboBoxSelectedArcJoinType->setItemText(2, QCoreApplication::translate("SideWidget", "right-left", nullptr));
@@ -788,16 +721,6 @@ public:
         label_26->setText(QCoreApplication::translate("SideWidget", "alpha", nullptr));
         toolBox->setItemText(toolBox->indexOf(page), QCoreApplication::translate("SideWidget", "Arcs", nullptr));
         label_14->setText(QCoreApplication::translate("SideWidget", "selected patch", nullptr));
-        comboBoxSelectedPatch->setItemText(0, QCoreApplication::translate("SideWidget", "white", nullptr));
-        comboBoxSelectedPatch->setItemText(1, QCoreApplication::translate("SideWidget", "pink", nullptr));
-        comboBoxSelectedPatch->setItemText(2, QCoreApplication::translate("SideWidget", "purple", nullptr));
-        comboBoxSelectedPatch->setItemText(3, QCoreApplication::translate("SideWidget", "blue", nullptr));
-        comboBoxSelectedPatch->setItemText(4, QCoreApplication::translate("SideWidget", "green", nullptr));
-        comboBoxSelectedPatch->setItemText(5, QCoreApplication::translate("SideWidget", "gray", nullptr));
-        comboBoxSelectedPatch->setItemText(6, QCoreApplication::translate("SideWidget", "lime", nullptr));
-        comboBoxSelectedPatch->setItemText(7, QCoreApplication::translate("SideWidget", "yellow", nullptr));
-        comboBoxSelectedPatch->setItemText(8, QCoreApplication::translate("SideWidget", "brown", nullptr));
-
         label_15->setText(QCoreApplication::translate("SideWidget", "selected point", nullptr));
         comboBoxSelectedPatchPoint->setItemText(0, QCoreApplication::translate("SideWidget", "0", nullptr));
         comboBoxSelectedPatchPoint->setItemText(1, QCoreApplication::translate("SideWidget", "1", nullptr));
@@ -816,11 +739,36 @@ public:
         comboBoxSelectedPatchPoint->setItemText(14, QCoreApplication::translate("SideWidget", "14", nullptr));
         comboBoxSelectedPatchPoint->setItemText(15, QCoreApplication::translate("SideWidget", "15", nullptr));
 
+        label_19->setText(QCoreApplication::translate("SideWidget", "x", nullptr));
+        label_20->setText(QCoreApplication::translate("SideWidget", "y", nullptr));
+        label_21->setText(QCoreApplication::translate("SideWidget", "z", nullptr));
         checkBoxShowPatchControlPolygon->setText(QCoreApplication::translate("SideWidget", "control polygon", nullptr));
         checkBoxShowPatchDataPoints->setText(QCoreApplication::translate("SideWidget", "data points", nullptr));
         checkBoxShowInterpolatingSurface->setText(QCoreApplication::translate("SideWidget", "interpolating suface", nullptr));
         checkBoxShowNormalVectors->setText(QCoreApplication::translate("SideWidget", "normal vectors", nullptr));
         label_16->setText(QCoreApplication::translate("SideWidget", "material", nullptr));
+        label_17->setText(QCoreApplication::translate("SideWidget", "light", nullptr));
+        comboBoxLight->setItemText(0, QCoreApplication::translate("SideWidget", "Directional light", nullptr));
+        comboBoxLight->setItemText(1, QCoreApplication::translate("SideWidget", "Spot light", nullptr));
+        comboBoxLight->setItemText(2, QCoreApplication::translate("SideWidget", "Point light", nullptr));
+
+        checkBoxApplyLight->setText(QCoreApplication::translate("SideWidget", "light", nullptr));
+        checkBoxShowPatchDerivatives->setText(QCoreApplication::translate("SideWidget", "derivatives", nullptr));
+        checkBoxShowPatchPartialDerivatives->setText(QCoreApplication::translate("SideWidget", "partial derivatives", nullptr));
+        label_18->setText(QCoreApplication::translate("SideWidget", "derivatives scale", nullptr));
+        label_24->setText(QCoreApplication::translate("SideWidget", "join with", nullptr));
+        label_25->setText(QCoreApplication::translate("SideWidget", "join type", nullptr));
+        comboBoxSelectedPatchJoinType->setItemText(0, QCoreApplication::translate("SideWidget", "west-east", nullptr));
+        comboBoxSelectedPatchJoinType->setItemText(1, QCoreApplication::translate("SideWidget", "north-south", nullptr));
+        comboBoxSelectedPatchJoinType->setItemText(2, QCoreApplication::translate("SideWidget", "north-north", nullptr));
+
+        pushButtonMergePatches->setText(QCoreApplication::translate("SideWidget", "merge", nullptr));
+        pushButtonJoinPatches->setText(QCoreApplication::translate("SideWidget", "join", nullptr));
+        pushButtonExtendWest->setText(QCoreApplication::translate("SideWidget", "extend south", nullptr));
+        pushButtonExtendEast->setText(QCoreApplication::translate("SideWidget", "extend north", nullptr));
+        pushButtonExtendNorth->setText(QCoreApplication::translate("SideWidget", "extend west", nullptr));
+        pushButtonExtendSouth->setText(QCoreApplication::translate("SideWidget", "extend east", nullptr));
+        label_27->setText(QCoreApplication::translate("SideWidget", "alpha", nullptr));
         comboBoxMaterial->setItemText(0, QCoreApplication::translate("SideWidget", "Brass", nullptr));
         comboBoxMaterial->setItemText(1, QCoreApplication::translate("SideWidget", "Gold", nullptr));
         comboBoxMaterial->setItemText(2, QCoreApplication::translate("SideWidget", "Silver", nullptr));
@@ -829,46 +777,10 @@ public:
         comboBoxMaterial->setItemText(5, QCoreApplication::translate("SideWidget", "Turquoise", nullptr));
         comboBoxMaterial->setItemText(6, QCoreApplication::translate("SideWidget", "Ruby", nullptr));
 
-        label_17->setText(QCoreApplication::translate("SideWidget", "light", nullptr));
-        comboBoxLight->setItemText(0, QCoreApplication::translate("SideWidget", "Directional light", nullptr));
-        comboBoxLight->setItemText(1, QCoreApplication::translate("SideWidget", "Spot light", nullptr));
-        comboBoxLight->setItemText(2, QCoreApplication::translate("SideWidget", "Point light", nullptr));
-
-        checkBoxShowPatchDerivatives->setText(QCoreApplication::translate("SideWidget", "derivatives", nullptr));
-        checkBoxShowPatchPartialDerivatives->setText(QCoreApplication::translate("SideWidget", "partial derivatives", nullptr));
-        label_18->setText(QCoreApplication::translate("SideWidget", "derivatives scale", nullptr));
-        checkBoxApplyLight->setText(QCoreApplication::translate("SideWidget", "light", nullptr));
-        label_19->setText(QCoreApplication::translate("SideWidget", "x", nullptr));
-        label_20->setText(QCoreApplication::translate("SideWidget", "y", nullptr));
-        label_21->setText(QCoreApplication::translate("SideWidget", "z", nullptr));
-        comboBoxSelectedJoiningPatch->setItemText(0, QCoreApplication::translate("SideWidget", "white", nullptr));
-        comboBoxSelectedJoiningPatch->setItemText(1, QCoreApplication::translate("SideWidget", "pink", nullptr));
-        comboBoxSelectedJoiningPatch->setItemText(2, QCoreApplication::translate("SideWidget", "purple", nullptr));
-        comboBoxSelectedJoiningPatch->setItemText(3, QCoreApplication::translate("SideWidget", "blue", nullptr));
-        comboBoxSelectedJoiningPatch->setItemText(4, QCoreApplication::translate("SideWidget", "green", nullptr));
-        comboBoxSelectedJoiningPatch->setItemText(5, QCoreApplication::translate("SideWidget", "gray", nullptr));
-        comboBoxSelectedJoiningPatch->setItemText(6, QCoreApplication::translate("SideWidget", "lime", nullptr));
-        comboBoxSelectedJoiningPatch->setItemText(7, QCoreApplication::translate("SideWidget", "yellow", nullptr));
-        comboBoxSelectedJoiningPatch->setItemText(8, QCoreApplication::translate("SideWidget", "brown", nullptr));
-
-        comboBoxSelectedPatchJoinType->setItemText(0, QCoreApplication::translate("SideWidget", "west-east", nullptr));
-        comboBoxSelectedPatchJoinType->setItemText(1, QCoreApplication::translate("SideWidget", "north-south", nullptr));
-        comboBoxSelectedPatchJoinType->setItemText(2, QCoreApplication::translate("SideWidget", "north-north", nullptr));
-
-        label_24->setText(QCoreApplication::translate("SideWidget", "join with", nullptr));
-        label_25->setText(QCoreApplication::translate("SideWidget", "join type", nullptr));
-        pushButtonMergePatches->setText(QCoreApplication::translate("SideWidget", "merge", nullptr));
-        pushButtonJoinPatches->setText(QCoreApplication::translate("SideWidget", "join", nullptr));
-        pushButtonExtendWest->setText(QCoreApplication::translate("SideWidget", "extend south", nullptr));
-        pushButtonExtendEast->setText(QCoreApplication::translate("SideWidget", "extend north", nullptr));
-        pushButtonExtendNorth->setText(QCoreApplication::translate("SideWidget", "extend west", nullptr));
-        pushButtonExtendSouth->setText(QCoreApplication::translate("SideWidget", "extend east", nullptr));
-        label_27->setText(QCoreApplication::translate("SideWidget", "Ualpha", nullptr));
-        label_28->setText(QCoreApplication::translate("SideWidget", "Valpha", nullptr));
         groupBox_2->setTitle(QCoreApplication::translate("SideWidget", "Isoparametric cuves", nullptr));
-        checkBoxShowIsoparametricCurvesU->setText(QCoreApplication::translate("SideWidget", "show U", nullptr));
-        checkBoxShowIsoparametricCurvesV->setText(QCoreApplication::translate("SideWidget", "show V", nullptr));
+        checkBoxShowIsoparametricCurvesU->setText(QCoreApplication::translate("SideWidget", "show V", nullptr));
         checkBoxShowIsometricDerivatives->setText(QCoreApplication::translate("SideWidget", "derivatives", nullptr));
+        checkBoxShowIsoparametricCurvesV->setText(QCoreApplication::translate("SideWidget", "show U", nullptr));
         toolBox->setItemText(toolBox->indexOf(page_2), QCoreApplication::translate("SideWidget", "Patches", nullptr));
     } // retranslateUi
 
