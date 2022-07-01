@@ -962,7 +962,7 @@ namespace cagd
 
     void GLWidget::setPatchUalpha(double value)
     {
-        for(int i = 0; i < numberOfPatches; i++){
+        for(int i = 0; i < patches.GetColumnCount(); i++){
             patches[i]->SetUAlpha(value);
             patches[i]->SetVAlpha(value);
         }
@@ -1086,11 +1086,6 @@ namespace cagd
     {
         for(int k = 0; k < patches.GetColumnCount(); k++)
         {
-            for (int i = 0; i < 4; i++){
-                for (int j = 0; j < 4; j++){
-                    patches[k]->SetData(i,j,_data_points_to_interpolate[k](i,j));
-                }
-            }
 
             if(patches[k]->GetImage()){
                 delete patches[k]->GetImage();
@@ -1107,15 +1102,15 @@ namespace cagd
 
 
 
-            uCurves[k] = patches[k]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
-            vCurves[k] = patches[k]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+//            uCurves[k] = patches[k]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+//            vCurves[k] = patches[k]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
 
 
-            for(GLuint  j = 0; j < uCurves[k]->GetColumnCount(); ++j)
-                (*uCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+//            for(GLuint  j = 0; j < uCurves[k]->GetColumnCount(); ++j)
+//                (*uCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
 
-            for(GLuint  j = 0; j < vCurves[k]->GetColumnCount(); ++j)
-                (*vCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+//            for(GLuint  j = 0; j < vCurves[k]->GetColumnCount(); ++j)
+//                (*vCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
         }
 
     }
