@@ -985,7 +985,7 @@ namespace cagd
     void GLWidget::setScalePatchDerivatives(double value)
     {
         scalePatchDerivatives = value;
-        for(int i = 0; i < numberOfPatches; i++)
+        for(int i = 0; i < patches.GetColumnCount(); i++)
         {
             for(GLuint  j = 0; j < uCurves[i]->GetColumnCount(); ++j)
                 (*uCurves[i])[j]->UpdateVertexBufferObjects(scalePatchDerivatives);
@@ -1007,9 +1007,7 @@ namespace cagd
         }
 
         patches.ResizeColumns(numberOfPatches);
-//        beforeInterpolation.ResizeColumns(numberOfPatches);
 
-//        afterInterpolation.ResizeColumns(numberOfPatches);
         uKnotVectors.ResizeColumns(numberOfPatches);
         vKnotVectors.ResizeColumns(numberOfPatches);
         uCurves.ResizeColumns(numberOfPatches);
@@ -1084,6 +1082,8 @@ namespace cagd
 
     void GLWidget::updatePatches()
     {
+        uCurves.ResizeColumns(patches.GetColumnCount());
+        vCurves.ResizeColumns(patches.GetColumnCount());
         for(int k = 0; k < patches.GetColumnCount(); k++)
         {
 
@@ -1102,15 +1102,15 @@ namespace cagd
 
 
 
-//            uCurves[k] = patches[k]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
-//            vCurves[k] = patches[k]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+            uCurves[k] = patches[k]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+            vCurves[k] = patches[k]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
 
 
-//            for(GLuint  j = 0; j < uCurves[k]->GetColumnCount(); ++j)
-//                (*uCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+            for(GLuint  j = 0; j < uCurves[k]->GetColumnCount(); ++j)
+                (*uCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
 
-//            for(GLuint  j = 0; j < vCurves[k]->GetColumnCount(); ++j)
-//                (*vCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+            for(GLuint  j = 0; j < vCurves[k]->GetColumnCount(); ++j)
+                (*vCurves[k])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
         }
 
     }
@@ -1128,15 +1128,15 @@ namespace cagd
 
         patches[selectedPatch]->SetImage(img);
 
-//        uCurves[selectedPatch] = patches[selectedPatch]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
-//        vCurves[selectedPatch] = patches[selectedPatch]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+        uCurves[selectedPatch] = patches[selectedPatch]->GenerateUIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
+        vCurves[selectedPatch] = patches[selectedPatch]->GenerateVIsoparametricLines(4, 2, 200, GL_STATIC_DRAW);
 
 
-//        for(GLuint  j = 0; j < uCurves[selectedPatch]->GetColumnCount(); ++j)
-//            (*uCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+        for(GLuint  j = 0; j < uCurves[selectedPatch]->GetColumnCount(); ++j)
+            (*uCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
 
-//        for(GLuint  j = 0; j < vCurves[selectedPatch]->GetColumnCount(); ++j)
-//            (*vCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
+        for(GLuint  j = 0; j < vCurves[selectedPatch]->GetColumnCount(); ++j)
+            (*vCurves[selectedPatch])[j]->UpdateVertexBufferObjects(scalePatchDerivatives, GL_STATIC_DRAW);
     }
 
     void GLWidget::renderPatches()
@@ -1204,39 +1204,39 @@ namespace cagd
                     patches[i]->RenderData(GL_POINTS);
                 }
 
-//                glPointSize(5.0f);
-//                for(GLuint j = 0; j < 4; ++j){
-//                    if(showUIsometricCurves)
-//                    {
-//                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
-//                        (*uCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
-//                    }
+                glPointSize(5.0f);
+                for(GLuint j = 0; j < 4; ++j){
+                    if(showUIsometricCurves)
+                    {
+                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
+                        (*uCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                    }
 
-//                    if(showIsometricDerivatives)
-//                    {
-//                        glColor3f(0.0f, 0.5f, 0.0f);
-//                        (*uCurves[i])[j]->RenderDerivatives(1, GL_LINES);
-//                        glColor3f(0.0f, 0.0f, 0.5f);
-//                        (*uCurves[i])[j]->RenderDerivatives(2, GL_LINES);
-//                    }
-//                }
+                    if(showIsometricDerivatives)
+                    {
+                        glColor3f(0.0f, 0.5f, 0.0f);
+                        (*uCurves[i])[j]->RenderDerivatives(1, GL_LINES);
+                        glColor3f(0.0f, 0.0f, 0.5f);
+                        (*uCurves[i])[j]->RenderDerivatives(2, GL_LINES);
+                    }
+                }
 
 
-//                for(GLuint j = 0; j < 4; ++j){
-//                    if(showVIsometricCurves)
-//                    {
-//                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
-//                        (*vCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
-//                    }
+                for(GLuint j = 0; j < 4; ++j){
+                    if(showVIsometricCurves)
+                    {
+                        glColor4f(0.0f, 0.2f, 0.8f, 0.6f);
+                        (*vCurves[i])[j]->RenderDerivatives(0, GL_LINE_STRIP);
+                    }
 
-//                    if(showIsometricDerivatives)
-//                    {
-//                        glColor3f(0.0f, 0.5f, 0.0f);
-//                        (*vCurves[i])[j]->RenderDerivatives(1, GL_LINES);
-//                        glColor3f(0.0f, 0.0f, 0.5f);
-//                        (*vCurves[i])[j]->RenderDerivatives(2, GL_LINES);
-//                    }
-//                }
+                    if(showIsometricDerivatives)
+                    {
+                        glColor3f(0.0f, 0.5f, 0.0f);
+                        (*vCurves[i])[j]->RenderDerivatives(1, GL_LINES);
+                        glColor3f(0.0f, 0.0f, 0.5f);
+                        (*vCurves[i])[j]->RenderDerivatives(2, GL_LINES);
+                    }
+                }
 
                 if(turnOnLight)
                 {
@@ -1297,10 +1297,12 @@ namespace cagd
         patches[selectedPatch]->ExtendPatch(6, *p);
         p->UpdateVertexBufferObjectsOfData();
         p->SetImage(p->GenerateImage(30, 30, GL_STATIC_DRAW));
+
         int n = patches.GetColumnCount();
         patches.ResizeColumns(n+1);
         patches[n] = p;
         emit setPatchN(n);
+        updatePatches();
         update();
     };
 
@@ -1316,6 +1318,7 @@ namespace cagd
         patches.ResizeColumns(n+1);
         patches[n] = p;
         emit setPatchN(n);
+        updatePatches();
         update();
     };
 
@@ -1330,6 +1333,7 @@ namespace cagd
         patches.ResizeColumns(n+1);
         patches[n] = p;
         emit setPatchN(n);
+        updatePatches();
         update();
     };
 
@@ -1344,6 +1348,7 @@ namespace cagd
         patches.ResizeColumns(n+1);
         patches[n] = p;
         emit setPatchN(n);
+        updatePatches();
         update();
     };
 
@@ -1369,12 +1374,7 @@ namespace cagd
                 patches[selectedPatch]->MergePatch(*patches[selectedJoiningPatch], 0, 0);
                 break;
         }
-        patches[selectedPatch]->UpdateVertexBufferObjectsOfData();
-        patches[selectedPatch]->SetImage(patches[selectedPatch]->GenerateImage(30, 30, GL_STATIC_DRAW));
-        patches[selectedPatch]->GetImage()->UpdateVertexBufferObjects();
-        patches[selectedJoiningPatch]->SetImage(patches[selectedJoiningPatch]->GenerateImage(30, 30, GL_STATIC_DRAW));
-        patches[selectedJoiningPatch]->UpdateVertexBufferObjectsOfData();
-        patches[selectedJoiningPatch]->GetImage()->UpdateVertexBufferObjects();
+        updatePatches();
         sendPatchPointCoordinates();
         update();
     };
@@ -1406,6 +1406,7 @@ namespace cagd
         int n = patches.GetColumnCount();
         patches.ResizeColumns(n+1);
         patches[n] = p;
+        updatePatches();
         emit setPatchN(n);
         update();
     };
