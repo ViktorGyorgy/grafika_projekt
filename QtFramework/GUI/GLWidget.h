@@ -165,7 +165,6 @@ namespace cagd
 
         //arc join merge extend
         void extendArcLeft();
-        void updateArcNeighbors(int);
         void extendArcRight();
         void mergeArcs();
         void joinArcs();

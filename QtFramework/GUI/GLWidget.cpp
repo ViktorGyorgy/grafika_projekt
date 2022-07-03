@@ -727,65 +727,7 @@ namespace cagd
         update();
     }
 
-    void GLWidget::updateArcNeighbors(int n){
-        if(arcs[n]->left){
-            if(arcs[n] == arcs[n]->left->left){
-                arcs[n]->left->setPoint(0, arcs[n]->getPoint(0));
-                arcs[n]->left->setPoint(1, 2 * arcs[n]->getPoint(0) - arcs[n]->getPoint(1));
-            }
-            else{
-                arcs[n]->left->setPoint(3, arcs[n]->getPoint(0));
-                arcs[n]->left->setPoint(2, 2 * arcs[n]->getPoint(0) - arcs[n]->getPoint(1));
-            }
-            //update left arc image
-            arcs[n]->left->UpdateVertexBufferObjectsOfData();
 
-            if (arcs[n]->left->getImage())
-            {
-                delete arcs[n]->left->getImage();
-            }
-
-
-            GenericCurve3 *img = arcs[n]->left->GenerateImage(2, 100, GL_STATIC_DRAW);
-
-            arcs[n]->left->setImage(img);
-
-            if (!img || !img->UpdateVertexBufferObjects())
-            {
-                   cout << "HIBA A UPDATEARCNEIGHBORS1" << endl;
-            }
-
-
-        }
-        if(arcs[n]->right){
-            if(arcs[n] == arcs[n]->right->left){
-                arcs[n]->right->setPoint(0, arcs[n]->getPoint(3));
-                arcs[n]->right->setPoint(1, 2 * arcs[n]->getPoint(3) - arcs[n]->getPoint(2));
-            }
-            else{
-                arcs[n]->right->setPoint(3, arcs[n]->getPoint(3));
-                arcs[n]->right->setPoint(2, 2 * arcs[n]->getPoint(3) - arcs[n]->getPoint(2));
-            }
-
-            //update left arc image
-            arcs[n]->right->UpdateVertexBufferObjectsOfData();
-
-            if (arcs[n]->right->getImage())
-            {
-                delete arcs[n]->right->getImage();
-            }
-
-
-            GenericCurve3 *img = arcs[n]->right->GenerateImage(2, 100, GL_STATIC_DRAW);
-
-            arcs[n]->right->setImage(img);
-
-            if (!img || !img->UpdateVertexBufferObjects())
-            {
-                   cout << "HIBA A UPDATEARCNEIGHBORS1" << endl;
-            }
-        }
-    }
 
     void GLWidget::joinArcs(){
         if(selectedArc == selectedJoiningArc){
