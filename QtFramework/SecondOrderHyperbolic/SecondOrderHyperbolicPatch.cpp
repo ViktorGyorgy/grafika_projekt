@@ -1385,6 +1385,7 @@ GLboolean SecHypPatch3::MergeEastWest(SecHypPatch3 &patch, int side1, int side2)
     // Set the first column of the result to our last column
     // Set the last column of the result to the patch first column
     int p1_col1;
+
     int p1_col2;
 
     int p2_col1;
@@ -1400,6 +1401,8 @@ GLboolean SecHypPatch3::MergeEastWest(SecHypPatch3 &patch, int side1, int side2)
 
         p2_col1 = 0;
         p2_col2 = 1;
+
+
     } else {
         p1_col1 = 0;
         p1_col2 = 1;
@@ -1408,17 +1411,14 @@ GLboolean SecHypPatch3::MergeEastWest(SecHypPatch3 &patch, int side1, int side2)
         p2_col2 = 2;
     }
     for(int i = 0; i < 4; i++) {
-        DCoordinate3 p;
+        DCoordinate3 p1;
         DCoordinate3 p2;
-        DCoordinate3 p3;
-        GetData(i, p1_col1, p);
-        patch.GetData(i, p2_col1, p2);
-        GetData(i, p1_col2, p3);
+        GetData(i, p1_col2, p1);
+        patch.GetData(i, p2_col2, p2);
 
-        SetData(i, p1_col1, (p + p2) / 2);
-        patch.SetData(i, p2_col1, (p + p2) / 2);
+        SetData(i, p1_col1, (p1 + p2) / 2);
+        patch.SetData(i, p2_col1, (p1 + p2) / 2);
 
-        patch.SetData(i, p2_col2, p + p2 - p3);
     }
 
     for (int i = 0; i < 4; i++) {
@@ -1456,16 +1456,13 @@ GLboolean SecHypPatch3::MergeNorthSouth(SecHypPatch3 &patch, int side1, int side
     }
 
     for(int i = 0; i < 4; i++) {
-        DCoordinate3 p;
+        DCoordinate3 p1;
         DCoordinate3 p2;
-        DCoordinate3 p3;
-        GetData(p1_row1, i, p);
-        patch.GetData(p2_row1, i, p2);
-        GetData(p1_row2, i, p3);
+        GetData(p1_row2, i, p1);
+        patch.GetData(p2_row2, i, p2);
 
-        SetData(p1_row1, i, (p + p2) / 2);
-        patch.SetData(p2_row1, i, (p + p2) / 2);
-        patch.SetData(p2_row2, i, p + p2 - p3);
+        SetData(p1_row1, i, (p1 + p2) / 2);
+        patch.SetData(p2_row1, i, (p1 + p2) / 2);
     }
 
     for (int i = 0; i < 4; i++) {
@@ -1534,15 +1531,12 @@ GLboolean SecHypPatch3::MergeNorthNorth(SecHypPatch3 &patch) {
     _connected_side[0] = 0;
     patch.SetNeighbour(0, 0, this);
     for(int i = 0; i < 4; i++) {
-        DCoordinate3 p;
+        DCoordinate3 p1;
         DCoordinate3 p2;
-        DCoordinate3 p3;
-        GetData(0, i, p);
-        patch.GetData(0, i, p2);
-        GetData(1, i, p3);
-        SetData(0, i, (p + p2) / 2);
-        patch.SetData(0, i, (p + p2) / 2);
-        patch.SetData(1, i, p + p2 - p3);
+        GetData(1, i, p1);
+        patch.GetData(1, i, p2);
+        SetData(0, i, (p1 + p2) / 2);
+        patch.SetData(0, i, (p1 + p2) / 2);
     }
 
     for (int i = 0; i < 4; i++) {
